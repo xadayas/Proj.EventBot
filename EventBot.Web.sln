@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBot.Web", "EventBot.Web\EventBot.Web.csproj", "{D33359C7-A4FA-47FA-8C6A-A7B70CA61162}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBot.Entities", "EventBot.Entities\EventBot.Entities.csproj", "{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D33359C7-A4FA-47FA-8C6A-A7B70CA61162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D33359C7-A4FA-47FA-8C6A-A7B70CA61162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D33359C7-A4FA-47FA-8C6A-A7B70CA61162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
