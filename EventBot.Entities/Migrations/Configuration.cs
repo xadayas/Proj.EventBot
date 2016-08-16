@@ -5,14 +5,14 @@ namespace EventBot.Entities.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EventBot.Db.EventBotDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<EventBot.Entities.EventBotDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(EventBot.Db.EventBotDb context)
+        protected override void Seed(EventBot.Entities.EventBotDb context)
         {
             //  This method will be called after migrating to the latest version.
 

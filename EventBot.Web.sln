@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBot.Web", "EventBot.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBot.Entities", "EventBot.Entities\EventBot.Entities.csproj", "{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBot.Entities.Service", "EventBot.Entities.Service\EventBot.Entities.Service.csproj", "{69A3557B-A45D-4220-A331-3A5F1CE738F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A3557B-A45D-4220-A331-3A5F1CE738F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A3557B-A45D-4220-A331-3A5F1CE738F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A3557B-A45D-4220-A331-3A5F1CE738F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A3557B-A45D-4220-A331-3A5F1CE738F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
