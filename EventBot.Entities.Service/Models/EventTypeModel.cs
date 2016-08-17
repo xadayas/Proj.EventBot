@@ -8,5 +8,7 @@ namespace EventBot.Entities.Service.Models
 {
     public class EventTypeModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

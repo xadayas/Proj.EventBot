@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A23473C2-7F1C-4C6B-BFF8-6F8684B4B55F}</ProjectGuid>
+    <ProjectGuid>{CEEB51B3-8295-4999-8FC7-534ADD64159D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventBot.Entities</RootNamespace>
-    <AssemblyName>EventBot.Entities</AssemblyName>
+    <RootNamespace>EventBot.Entities.Service.Test</RootNamespace>
+    <AssemblyName>EventBot.Entities.Service.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,19 +38,13 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,24 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventBotDb.cs" />
-    <Compile Include="Migrations\201608161254578_UsingIdentity.cs" />
-    <Compile Include="Migrations\201608161254578_UsingIdentity.Designer.cs">
-      <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608171654399_notifications.cs" />
-    <Compile Include="Migrations\201608171654399_notifications.Designer.cs">
-      <DependentUpon>201608171654399_notifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\EventBotImage.cs" />
-    <Compile Include="Models\EventType.cs" />
-    <Compile Include="Models\EventUser.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\NotificationType.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserNotifications.cs" />
+    <Compile Include="ServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,12 +61,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608161254578_UsingIdentity.resx">
-      <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608171654399_notifications.resx">
-      <DependentUpon>201608171654399_notifications.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\EventBot.Entities.Service\EventBot.Entities.Service.csproj">
+      <Project>{69a3557b-a45d-4220-a331-3a5f1ce738f2}</Project>
+      <Name>EventBot.Entities.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventBot.Entities\EventBot.Entities.csproj">
+      <Project>{a23473c2-7f1c-4c6b-bff8-6f8684b4b55f}</Project>
+      <Name>EventBot.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

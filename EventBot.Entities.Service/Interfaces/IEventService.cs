@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EventBot.Entities.Models;
+﻿using System.Collections.Generic;
 using EventBot.Entities.Service.Models;
 
-namespace EventBot.Entities.Service
+namespace EventBot.Entities.Service.Interfaces
 {
     public interface IEventService
     {
