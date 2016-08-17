@@ -33,6 +33,7 @@ namespace EventBot.Entities.Service
                     MeatingPlace = model.MeatingPlace,
                     VisitCount = model.VisitCount
                 });
+                db.SaveChanges();
             }
         }
 

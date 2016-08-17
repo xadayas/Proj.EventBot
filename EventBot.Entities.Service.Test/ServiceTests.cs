@@ -8,7 +8,6 @@ namespace EventBot.Entities.Service.Test
     [TestFixture]
     public class ServiceTests
     {
-        // TODO add reference to EventService
         private readonly IEventService _service = new EventServiceEf();
 
         [Test]
