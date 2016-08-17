@@ -73,26 +73,26 @@ namespace EventBot.Entities.Service
                                || w.Description.ToLower().Contains(queryLowerCase)
                                || w.MeetingPlace.ToLower().Contains(queryLowerCase)
                                && (locationEmpty
-                                   || w.MeetingPlace.ToLower()==location.ToLower()
+                                   || w.MeetingPlace.ToLower() == location.ToLower()
                                    )
                     )
                     .Select(o => new
                     {
-                        Id = o.Id,
-                        Title = o.Title,
-                        Description = o.Description,
-                        CreatedDate = o.CreatedDate,
-                        ModifiedDate = o.ModifiedDate,
-                        MeetingPlace = o.MeetingPlace,
-                        StartDate = o.StartDate,
-                        EndDate = o.EndDate,
-                        IsCanceled = o.IsCanceled,
+                        o.Id,
+                        o.Title,
+                        o.Description,
+                        o.CreatedDate,
+                        o.ModifiedDate,
+                        o.MeetingPlace,
+                        o.StartDate,
+                        o.EndDate,
+                        o.IsCanceled,
                         ImageId = o.Image.Id,
-                        VisitCount = o.VisitCount,
-                        EventTypes = o.EventTypes,
+                        o.VisitCount,
+                        o.EventTypes,
                         UserId = o.Organiser.Id
                     }).ToArray()
-                    .Select(s=>new EventModel
+                    .Select(s => new EventModel
                     {
                         Id = s.Id,
                         Title = s.Title,
@@ -105,7 +105,7 @@ namespace EventBot.Entities.Service
                         IsCanceled = s.IsCanceled,
                         ImageId = s.ImageId,
                         VisitCount = s.VisitCount,
-                        EventTypes = s.EventTypes.Select(ss=>new EventTypeModel
+                        EventTypes = s.EventTypes.Select(ss => new EventTypeModel
                         {
                             Id = ss.Id,
                             Name = ss.Name
