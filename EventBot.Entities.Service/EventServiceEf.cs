@@ -186,5 +186,28 @@ namespace EventBot.Entities.Service
                 return userIds.Distinct().ToArray();
             }
         }
+
+        public byte[] GetImage(int imageId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var image = db.Images.SingleOrDefault(s => s.Id == imageId);
+                if(image==null)throw new InvalidOperationException("Image not found");
+                return image.ImageBytes;
+            }
+        }
+
+        public void CreateImage(byte[] imageBytes)
+        {
+            var image = new EventBotImage
+            {
+                ImageBytes = imageBytes
+            };
+            using (var db = new EventBotDb())
+            {
+                db.Images.Add(image);
+                db.SaveChanges();
+            }
+        }
     }
 }
