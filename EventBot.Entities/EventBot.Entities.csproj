@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201608171654399_notifications.Designer.cs">
       <DependentUpon>201608171654399_notifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608171929375_Spellfix.cs" />
+    <Compile Include="Migrations\201608171929375_Spellfix.Designer.cs">
+      <DependentUpon>201608171929375_Spellfix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventBotImage.cs" />
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608171654399_notifications.resx">
       <DependentUpon>201608171654399_notifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608171929375_Spellfix.resx">
+      <DependentUpon>201608171929375_Spellfix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

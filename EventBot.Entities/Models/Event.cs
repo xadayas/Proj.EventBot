@@ -14,7 +14,7 @@ namespace EventBot.Entities.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public long VisitCount { get; set; }
-        public string MeatingPlace { get; set; }
+        public string MeetingPlace { get; set; }
         public EventBotImage Image { get; set; }
         public bool IsCanceled { get; set; }
         public virtual ICollection<EventType> EventTypes { get; set; }

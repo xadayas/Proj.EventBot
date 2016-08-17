@@ -21,7 +21,7 @@ namespace EventBot.Entities.Service.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public long VisitCount { get; set; }
-        public string MeatingPlace { get; set; }
+        public string MeetingPlace { get; set; }
 
         public int ImageId { get; set; }
         // public EventBotImage Image { get; set; }
