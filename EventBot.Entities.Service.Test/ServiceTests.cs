@@ -15,18 +15,21 @@ namespace EventBot.Entities.Service.Test
         {
             // TODO get user id?
             // TODO add asserts
-
+            var testEvent = new EventModel
+            {
+                Title = "TestTitle",
+                Description = "Test Event Description",
+                StartDate = DateTime.Now + TimeSpan.FromDays(7),
+                EndDate = DateTime.Now + TimeSpan.FromDays(7) + TimeSpan.FromHours(3),
+                MeatingPlace = "Skogen brevid Ängen"
+            };
             Assert.DoesNotThrow(() =>
             {
-                _service.CreateOrUpdateEvent(new EventModel
-                {
-                    Title = "TestTitle",
-                    Description = "Test Event Description",
-                    StartDate = DateTime.Now + TimeSpan.FromDays(7),
-                    EndDate = DateTime.Now + TimeSpan.FromDays(7) + TimeSpan.FromHours(3),
-                    MeatingPlace = "Skogen brevid Ängen"
-                });
+                _service.CreateOrUpdateEvent(testEvent);
             });
+            Assert.That(testEvent.Id!=0);
+            string msg = testEvent.Id != 0 ? $"Event created successful, assigned id = {testEvent.Id}" : "Failed creating Event";
+            Console.WriteLine(msg);
         }
     }
 }
