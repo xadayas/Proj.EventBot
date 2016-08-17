@@ -15,7 +15,7 @@ namespace EventBot.Entities.Service
             model.ModifiedDate = DateTime.Now;
             using (var db = new EventBotDb())
             {
-                db.Events.AddOrUpdate(new Event
+                var newEvent = new Event
                 {
                     Id = model.Id,
                     Title = model.Title,
@@ -31,9 +31,11 @@ namespace EventBot.Entities.Service
                         Id = model.ImageId
                     },
                     MeatingPlace = model.MeatingPlace,
-                    VisitCount = model.VisitCount
-                });
+                    VisitCount = model.VisitCount,
+                };
+                db.Events.AddOrUpdate(newEvent);
                 db.SaveChanges();
+                model.Id = newEvent.Id;
             }
         }
 
