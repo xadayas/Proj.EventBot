@@ -69,7 +69,10 @@
     <Compile Include="Models\EventBotImage.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\EventUser.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserNotifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

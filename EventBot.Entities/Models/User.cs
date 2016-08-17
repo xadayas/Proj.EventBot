@@ -21,5 +21,11 @@ namespace EventBot.Entities.Models
         public virtual ICollection<EventType> EventTypeInterests { get; set; }
         public virtual ICollection<User> FollowingUsers { get; set; }
         public virtual ICollection<EventUser> Events { get; set; }
+        public virtual ICollection<UserNotifications> Notifications { get; set; }
+
+        public void Notify(Notification notification)
+        {
+            Notifications.Add(new UserNotifications(this, notification));
+        }
     }
 }
