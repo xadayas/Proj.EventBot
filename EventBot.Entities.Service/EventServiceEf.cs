@@ -121,13 +121,16 @@ namespace EventBot.Entities.Service
             {
                 // TODO Return something if EventType already exists. For now just return.
                 if (model.Id == 0 && db.EventTypes.Any(w => w.Name == model.Name)) return;
-                db.EventTypes.AddOrUpdate(new EventType
+                var eventType = new EventType
                 {
                     Id = model.Id,
                     Name = model.Name
-                });
+                };
+                db.EventTypes.AddOrUpdate(eventType);
                 db.SaveChanges();
+                model.Id = eventType.Id;
             }
+            
         }
 
         public ICollection<EventTypeModel> GetEventTypes()

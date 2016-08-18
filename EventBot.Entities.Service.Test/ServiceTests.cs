@@ -96,6 +96,26 @@ namespace EventBot.Entities.Service.Test
             var eventCountAfter = _service.SearchEvents(String.Empty, "Umeå").Count;
             Assert.That(eventCountAfter==eventsCountBefore+1);
         }
+
+        [Test]
+        public void CanCreateAndUpdateEventType()
+        {
+            Assert.DoesNotThrow(() =>
+            {
+
+                var testEventType = _service.GetEventTypes().FirstOrDefault(w => w.Name == "Pokemon");
+                if(testEventType==null)testEventType=new EventTypeModel
+                {
+                    Name = "Pokemon"
+                };
+                _service.CreateOrUpdateEventType(testEventType);
+                Assert.That(_service.GetEventTypes().Count(w=>w.Name=="Pokemon")==1);
+                testEventType.Name = "Pokemon2";
+                _service.CreateOrUpdateEventType(testEventType);
+                Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon") == 0);
+                Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon2") == 1);
+            });
+        }
     }
 
 }
