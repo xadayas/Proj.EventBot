@@ -79,6 +79,23 @@ namespace EventBot.Entities.Service.Test
             Console.WriteLine($"Description : {foundTitleCount} / {foundTitleCount2} .");
             Console.WriteLine($"Location : {foundTitleCount} / {foundTitleCount2} .");
         }
+
+        [Test]
+        public void GetAllEventsFilterByLocation()
+        {
+            var eventsCountBefore = _service.SearchEvents(string.Empty, "Umeå").Count;
+            _service.CreateOrUpdateEvent(
+                new EventModel
+                {
+                    Title = "Location Test Event",
+                    Description = "Location Test Description",
+                    MeetingPlace = "Umeå",
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now
+                });
+            var eventCountAfter = _service.SearchEvents(String.Empty, "Umeå").Count;
+            Assert.That(eventCountAfter==eventsCountBefore+1);
+        }
     }
 
 }
