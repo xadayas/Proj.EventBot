@@ -40,22 +40,22 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var ev = db.Events.SingleOrDefault(e => e.Id == id);
+                var ev = db.Events.Where(e => e.Id == id);
                 if (ev == null)
                     return null;
-                return new EventModel()
+                return ev.Select(e =>  new EventModel()
                 {
-                    Id = ev.Id,
-                    CreatedDate = ev.CreatedDate,
-                    EndDate = ev.EndDate,
-                    Description = ev.Description,
-                    //ImageId = ev.Image.Id,
-                    IsCanceled = ev.IsCanceled,
-                    MeetingPlace = ev.MeetingPlace,
-                    ModifiedDate = ev.ModifiedDate,
-                    StartDate = ev.StartDate,
-                    Title = ev.Title,
-                };
+                    Id = e.Id,
+                    CreatedDate = e.CreatedDate,
+                    EndDate = e.EndDate,
+                    Description = e.Description,
+                    ImageId = e.Image == null ? 0 : e.Image.Id,
+                    IsCanceled = e.IsCanceled,
+                    MeetingPlace = e.MeetingPlace,
+                    ModifiedDate = e.ModifiedDate,
+                    StartDate = e.StartDate,
+                    Title = e.Title,
+                }).FirstOrDefault();
             }
         }
 

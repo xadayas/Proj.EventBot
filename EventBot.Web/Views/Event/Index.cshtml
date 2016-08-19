@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using (Ajax.BeginForm("Search", "Event", new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "EventTable"
+}))
+{
+    <input type="text" name="query" />
+    <input type="submit" value="Search" />
+}
+<div id="EventTable">
+
+</div>

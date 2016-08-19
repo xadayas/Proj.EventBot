@@ -27,10 +27,16 @@ namespace EventBot.Web.Controllers
         {
             return View();
         }
+        
+        public ActionResult Search(string query)
+        {
+            return PartialView(_service.SearchEvents(query));
+        }
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var ev = _service.GetEvent(id);
+            return View(ev);
         }
 
         // GET: Event/Create
