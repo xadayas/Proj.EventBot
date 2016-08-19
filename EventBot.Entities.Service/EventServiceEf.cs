@@ -21,7 +21,6 @@ namespace EventBot.Entities.Service
                     Id = model.Id,
                     Title = model.Title,
                     Description = model.Description,
-                    //Organiser
                     CreatedDate = model.CreatedDate,
                     ModifiedDate = model.ModifiedDate,
                     StartDate = model.StartDate,
@@ -33,6 +32,7 @@ namespace EventBot.Entities.Service
                     },
                     MeetingPlace = model.MeetingPlace,
                     VisitCount = model.VisitCount
+                   
                 };
                 db.Events.AddOrUpdate(newEvent);
                 db.SaveChanges();
@@ -55,7 +55,7 @@ namespace EventBot.Entities.Service
                 tempEvent.Users.Add(new EventUser
                 {
                     User = tempUser,
-                    Event = tempEvent
+                    Event = tempEvent,
                 });
             }
         }

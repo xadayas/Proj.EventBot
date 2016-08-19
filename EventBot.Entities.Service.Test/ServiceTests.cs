@@ -114,6 +114,8 @@ namespace EventBot.Entities.Service.Test
                 _service.CreateOrUpdateEventType(testEventType);
                 Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon") == 0);
                 Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon2") == 1);
+                testEventType.Name = "Pokemon";
+                _service.CreateOrUpdateEventType(testEventType);
             });
         }
     }
