@@ -16,21 +16,32 @@ namespace EventBot.Entities.Service.Test
         {
             // TODO get user id?
             // TODO add asserts
-            var testEvent = new EventModel
+
+            using (var db = new EventBotDb())
             {
-                Title = "TestTitle",
-                Description = "Test Event Description",
-                StartDate = DateTime.Now + TimeSpan.FromDays(7),
-                EndDate = DateTime.Now + TimeSpan.FromDays(7) + TimeSpan.FromHours(3),
-                MeetingPlace = "Skogen brevid Ängen"
-            };
-            Assert.DoesNotThrow(() =>
-            {
-                _service.CreateOrUpdateEvent(testEvent);
-            });
-            Assert.That(testEvent.Id!=0);
-            string msg = testEvent.Id != 0 ? $"Event created successful, assigned id = {testEvent.Id}" : "Failed creating Event";
-            Console.WriteLine(msg);
+
+
+
+                var testEvent = new EventModel
+                {
+                    UserId = db.Users.First().Id,
+                    Title = "TestTitle",
+                    Description = "Test Event Description",
+                    StartDate = DateTime.Now + TimeSpan.FromDays(7),
+                    EndDate = DateTime.Now + TimeSpan.FromDays(7) + TimeSpan.FromHours(3),
+                    MeetingPlace = "Skogen brevid Ängen"
+                };
+
+                Assert.DoesNotThrow(() =>
+                {
+                    _service.CreateOrUpdateEvent(testEvent);
+                });
+                Assert.That(testEvent.Id != 0);
+                string msg = testEvent.Id != 0
+                    ? $"Event created successful, assigned id = {testEvent.Id}"
+                    : "Failed creating Event";
+                Console.WriteLine(msg);
+            }
         }
 
         [Test]
@@ -44,7 +55,7 @@ namespace EventBot.Entities.Service.Test
             {
                 _service.CreateOrUpdateEvent(firstEvent);
             });
-            Assert.That(firstEvent.Id==testId);
+            Assert.That(firstEvent.Id == testId);
         }
 
         [Test]
@@ -56,10 +67,12 @@ namespace EventBot.Entities.Service.Test
             var foundTitleCount = _service.SearchEvents("banan").Count;
             var foundDescriptionCount = _service.SearchEvents("MiniGolf").Count;
             var foundLocationCount = _service.SearchEvents("Umeå").Count;
-
+            var userid = string.Empty;
+            using (var db = new EventBotDb()) userid = db.Users.First().Id;
             _service.CreateOrUpdateEvent(
                 new EventModel
                 {
+                    UserId = userid,
                     Title = "Banan ätar tävling ",
                     Description = "Vi träffas och spelar minigolf",
                     MeetingPlace = "Umeå",
@@ -70,11 +83,11 @@ namespace EventBot.Entities.Service.Test
             var foundDescriptionCount2 = _service.SearchEvents("MiniGolf").Count;
             var foundLocationCount2 = _service.SearchEvents("Umeå").Count;
 
-            Assert.That(foundTitleCount2==foundTitleCount+1);
+            Assert.That(foundTitleCount2 == foundTitleCount + 1);
             Assert.That(foundDescriptionCount2 == foundDescriptionCount + 1);
             Assert.That(foundLocationCount2 == foundLocationCount + 1);
 
-            
+
             Console.WriteLine($"Title : {foundTitleCount} / {foundTitleCount2} .");
             Console.WriteLine($"Description : {foundTitleCount} / {foundTitleCount2} .");
             Console.WriteLine($"Location : {foundTitleCount} / {foundTitleCount2} .");
@@ -84,9 +97,12 @@ namespace EventBot.Entities.Service.Test
         public void GetAllEventsFilterByLocation()
         {
             var eventsCountBefore = _service.SearchEvents(string.Empty, "Umeå").Count;
+            var userid = string.Empty;
+            using (var db = new EventBotDb()) userid = db.Users.First().Id;
             _service.CreateOrUpdateEvent(
                 new EventModel
                 {
+                    UserId = userid,
                     Title = "Location Test Event",
                     Description = "Location Test Description",
                     MeetingPlace = "Umeå",
@@ -94,7 +110,7 @@ namespace EventBot.Entities.Service.Test
                     EndDate = DateTime.Now
                 });
             var eventCountAfter = _service.SearchEvents(String.Empty, "Umeå").Count;
-            Assert.That(eventCountAfter==eventsCountBefore+1);
+            Assert.That(eventCountAfter == eventsCountBefore + 1);
         }
 
         [Test]
@@ -104,16 +120,18 @@ namespace EventBot.Entities.Service.Test
             {
 
                 var testEventType = _service.GetEventTypes().FirstOrDefault(w => w.Name == "Pokemon");
-                if(testEventType==null)testEventType=new EventTypeModel
+                if (testEventType == null) testEventType = new EventTypeModel
                 {
                     Name = "Pokemon"
                 };
                 _service.CreateOrUpdateEventType(testEventType);
-                Assert.That(_service.GetEventTypes().Count(w=>w.Name=="Pokemon")==1);
+                Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon") == 1);
                 testEventType.Name = "Pokemon2";
                 _service.CreateOrUpdateEventType(testEventType);
                 Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon") == 0);
                 Assert.That(_service.GetEventTypes().Count(w => w.Name == "Pokemon2") == 1);
+                testEventType.Name = "Pokemon";
+                _service.CreateOrUpdateEventType(testEventType);
             });
         }
     }
