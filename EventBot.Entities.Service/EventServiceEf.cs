@@ -12,34 +12,80 @@ namespace EventBot.Entities.Service
     {
         public void CreateOrUpdateEvent(EventModel model)
         {
-            model.CreatedDate = model.Id == 0 ? DateTime.Now : model.CreatedDate;
-            model.ModifiedDate = DateTime.Now;
             using (var db = new EventBotDb())
             {
-                var newEvent = new Event
-                {
-                    Id = model.Id,
-                    Title = model.Title,
-                    Description = model.Description,
-                    CreatedDate = model.CreatedDate,
-                    ModifiedDate = model.ModifiedDate,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
-                    IsCanceled = model.IsCanceled,
-                    Image = new EventBotImage
-                    {
-                        Id = model.ImageId
-                    },
-                    MeetingPlace = model.MeetingPlace,
-                    VisitCount = model.VisitCount
-                   
-                };
-                db.Events.AddOrUpdate(newEvent);
+                var even = db.Events.FirstOrDefault(e => e.Id == model.Id) ?? new Event();
+                even.Id = model.Id;
+                even.Title = model.Title;
+                even.Description = model.Description;
+                even.Organiser = db.Users.Single(u => u.Id == model.UserId);
+                even.CreatedDate = even.Id == 0 ? DateTime.Now : even.CreatedDate;
+                even.ModifiedDate = DateTime.Now;
+                even.StartDate = model.StartDate;
+                even.EndDate = model.EndDate;
+                even.IsCanceled = model.IsCanceled;
+                //Image = new EventBotImage
+                //{
+                //    Id = model.ImageId
+                //},
+                even.MeetingPlace = model.MeetingPlace;
+                even.VisitCount = model.VisitCount;
+                db.Events.AddOrUpdate(even);
                 db.SaveChanges();
-                model.Id = newEvent.Id;
+                model.Id = even.Id;
             }
         }
 
+        public EventModel GetEvent(int id)
+        {
+            using (var db = new EventBotDb())
+            {
+                var ev = db.Events.SingleOrDefault(e => e.Id == id);
+                if (ev == null)
+                    return null;
+                return new EventModel()
+                {
+                    Id = ev.Id,
+                    CreatedDate = ev.CreatedDate,
+                    EndDate = ev.EndDate,
+                    Description = ev.Description,
+                    //ImageId = ev.Image.Id,
+                    IsCanceled = ev.IsCanceled,
+                    MeetingPlace = ev.MeetingPlace,
+                    ModifiedDate = ev.ModifiedDate,
+                    StartDate = ev.StartDate,
+                    Title = ev.Title,
+                };
+            }
+        }
+
+        public ICollection<EventModel> GetUserCreatedEvents(string userId)
+        {
+            using (var db = new EventBotDb())
+            {
+               return db.Events.Where(e => e.Organiser.Id == userId)
+                    .Select(@event => new EventModel
+                    {
+                        Id = @event.Id,
+                        Title = @event.Title,
+                        Description = @event.Description,
+                        CreatedDate = @event.CreatedDate,
+                        ModifiedDate = @event.ModifiedDate,
+                        MeetingPlace = @event.MeetingPlace,
+                        StartDate = @event.StartDate,
+                        EndDate = @event.EndDate,
+                        IsCanceled = @event.IsCanceled,
+                        ImageId = @event.Image.Id,
+                        VisitCount = @event.VisitCount,
+                        EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
+                        {
+                            Id = eventType.Id,
+                            Name = eventType.Name
+                        }).ToList(),
+                        UserId = @event.Organiser.Id
+                    }).ToList();
+            }
+        } 
         public void JoinEvent(string userId, int eventId)
         {
             using (var db = new EventBotDb())
@@ -55,7 +101,7 @@ namespace EventBot.Entities.Service
                 tempEvent.Users.Add(new EventUser
                 {
                     User = tempUser,
-                    Event = tempEvent,
+                    Event = tempEvent
                 });
             }
         }
