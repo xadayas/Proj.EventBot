@@ -6,6 +6,8 @@ namespace EventBot.Entities.Service.Interfaces
     public interface IEventService
     {
         void CreateOrUpdateEvent(EventModel model);
+        EventModel GetEvent(int id);
+        ICollection<EventModel> GetUserCreatedEvents(string userId); 
         void JoinEvent(string userId, int eventId);
         ICollection<EventModel> SearchEvents(string query,string location = null);
         void CreateOrUpdateEventType(EventTypeModel model);
