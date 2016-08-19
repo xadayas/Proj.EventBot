@@ -75,7 +75,7 @@ namespace EventBot.Entities.Service
                         StartDate = @event.StartDate,
                         EndDate = @event.EndDate,
                         IsCanceled = @event.IsCanceled,
-                        ImageId = @event.Image.Id,
+                        ImageId = @event.Image == null ? 0 : @event.Image.Id,
                         VisitCount = @event.VisitCount,
                         EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
                         {
@@ -133,7 +133,7 @@ namespace EventBot.Entities.Service
                         o.StartDate,
                         o.EndDate,
                         o.IsCanceled,
-                        ImageId = o.Image.Id,
+                        ImageId = o.Image == null ? 0 : o.Image.Id,
                         o.VisitCount,
                         o.EventTypes,
                         UserId = o.Organiser.Id

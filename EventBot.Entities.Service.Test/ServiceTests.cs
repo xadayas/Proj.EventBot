@@ -67,10 +67,12 @@ namespace EventBot.Entities.Service.Test
             var foundTitleCount = _service.SearchEvents("banan").Count;
             var foundDescriptionCount = _service.SearchEvents("MiniGolf").Count;
             var foundLocationCount = _service.SearchEvents("Umeå").Count;
-
+            var userid = string.Empty;
+            using (var db = new EventBotDb()) userid = db.Users.First().Id;
             _service.CreateOrUpdateEvent(
                 new EventModel
                 {
+                    UserId = userid,
                     Title = "Banan ätar tävling ",
                     Description = "Vi träffas och spelar minigolf",
                     MeetingPlace = "Umeå",
@@ -95,9 +97,12 @@ namespace EventBot.Entities.Service.Test
         public void GetAllEventsFilterByLocation()
         {
             var eventsCountBefore = _service.SearchEvents(string.Empty, "Umeå").Count;
+            var userid = string.Empty;
+            using (var db = new EventBotDb()) userid = db.Users.First().Id;
             _service.CreateOrUpdateEvent(
                 new EventModel
                 {
+                    UserId = userid,
                     Title = "Location Test Event",
                     Description = "Location Test Description",
                     MeetingPlace = "Umeå",
