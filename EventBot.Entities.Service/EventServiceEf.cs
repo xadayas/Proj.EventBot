@@ -24,10 +24,7 @@ namespace EventBot.Entities.Service
                 even.StartDate = model.StartDate;
                 even.EndDate = model.EndDate;
                 even.IsCanceled = model.IsCanceled;
-                //Image = new EventBotImage
-                //{
-                //    Id = model.ImageId
-                //},
+                even.Image = model.ImageId == 0 ? null : db.Images.FirstOrDefault(w => w.Id == model.ImageId);
                 even.MeetingPlace = model.MeetingPlace;
                 even.VisitCount = model.VisitCount;
                 db.Events.AddOrUpdate(even);
@@ -246,7 +243,7 @@ namespace EventBot.Entities.Service
             }
         }
 
-        public void CreateImage(byte[] imageBytes)
+        public int CreateImage(byte[] imageBytes)
         {
             var image = new EventBotImage
             {
@@ -257,6 +254,7 @@ namespace EventBot.Entities.Service
                 db.Images.Add(image);
                 db.SaveChanges();
             }
+            return image.Id;
         }
     }
 }

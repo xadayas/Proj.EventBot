@@ -16,6 +16,6 @@ namespace EventBot.Entities.Service.Interfaces
         void UnSubscribeFromEventType(string userId, int eventTypeId);
         ICollection<string> GetSubscribedEventTypeUserIds(ICollection<EventTypeModel> eventTypes);
         byte[] GetImage(int imageId);
-        void CreateImage(byte[] imageBytes);
+        int CreateImage(byte[] imageBytes);
     }
 }

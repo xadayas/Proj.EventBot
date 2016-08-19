@@ -36,5 +36,17 @@ namespace EventBot.Web.Controllers
             }
             return View();
         }
+        [HttpPost]
+        public ActionResult UploadGetId(HttpPostedFileBase file)
+        {
+            int id = 0;
+            if (file != null && file.ContentLength > 0)
+            {
+                var ms = new MemoryStream();
+                file.InputStream.CopyTo(ms);
+                id=_service.CreateImage(ms.ToArray());
+            }
+            return Content(id.ToString());
+        }
     }
 }

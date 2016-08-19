@@ -42,7 +42,8 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            return View();
+
+            return View(new EventModel());
         }
 
         // POST: Event/Create
