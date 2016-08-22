@@ -1,16 +1,35 @@
 ﻿@model EventBot.Web.Models.IndexViewModel
+@{
+    ViewBag.Title = "Hantera ditt konto";
+}
 
-
-<h2></h2>
+<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Ändra kontoinställningar</h4>
+    <h4>Ändra dina kontoinställningar</h4>
     <hr />
-    <input value="@Model.Name" type="text" />
     <dl class="dl-horizontal">
-
-                @Html.ActionLink("Byt lösenord", "ChangePassword")
-
+        <dt>Namn:</dt>
+        <dd>
+            [
+            @Html.ActionLink("Byt namn", "ChangeName")
+            ]
+        </dd>
+        <dt>Lösenord:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Byt Lösenord", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+        
+        </dd>
     </dl>
 </div>

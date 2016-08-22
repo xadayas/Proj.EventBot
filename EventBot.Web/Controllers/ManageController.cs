@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EventBot.Web.Models;
 using EventBot.Entities;
+using EventBot.Entities.Service;
 
 namespace EventBot.Web.Controllers
 {
@@ -16,15 +17,19 @@ namespace EventBot.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly EventServiceEf _service;
+
 
         public ManageController()
         {
+            _service = new EventServiceEf();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _service = new EventServiceEf();
         }
 
         public ApplicationSignInManager SignInManager
@@ -220,6 +225,29 @@ namespace EventBot.Web.Controllers
         public ActionResult ChangePassword()
         {
             return View();
+        }
+
+        public ActionResult ChangeName()
+        {
+            var name = _service.GetName(User.Identity.GetUserId());
+
+            var model = new ChangeNameViewModel { Name = name };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeName(ChangeNameViewModel model)
+        {
+            var user = User.Identity.GetUserId();
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            _service.ChangeName(user, model.Name);
+
+            return Redirect("Index");
+
         }
 
         //
