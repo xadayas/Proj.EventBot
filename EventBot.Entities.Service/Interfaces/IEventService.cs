@@ -22,5 +22,7 @@ namespace EventBot.Entities.Service.Interfaces
         IEnumerable<Notification> GetNewNotificationsFor(string userId);
         void MarkNotificationAsRead(string userId);
         bool CheckParticipant(string userId, int eventId);
+        void ChangeName(string userId, string name);
+        string GetName(string userId);
     }
 }

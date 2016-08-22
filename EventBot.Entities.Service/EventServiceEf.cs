@@ -305,6 +305,33 @@ namespace EventBot.Entities.Service
                 return db.EventUsers.Any(s => s.User.Id == userId && s.Event.Id == eventId);
             }
         }
+
+        public void ChangeName(string userId, string name)
+        {
+            using (var db = new EventBotDb())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null || name == null) 
+                    throw new InvalidOperationException("User not found, or name string empty.");
+
+                user.Name = name;
+                db.Users.AddOrUpdate(user);
+                db.SaveChanges();
+            }
+        }
+
+        public string GetName(string userId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+
+                if (user == null)
+                    throw new InvalidOperationException("No user found.");
+
+                return user.Name;
+            }
+        }
     }
 }
 
