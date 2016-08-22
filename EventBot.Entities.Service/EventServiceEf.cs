@@ -102,6 +102,20 @@ namespace EventBot.Entities.Service
                     User = tempUser,
                     Event = tempEvent
                 });
+                db.SaveChanges();
+            }
+        }
+
+        public void LeaveEvent(string userId, int eventId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var attandee = db.EventUsers.SingleOrDefault(s => s.Event.Id == eventId && s.User.Id == userId);
+
+                if (attandee == null)
+                    throw new InvalidOperationException("No particpant is found.");
+                db.EventUsers.Remove(attandee);
+                db.SaveChanges();
             }
         }
 
@@ -281,6 +295,14 @@ namespace EventBot.Entities.Service
 
                 notifications.ForEach(notification => notification.NotificationsRead());
                 db.SaveChanges();
+            }
+        }
+
+        public bool CheckParticipant(string userId, int eventId)
+        {
+            using (var db = new EventBotDb())
+            {
+                return db.EventUsers.Any(s => s.User.Id == userId && s.Event.Id == eventId);
             }
         }
     }

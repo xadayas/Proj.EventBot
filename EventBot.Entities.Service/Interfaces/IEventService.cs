@@ -10,6 +10,7 @@ namespace EventBot.Entities.Service.Interfaces
         EventModel GetEvent(int id);
         ICollection<EventModel> GetUserCreatedEvents(string userId); 
         void JoinEvent(string userId, int eventId);
+        void LeaveEvent(string userId, int eventId);
         ICollection<EventModel> SearchEvents(string query,string location = null);
         void CreateOrUpdateEventType(EventTypeModel model);
         ICollection<EventTypeModel> GetEventTypes();
@@ -20,5 +21,6 @@ namespace EventBot.Entities.Service.Interfaces
         int CreateImage(byte[] imageBytes);
         IEnumerable<Notification> GetNewNotificationsFor(string userId);
         void MarkNotificationAsRead(string userId);
+        bool CheckParticipant(string userId, int eventId);
     }
 }
