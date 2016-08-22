@@ -34,6 +34,7 @@ namespace EventBot.Entities.Service
             }
         }
 
+
         public EventModel GetEvent(int id)
         {
             using (var db = new EventBotDb())
