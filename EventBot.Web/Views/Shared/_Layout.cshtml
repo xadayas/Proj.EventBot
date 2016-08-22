@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -41,7 +42,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 
-    @*<script type="text/x-template" id="notifications-template">
+    <script type="text/x-template" id="notifications-template">
         <ul class="notifications">
             <%
             _.each(notifications, function(notification){
@@ -68,6 +69,7 @@
                 }
             })
             %>
+            <li><a href="#"><span class="highlight"></span></a></li>
         </ul>
     </script>
 
@@ -79,7 +81,7 @@
 
                 $(".js-notifications-count")
                     .text(notifications.length)
-                    //.removeClass("hide")
+                    .removeClass("hide")
                     .addClass("animated bounceInDown");
 
                 $(".notifications").popover({
@@ -102,6 +104,6 @@
                 });
             });
         });
-    </script>*@
+    </script>
 </body>
 </html>

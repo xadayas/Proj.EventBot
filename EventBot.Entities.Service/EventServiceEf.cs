@@ -285,3 +285,10 @@ namespace EventBot.Entities.Service
         }
     }
 }
+
+                return db.EventTypes.Select(s =>
+                    new EventTypeModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name
+                    }).ToArray();
