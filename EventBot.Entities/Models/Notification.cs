@@ -11,14 +11,12 @@ namespace EventBot.Entities.Models
     {
         #region Properties
 
-        public int Id { get; set; }
-        public DateTime DateTime { get; set; }
-        public NotificationType Type { get; set; }
-        public DateTime OriginalStartDate { get; set; }
-        public DateTime OriginalEndDate { get; set; }
-        public string OriginalContent { get; set; }
+        public int Id { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public NotificationType Type { get; private set; }
+        public DateTime? OriginalStartDate { get; private set; }
         [Required]
-        public Event Event { get; set; }
+        public Event Event { get; private set; }
 
         #endregion
 
@@ -46,12 +44,10 @@ namespace EventBot.Entities.Models
             return new Notification(NotificationType.EventCreated, ev);
         }
 
-        public static Notification UpdatedCreated(Event newEvent, DateTime originalStartDate, DateTime originalEndDate, string originalContent)
+        public static Notification EventUpdated(Event newEvent, DateTime originalStartDate, DateTime originalEndDate, string originalContent)
         {
             var notification = new Notification(NotificationType.EventUpdated, newEvent);
             notification.OriginalStartDate = originalStartDate;
-            notification.OriginalEndDate = originalEndDate;
-            notification.OriginalContent = originalContent;
 
             return notification;
         }

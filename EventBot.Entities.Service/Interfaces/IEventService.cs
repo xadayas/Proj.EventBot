@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EventBot.Entities.Service.Models;
+using EventBot.Entities.Models;
 
 namespace EventBot.Entities.Service.Interfaces
 {
@@ -17,5 +18,7 @@ namespace EventBot.Entities.Service.Interfaces
         ICollection<string> GetSubscribedEventTypeUserIds(ICollection<EventTypeModel> eventTypes);
         byte[] GetImage(int imageId);
         int CreateImage(byte[] imageBytes);
+        IEnumerable<Notification> GetNewNotificationsFor(string userId);
+        void MarkNotificationAsRead(string userId);
     }
 }

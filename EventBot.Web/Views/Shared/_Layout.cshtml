@@ -41,5 +41,68 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
+
+    @*<script type="text/x-template" id="notifications-template">
+        <ul class="notifications">
+            <%
+            _.each(notifications, function(notification){
+            if (notification.type == 1) { %>
+            <li><span class="highlight"><%= notification.event.organiser.name %></span> har avbokat aktiviten som var planerad <%= moment(notification.event.startDate).format("D MMM HH:mm") %>.</li>
+            <% }
+
+            else if (notification.type == 2) {
+                var changes = [],
+                originalValues = [],
+                newValues = [];
+
+                if (notification.originalStartDate != notification.event.startDate) {
+                    changes.push('datum/tid');
+                    originalValues.push(notification.originalStartDate);
+                    newValues.push(notification.event.startDate);
+                    %>
+                    <li><span class="highlight"><%= notification.event.organiser.name %></span> har ändrat <%= changes.join(' and ') %> från <%= originalValues.join('/') %> till <%= newValues.join('/') %></li>
+                    <%}
+
+                    else {%>
+                    <li><span class="highlight"><%= notification.event.organiser.name %></span> har uppdaterat detaljerna i eventet som är planerat <%= notification.event.startDate %>.</li>
+                    <%}
+                }
+            })
+            %>
+        </ul>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/notifications", function (notifications) {
+                if (notifications.length == 0)
+                    return;
+
+                $(".js-notifications-count")
+                    .text(notifications.length)
+                    //.removeClass("hide")
+                    .addClass("animated bounceInDown");
+
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifikationer",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        return compiled({ notifications: notifications });
+                    },
+                    placement: "bottom",
+                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+                }).on("shown.bs.popover", function() {
+                    $.post("/api/notifications/markAllAsRead")
+                        .done(function () {
+                            $(".js-notifications-count")
+                                .text("")
+                                .addClass("hide");
+                        });
+                });
+            });
+        });
+    </script>*@
 </body>
 </html>

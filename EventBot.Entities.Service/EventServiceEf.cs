@@ -5,6 +5,7 @@ using System.Linq;
 using EventBot.Entities.Models;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
+using System.Data.Entity;
 
 namespace EventBot.Entities.Service
 {
@@ -255,6 +256,31 @@ namespace EventBot.Entities.Service
                 db.SaveChanges();
             }
             return image.Id;
+        }
+
+        public IEnumerable<Notification> GetNewNotificationsFor(string userId)
+        {
+            using (var db = new EventBotDb())
+            {
+                return db.UserNotifications
+                    .Where(u => u.UserId == userId && !u.IsRead)
+                    .Select(n => n.Notification)
+                    .Include(o => o.Event.Organiser)
+                    .ToList();                  
+            }
+        }
+
+        public void MarkNotificationAsRead(string userId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var notifications = db.UserNotifications
+                    .Where(user => user.UserId == userId && !user.IsRead)
+                    .ToList();
+
+                notifications.ForEach(notification => notification.NotificationsRead());
+                db.SaveChanges();
+            }
         }
     }
 }

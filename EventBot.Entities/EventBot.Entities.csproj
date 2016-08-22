@@ -60,8 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventBotDb.cs" />
-    <Compile Include="Migrations\201608161254578_UsingIdentity.cs" />
-    <Compile Include="Migrations\201608161254578_UsingIdentity.Designer.cs">
+    <Compile Include="Migrations\201608220534019_AddDbSetForNotifications.cs" />
+    <Compile Include="Migrations\201608220534019_AddDbSetForNotifications.Designer.cs">
+      <DependentUpon>201608220534019_AddDbSetForNotifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.cs" />
+    <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.Designer.cs">
       <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201608171654399_notifications.cs" />
@@ -88,7 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608161254578_UsingIdentity.resx">
+    <EmbeddedResource Include="Migrations\201608220534019_AddDbSetForNotifications.resx">
+      <DependentUpon>201608220534019_AddDbSetForNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Unfinished Migrations\201608161254578_UsingIdentity.resx">
       <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608171654399_notifications.resx">
@@ -98,6 +105,7 @@
       <DependentUpon>201608171929375_Spellfix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
