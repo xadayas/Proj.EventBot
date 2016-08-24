@@ -30,7 +30,7 @@ body {
 .navbar-brand {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
-        font-style:italic;
+        font-style:initial;
         font-size: 25px;
         color:white;
 }
@@ -55,8 +55,22 @@ body {
 }
 
 #grad {
-    background: linear-gradient(#ffffff, #4cff00); /* Standard syntax */
+    background: linear-gradient(#ffffff, #09002a); /* Standard syntax */
     border-bottom-left-radius: 12px;
-    border-top-right-radius: 24px;
+    border-top-right-radius: 0px;
+    color:white;
+}
 
+.grad {
+    background: linear-gradient(#ffffff, #000000); /* Standard syntax */
+    border-top-right-radius: 24px;
+    color:white;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #777777;
+}
+
+.events-menu > li > a {
+    background: linear-gradient(#ffffff, #000000); /* Standard syntax */
+    color:white;
 }

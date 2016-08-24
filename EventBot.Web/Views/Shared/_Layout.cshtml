@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @Html.ActionLink("eventius", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @id = "grad" })
+                @Html.ActionLink("eventius™", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @id = "grad" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -29,7 +29,16 @@
 
    
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
+                        <a class="dropdown-toggle events-menu" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/event">List All</a></li>
+                            <li><a href="/event/userId">List Own</a></li>
+                            <li><a href="/event/edit">Edit</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle events-menu" data-toggle="dropdown" href="#">Om Eventius<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/event">List All</a></li>
                             <li><a href="/event/userId">List Own</a></li>
