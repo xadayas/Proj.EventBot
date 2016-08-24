@@ -1,4 +1,4 @@
-﻿      $(document).ready(function () {
+﻿$(document).ready(function () {
             $.getJSON("/api/notifications", function (notifications) {
                 if (notifications.length == 0)
                     return;
@@ -27,5 +27,5 @@
             });
             });
             });
-            });
+});
   
