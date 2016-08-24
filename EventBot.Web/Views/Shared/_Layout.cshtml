@@ -1,16 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title></title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,19 +19,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Event Bot", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                @Html.ActionLink("eventius", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @id = "grad" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+                    
 
    
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">List All</a></li>
-                            <li><a href="#">List Own</a></li>
-                            <li><a href="#">Edit</a></li>
+                            <li><a href="/event">List All</a></li>
+                            <li><a href="/event/userId">List Own</a></li>
+                            <li><a href="/event/edit">Edit</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -46,6 +49,7 @@
 
     </div>
 
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
@@ -56,6 +60,8 @@
         <script src="~/Scripts/all-underscore.js" type="text/x-template" id="notifications-template"></script>
 
     <script src="~/Scripts/all.js"></script>
+
+
 
 </body>
 </html>
