@@ -68,6 +68,11 @@
     <Compile Include="Migrations\201608231908007_AddedOrganisedEventsToUserEntity.Designer.cs">
       <DependentUpon>201608231908007_AddedOrganisedEventsToUserEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608241419505_location.cs" />
+    <Compile Include="Migrations\201608241419505_location.Designer.cs">
+      <DependentUpon>201608241419505_location.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.cs" />
     <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.Designer.cs">
       <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
@@ -101,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608231908007_AddedOrganisedEventsToUserEntity.resx">
       <DependentUpon>201608231908007_AddedOrganisedEventsToUserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608241419505_location.resx">
+      <DependentUpon>201608241419505_location.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Unfinished Migrations\201608161254578_UsingIdentity.resx">
       <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>

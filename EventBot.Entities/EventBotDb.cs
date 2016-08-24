@@ -56,5 +56,6 @@ namespace EventBot.Entities
         public virtual DbSet<EventUser> EventUsers { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<UserNotifications> UserNotifications { get; set; }
+        public virtual DbSet<Location> Locations { get; set; } 
     }
 }

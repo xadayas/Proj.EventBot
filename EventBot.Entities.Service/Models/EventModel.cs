@@ -22,11 +22,12 @@ namespace EventBot.Entities.Service.Models
         public DateTime ModifiedDate { get; set; }
         public long VisitCount { get; set; }
         public string MeetingPlace { get; set; }
+        public LocationModel Location { get; set; }
 
         public int ImageId { get; set; }
         // public EventBotImage Image { get; set; }
         public bool IsCanceled { get; set; }
-       
+        
         public virtual ICollection<EventTypeModel> EventTypes { get; set; }
         //public virtual ICollection<EventUser> Users { get; set; }
     }
