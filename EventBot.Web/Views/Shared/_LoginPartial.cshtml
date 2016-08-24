@@ -5,24 +5,31 @@
     {
     @Html.AntiForgeryToken()
 
+
         <ul class="nav navbar-nav navbar-right">
             <li class="notifications">
                 <a href="#">
                     <i class="glyphicon glyphicon-globe"></i>
-                    <span class="badge js-notification-count animated bounce">2</span>
+                    <span class="badge js-notification-count animated bounce">0</span>
                 </a>
             </li>
+
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <a href="/Account/Register"><span class="glyphicon glyphicon-user"></span> @User.Identity.GetUserName()</a>
+
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-in"></span> Log off</a></li>
+
         </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><a href="/Account/Register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
+
+    
 }
