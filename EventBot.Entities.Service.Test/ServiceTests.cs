@@ -134,6 +134,14 @@ namespace EventBot.Entities.Service.Test
                 _service.CreateOrUpdateEventType(testEventType);
             });
         }
+        [Test]
+        public void ImageTest()
+        {
+            var img = _service.GetImage(6);
+            Console.WriteLine("Image2:");
+            var hex = String.Join(String.Empty, Array.ConvertAll(img, x => x.ToString("X2")));
+            Console.WriteLine(hex);
+        }
     }
 
 }
