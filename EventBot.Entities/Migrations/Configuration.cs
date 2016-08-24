@@ -19,16 +19,16 @@ namespace EventBot.Entities.Migrations
 
         protected override void Seed(EventBot.Entities.EventBotDb context)
         {
-            
+
             var rnd = new Random();
             // 5 test users
-            string[] testIds = {"random1", "random2", "random3", "random4", "random5"};
-            string[] testNames = {"Johan Jonsson", "Eva Andersson", "Erik Mjunstedt", "Agneta Hård", "Ivar Von Hu"};
-            string[] testUserNames = {"johan@eventbot.se", "eva@eventbot.se", "erik@eventbot.se", "agneta@eventbot.se", "ivar@eventbot.se"};
+            string[] testIds = { "random1", "random2", "random3", "random4", "random5" };
+            string[] testNames = { "Johan Jonsson", "Eva Andersson", "Erik Mjunstedt", "Agneta Hård", "Ivar Von Hu" };
+            string[] testUserNames = { "johan@eventbot.se", "eva@eventbot.se", "erik@eventbot.se", "agneta@eventbot.se", "ivar@eventbot.se" };
             const string testPassword = "Passw0rd!";
 
             //EventTypes
-            string[] testEventTypes = {"SvampPlockning", "Pokemon", "Bergsklättring", "Segling", "Cykling"};
+            string[] testEventTypes = { "SvampPlockning", "Pokemon", "Bergsklättring", "Segling", "Cykling" };
 
             // test events
             string[] testEventTitles =
@@ -55,6 +55,53 @@ namespace EventBot.Entities.Migrations
                 "Rundvik",
                 "Stockolm"
             };
+
+            // Locations
+            context.Locations.AddOrUpdate(x => x.Id,
+                new Location
+                {
+                    Id = 1,
+                    Latitude = 63.8269069,
+                    Longitude = 20.1717508,
+                    Altitude = 12,
+                    Name = "Umeå"
+                });
+            context.Locations.AddOrUpdate(x => x.Id,
+                new Location
+                {
+                    Id = 2,
+                    Latitude = 63.2840601,
+                    Longitude = 18.6169476,
+                    Altitude = 12,
+                    Name = "Örnsköldsvik"
+                });
+            context.Locations.AddOrUpdate(x => x.Id,
+                 new Location
+                 {
+                     Id = 3,
+                     Latitude = 62.9275626,
+                     Longitude = 17.7471819,
+                     Altitude = 13,
+                     Name = "Kramfors"
+                 });
+            context.Locations.AddOrUpdate(x => x.Id,
+                 new Location
+                 {
+                     Id = 4,
+                     Latitude = 63.5411747,
+                     Longitude = 19.431265,
+                     Altitude = 13,
+                     Name = "Rundvik"
+                 });
+            context.Locations.AddOrUpdate(x => x.Id,
+                 new Location
+                 {
+                     Id = 5,
+                     Latitude = 59.3260664,
+                     Longitude = 17.8471206,
+                     Altitude = 11,
+                     Name = "Stockholm"
+                 });
 
             //Image image
             context.Images.AddOrUpdate(x => x.Id, new EventBotImage
@@ -90,10 +137,10 @@ namespace EventBot.Entities.Migrations
 
             for (var i = 0; i < 5; i++)
             {
-                context.EventTypes.AddOrUpdate(x=>x.Id,
+                context.EventTypes.AddOrUpdate(x => x.Id,
                     new EventType
                     {
-                        Id = i+1,
+                        Id = i + 1,
                         Name = testEventTypes[i]
                     });
             }
@@ -129,18 +176,19 @@ namespace EventBot.Entities.Migrations
                         Title = testEventTitles[i],
                         Description = testEventDescriptions[i],
                         MeetingPlace = testPlaces[i],
+                        Location = context.Locations.Find(i + 1),
                         CreatedDate = DateTime.Now,
                         StartDate = DateTime.Now.AddHours(1),
                         EndDate = DateTime.Now.AddHours(2),
                         ModifiedDate = DateTime.Now,
-                        VisitCount = rnd.Next(0,1000),
-                        Image = context.Images.Find(i+1)
+                        VisitCount = rnd.Next(0, 1000),
+                        Image = context.Images.Find(i + 1)
                     });
             }
 
             for (var i = 0; i < 5; i++)
             {
-                context.EventUsers.AddOrUpdate(x=>x.Id,
+                context.EventUsers.AddOrUpdate(x => x.Id,
                     new EventUser[]
                     {
                         new EventUser {Id=i*5+1,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[0])},
@@ -151,9 +199,9 @@ namespace EventBot.Entities.Migrations
                     });
             }
 
-           
-            
-            
+
+
+
             context.SaveChanges();
         }
         public static byte[] StringToByteArray(string hex)

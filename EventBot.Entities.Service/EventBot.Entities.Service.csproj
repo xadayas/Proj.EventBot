@@ -62,6 +62,7 @@
     <Compile Include="Interfaces\IEventService.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventTypeModel.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

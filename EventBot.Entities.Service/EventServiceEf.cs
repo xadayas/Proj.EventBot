@@ -28,6 +28,14 @@ namespace EventBot.Entities.Service
                 even.Image = model.ImageId == 0 ? null : db.Images.FirstOrDefault(w => w.Id == model.ImageId);
                 even.MeetingPlace = model.MeetingPlace;
                 even.VisitCount = model.VisitCount;
+                even.Location=new Location
+                {
+                    Id = model.Location.Id,
+                    Latitude = model.Location.Latitude,
+                    Longitude = model.Location.Longitude,
+                    Altitude = model.Location.Altitude,
+                    Name = model.Location.Name
+                };
                 db.Events.AddOrUpdate(even);
                 db.SaveChanges();
                 model.Id = even.Id;
@@ -54,6 +62,14 @@ namespace EventBot.Entities.Service
                     ModifiedDate = e.ModifiedDate,
                     StartDate = e.StartDate,
                     Title = e.Title,
+                    Location = new LocationModel
+                    {
+                        Id = e.Location.Id,
+                        Latitude = e.Location.Latitude,
+                        Longitude = e.Location.Longitude,
+                        Altitude = e.Location.Altitude,
+                        Name = e.Location.Name
+                    }
                 }).FirstOrDefault();
             }
         }
@@ -71,6 +87,14 @@ namespace EventBot.Entities.Service
                         CreatedDate = @event.CreatedDate,
                         ModifiedDate = @event.ModifiedDate,
                         MeetingPlace = @event.MeetingPlace,
+                        Location = new LocationModel
+                        {
+                          Id  = @event.Location.Id,
+                          Latitude = @event.Location.Latitude,
+                          Longitude = @event.Location.Longitude,
+                          Altitude = @event.Location.Altitude,
+                          Name = @event.Location.Name
+                        },
                         StartDate = @event.StartDate,
                         EndDate = @event.EndDate,
                         IsCanceled = @event.IsCanceled,
@@ -143,6 +167,7 @@ namespace EventBot.Entities.Service
                         o.CreatedDate,
                         o.ModifiedDate,
                         o.MeetingPlace,
+                        o.Location,
                         o.StartDate,
                         o.EndDate,
                         o.IsCanceled,
@@ -159,6 +184,14 @@ namespace EventBot.Entities.Service
                         CreatedDate = s.CreatedDate,
                         ModifiedDate = s.ModifiedDate,
                         MeetingPlace = s.MeetingPlace,
+                        Location = new LocationModel
+                        {
+                            Id = s.Location.Id,
+                            Latitude = s.Location.Latitude,
+                            Longitude = s.Location.Longitude,
+                            Altitude = s.Location.Altitude,
+                            Name = s.Location.Name
+                        },
                         StartDate = s.StartDate,
                         EndDate = s.EndDate,
                         IsCanceled = s.IsCanceled,
