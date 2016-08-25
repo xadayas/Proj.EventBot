@@ -1,4 +1,5 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
+@import '/Content/eventbot.css';
 
 body {
     padding-top: 50px;
@@ -8,8 +9,8 @@ body {
 
 .body-content {
     background: #f9fafb;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .dl-horizontal dt {
@@ -19,9 +20,9 @@ body {
 input,
 select,
 textarea {
-    max-width: 280px;
-}
+    /*max-width: 400px;*/
 
+}
 
 /* Bootstrap overrides */
 
