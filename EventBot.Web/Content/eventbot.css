@@ -1,11 +1,14 @@
 ﻿
 /* Css test for create event */
-
+body {
+    overflow-x: hidden;
+}
 form {
     margin: 0;
     padding: 0;
 }
 .form-horizontal {
+    max-width: 700px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -33,7 +36,7 @@ img#EventImage {
     padding: 70px 60px;
 }
 input.form-control {
-    margin: 0 20px;
+    padding: 0 20px;
     text-align: center;
     outline: none;
     border: none;
