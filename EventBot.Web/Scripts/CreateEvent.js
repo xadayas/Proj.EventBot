@@ -49,8 +49,7 @@ $('.datetimefield').AnyPicker({
     showComponentLabel: true,
     parent: "div.container-fluid",
     layout: "fixed",
-    vAlign: "center",
-    hAlign: "top"
+    vAlign:"top"
 });
 
 

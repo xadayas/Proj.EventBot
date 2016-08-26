@@ -53,6 +53,10 @@ input.form-control:focus {
     box-shadow: none;
     
 }
+input.form-control[readonly] {
+    background-color: transparent;
+    cursor: pointer;
+}
 input.btn {
     height: 91px;
     width: 100% !important;
