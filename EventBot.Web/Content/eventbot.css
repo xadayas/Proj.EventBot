@@ -76,3 +76,36 @@ input.btn:focus {
     }
 
 }
+
+/* Input file */
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+    margin: 0;
+    padding: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-weight: lighter;
+    height: 91px;
+    width: 100%;
+    padding-top: 40px;
+    margin: 0;
+    text-align: center;
+    display: block;
+    color: white;
+    background-color: #ff5c47;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
