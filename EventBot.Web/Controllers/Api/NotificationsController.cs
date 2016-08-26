@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using EventBot.Entities.Service.Models;
 using Microsoft.AspNet.Identity;
 
 namespace EventBot.Web.Controllers.Api
@@ -21,7 +22,7 @@ namespace EventBot.Web.Controllers.Api
             _eventService = new EventServiceEf();
         }
 
-        public IEnumerable<Notification> GetNewNotifications()
+        public IEnumerable<NotificationModel> GetNewNotifications()
         {
             var user = User.Identity.GetUserId();
             var notification = _eventService.GetNewNotificationsFor(user);
@@ -30,10 +31,18 @@ namespace EventBot.Web.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult MarkAsRead()
+        public IHttpActionResult MarkAllAsRead()
         {
             var user = User.Identity.GetUserId();
-            _eventService.MarkNotificationAsRead(user);
+            _eventService.MarkAllNotificationsAsRead(user);
+
+            return Ok();
+        }
+        [HttpPost]
+        public IHttpActionResult MarkSingleAsRead(int id)
+        {
+            var user = User.Identity.GetUserId();
+            _eventService.MarkNotificationAsRead(id,user);
 
             return Ok();
         }

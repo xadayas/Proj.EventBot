@@ -7,13 +7,13 @@ namespace EventBot.Entities.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class location : IMigrationMetadata
+    public sealed partial class NotInitial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(location));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NotInitial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608241419505_location"; }
+            get { return "201608261351003_NotInitial"; }
         }
         
         string IMigrationMetadata.Source

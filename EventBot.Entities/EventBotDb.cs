@@ -37,25 +37,14 @@ namespace EventBot.Entities
                 .ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserLogin>()
                 .ToTable("UserLogins");
-            modelBuilder.Entity<Notification>()
-                .HasRequired(g => g.Event);
-            modelBuilder.Entity<UserNotifications>()
-                .HasKey(user => new { user.UserId, user.NotificationId });
-            modelBuilder.Entity<UserNotifications>()
-                .HasRequired(u => u.User)
-                .WithMany(s => s.Notifications)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Event>().HasRequired(p => p.Organiser).WithMany(p => p.OrganisedEvents);
-
+            //modelBuilder.Entity<Event>().HasRequired(p => p.Organiser).WithMany(p => p.OrganisedEvents);
         }
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventBotImage> Images { get; set; }
-        public virtual DbSet<EventUser> EventUsers { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<UserNotifications> UserNotifications { get; set; }
         public virtual DbSet<Location> Locations { get; set; } 
     }
 }

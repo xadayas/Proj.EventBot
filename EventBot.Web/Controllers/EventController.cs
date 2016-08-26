@@ -83,6 +83,7 @@ namespace EventBot.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             model.UserId = User.Identity.GetUserId();
+            model.Location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault() ?? new LocationModel { Name = model.MeetingPlace };
             _service.CreateOrUpdateEvent(model);
             return RedirectToAction("UserEvents");
         }

@@ -2,7 +2,7 @@
             $.getJSON("/api/notifications", function (notifications) {
                 if (notifications.length == 0)
                     return;
-
+                console.log(notifications);
                 $(".js-notifications-count")
                     .text(notifications.length)
                     .removeClass("hide")
@@ -19,7 +19,7 @@
                 template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 
             }).on("shown.bs.popover", function() {
-                    $.post("/api/notifications/markAllAsRead")
+                $.post("/api/Notifications/MarkAllAsRead")
                         .done(function () {
                             $(".js-notifications-count")
                                 .text("")

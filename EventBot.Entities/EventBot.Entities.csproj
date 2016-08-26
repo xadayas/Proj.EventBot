@@ -60,40 +60,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventBotDb.cs" />
-    <Compile Include="Migrations\201608220534019_AddDbSetForNotifications.cs" />
-    <Compile Include="Migrations\201608220534019_AddDbSetForNotifications.Designer.cs">
-      <DependentUpon>201608220534019_AddDbSetForNotifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608231908007_AddedOrganisedEventsToUserEntity.cs" />
-    <Compile Include="Migrations\201608231908007_AddedOrganisedEventsToUserEntity.Designer.cs">
-      <DependentUpon>201608231908007_AddedOrganisedEventsToUserEntity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608241419505_location.cs" />
-    <Compile Include="Migrations\201608241419505_location.Designer.cs">
-      <DependentUpon>201608241419505_location.cs</DependentUpon>
+    <Compile Include="Migrations\201608261351003_NotInitial.cs" />
+    <Compile Include="Migrations\201608261351003_NotInitial.Designer.cs">
+      <DependentUpon>201608261351003_NotInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.cs" />
-    <Compile Include="Unfinished Migrations\201608161254578_UsingIdentity.Designer.cs">
-      <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608171654399_notifications.cs" />
-    <Compile Include="Migrations\201608171654399_notifications.Designer.cs">
-      <DependentUpon>201608171654399_notifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608171929375_Spellfix.cs" />
-    <Compile Include="Migrations\201608171929375_Spellfix.Designer.cs">
-      <DependentUpon>201608171929375_Spellfix.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventBotImage.cs" />
     <Compile Include="Models\EventType.cs" />
-    <Compile Include="Models\EventUser.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserNotifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,26 +79,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608220534019_AddDbSetForNotifications.resx">
-      <DependentUpon>201608220534019_AddDbSetForNotifications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608231908007_AddedOrganisedEventsToUserEntity.resx">
-      <DependentUpon>201608231908007_AddedOrganisedEventsToUserEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608241419505_location.resx">
-      <DependentUpon>201608241419505_location.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Unfinished Migrations\201608161254578_UsingIdentity.resx">
-      <DependentUpon>201608161254578_UsingIdentity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608171654399_notifications.resx">
-      <DependentUpon>201608171654399_notifications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608171929375_Spellfix.resx">
-      <DependentUpon>201608171929375_Spellfix.cs</DependentUpon>
+    <Folder Include="Unfinished Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608261351003_NotInitial.resx">
+      <DependentUpon>201608261351003_NotInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

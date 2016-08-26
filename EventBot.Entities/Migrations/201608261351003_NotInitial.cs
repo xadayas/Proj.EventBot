@@ -3,7 +3,7 @@ namespace EventBot.Entities.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UsingIdentity : DbMigration
+    public partial class NotInitial : DbMigration
     {
         public override void Up()
         {
@@ -19,15 +19,21 @@ namespace EventBot.Entities.Migrations
                         CreatedDate = c.DateTime(nullable: false),
                         ModifiedDate = c.DateTime(nullable: false),
                         VisitCount = c.Long(nullable: false),
-                        MeatingPlace = c.String(),
+                        MeetingPlace = c.String(),
                         IsCanceled = c.Boolean(nullable: false),
                         Image_Id = c.Int(),
+                        Location_Id = c.Int(),
+                        User_Id = c.String(maxLength: 128),
                         Organiser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.EventBotImages", t => t.Image_Id)
+                .ForeignKey("dbo.Locations", t => t.Location_Id)
+                .ForeignKey("dbo.Users", t => t.User_Id)
                 .ForeignKey("dbo.Users", t => t.Organiser_Id)
                 .Index(t => t.Image_Id)
+                .Index(t => t.Location_Id)
+                .Index(t => t.User_Id)
                 .Index(t => t.Organiser_Id);
             
             CreateTable(
@@ -55,6 +61,18 @@ namespace EventBot.Entities.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Locations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Latitude = c.Double(nullable: false),
+                        Longitude = c.Double(nullable: false),
+                        Altitude = c.Double(nullable: false),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Users",
                 c => new
                     {
@@ -74,13 +92,16 @@ namespace EventBot.Entities.Migrations
                         UserName = c.String(nullable: false, maxLength: 256),
                         User_Id = c.String(maxLength: 128),
                         Image_Id = c.Int(),
+                        Event_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.User_Id)
                 .ForeignKey("dbo.EventBotImages", t => t.Image_Id)
+                .ForeignKey("dbo.Events", t => t.Event_Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex")
                 .Index(t => t.User_Id)
-                .Index(t => t.Image_Id);
+                .Index(t => t.Image_Id)
+                .Index(t => t.Event_Id);
             
             CreateTable(
                 "dbo.UserClaims",
@@ -96,21 +117,6 @@ namespace EventBot.Entities.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.EventUsers",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Rating = c.Single(nullable: false),
-                        Event_Id = c.Int(),
-                        User_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Events", t => t.Event_Id)
-                .ForeignKey("dbo.Users", t => t.User_Id)
-                .Index(t => t.Event_Id)
-                .Index(t => t.User_Id);
-            
-            CreateTable(
                 "dbo.UserLogins",
                 c => new
                     {
@@ -121,6 +127,24 @@ namespace EventBot.Entities.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.Notifications",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DateTime = c.DateTime(nullable: false),
+                        Type = c.Int(nullable: false),
+                        OriginalStartDate = c.DateTime(),
+                        IsRead = c.Boolean(nullable: false),
+                        Event_Id = c.Int(),
+                        User_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Events", t => t.Event_Id)
+                .ForeignKey("dbo.Users", t => t.User_Id)
+                .Index(t => t.Event_Id)
+                .Index(t => t.User_Id);
             
             CreateTable(
                 "dbo.UserRoles",
@@ -150,37 +174,44 @@ namespace EventBot.Entities.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.UserRoles", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.Users", "Event_Id", "dbo.Events");
             DropForeignKey("dbo.Events", "Organiser_Id", "dbo.Users");
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Events", "User_Id", "dbo.Users");
+            DropForeignKey("dbo.Notifications", "User_Id", "dbo.Users");
+            DropForeignKey("dbo.Notifications", "Event_Id", "dbo.Events");
             DropForeignKey("dbo.UserLogins", "UserId", "dbo.Users");
             DropForeignKey("dbo.Users", "Image_Id", "dbo.EventBotImages");
             DropForeignKey("dbo.Users", "User_Id", "dbo.Users");
             DropForeignKey("dbo.EventTypes", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.EventUsers", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.EventUsers", "Event_Id", "dbo.Events");
             DropForeignKey("dbo.UserClaims", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Events", "Location_Id", "dbo.Locations");
             DropForeignKey("dbo.Events", "Image_Id", "dbo.EventBotImages");
             DropForeignKey("dbo.EventTypes", "Event_Id", "dbo.Events");
             DropIndex("dbo.Roles", "RoleNameIndex");
             DropIndex("dbo.UserRoles", new[] { "RoleId" });
             DropIndex("dbo.UserRoles", new[] { "UserId" });
+            DropIndex("dbo.Notifications", new[] { "User_Id" });
+            DropIndex("dbo.Notifications", new[] { "Event_Id" });
             DropIndex("dbo.UserLogins", new[] { "UserId" });
-            DropIndex("dbo.EventUsers", new[] { "User_Id" });
-            DropIndex("dbo.EventUsers", new[] { "Event_Id" });
             DropIndex("dbo.UserClaims", new[] { "UserId" });
+            DropIndex("dbo.Users", new[] { "Event_Id" });
             DropIndex("dbo.Users", new[] { "Image_Id" });
             DropIndex("dbo.Users", new[] { "User_Id" });
             DropIndex("dbo.Users", "UserNameIndex");
             DropIndex("dbo.EventTypes", new[] { "User_Id" });
             DropIndex("dbo.EventTypes", new[] { "Event_Id" });
             DropIndex("dbo.Events", new[] { "Organiser_Id" });
+            DropIndex("dbo.Events", new[] { "User_Id" });
+            DropIndex("dbo.Events", new[] { "Location_Id" });
             DropIndex("dbo.Events", new[] { "Image_Id" });
             DropTable("dbo.Roles");
             DropTable("dbo.UserRoles");
+            DropTable("dbo.Notifications");
             DropTable("dbo.UserLogins");
-            DropTable("dbo.EventUsers");
             DropTable("dbo.UserClaims");
             DropTable("dbo.Users");
+            DropTable("dbo.Locations");
             DropTable("dbo.EventBotImages");
             DropTable("dbo.EventTypes");
             DropTable("dbo.Events");
