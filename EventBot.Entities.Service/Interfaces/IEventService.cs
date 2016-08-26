@@ -10,19 +10,27 @@ namespace EventBot.Entities.Service.Interfaces
         EventModel GetEvent(int id);
         ICollection<EventModel> GetUserCreatedEvents(string userId);
         ICollection<EventModel> GetAllUpComingEvents();
+
         void JoinEvent(string userId, int eventId);
         void LeaveEvent(string userId, int eventId);
+
         ICollection<EventModel> SearchEvents(string query,string location = null);
         void CreateOrUpdateEventType(EventTypeModel model);
         ICollection<EventTypeModel> GetEventTypes();
+
         void SubscribeToEventType(string userId,int eventTypeId);
         void UnSubscribeFromEventType(string userId, int eventTypeId);
         ICollection<string> GetSubscribedEventTypeUserIds(ICollection<EventTypeModel> eventTypes);
+
         byte[] GetImage(int imageId);
         int CreateImage(byte[] imageBytes);
-        IEnumerable<Notification> GetNewNotificationsFor(string userId);
-        void MarkNotificationAsRead(string userId);
+
+        IEnumerable<NotificationModel> GetNewNotificationsFor(string userId);
+        void MarkAllNotificationsAsRead(string userId);
+        void MarkNotificationAsRead(int id,string userId);
+
         bool CheckParticipant(string userId, int eventId);
+
         void ChangeName(string userId, string name);
         string GetName(string userId);
     }

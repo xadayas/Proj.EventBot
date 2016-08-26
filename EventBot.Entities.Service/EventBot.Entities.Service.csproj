@@ -63,6 +63,7 @@
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventTypeModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

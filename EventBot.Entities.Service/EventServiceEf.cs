@@ -11,11 +11,15 @@ namespace EventBot.Entities.Service
 {
     public class EventServiceEf : IEventService
     {
+        #region get and update events
         public void CreateOrUpdateEvent(EventModel model)
         {
             using (var db = new EventBotDb())
             {
+                var notificationType = NotificationType.EventCreated;
                 var even = db.Events.FirstOrDefault(e => e.Id == model.Id) ?? new Event();
+                if(even.Id != 0)
+                    notificationType = NotificationType.EventUpdated;
                 even.Id = model.Id;
                 even.Title = model.Title;
                 even.Description = model.Description;
@@ -36,7 +40,11 @@ namespace EventBot.Entities.Service
                     Altitude = model.Location.Altitude,
                     Name = model.Location.Name
                 };
+                if(even.IsCanceled)
+                    notificationType = NotificationType.EventCanceled;
                 db.Events.AddOrUpdate(even);
+                if(notificationType == NotificationType.EventUpdated || notificationType == NotificationType.EventCanceled)
+                    CreateEventNotification(db, even, notificationType);
                 db.SaveChanges();
                 model.Id = even.Id;
             }
@@ -154,16 +162,15 @@ namespace EventBot.Entities.Service
                 if (tempUser == null) throw new InvalidOperationException("User not found.");
                 var tempEvent = db.Events.SingleOrDefault(w => w.Id == eventId);
                 if (tempEvent == null) throw new InvalidOperationException("Event not found.");
-                var tempEventUser = db.EventUsers.SingleOrDefault(w => w.User.Id == userId && w.Event.Id == eventId);
+                
                 //TODO Return something if user already joined event ? For now just return.
-                if (tempEventUser != null) return;
+                if (tempEvent == null || tempUser == null) return;
 
-                tempEvent.Users.Add(new EventUser
+                if (!tempEvent.Users.Contains(tempUser))
                 {
-                    User = tempUser,
-                    Event = tempEvent
-                });
-                db.SaveChanges();
+                     tempEvent.Users.Add(tempUser);
+                     db.SaveChanges();
+                }
             }
         }
 
@@ -171,12 +178,16 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var attandee = db.EventUsers.SingleOrDefault(s => s.Event.Id == eventId && s.User.Id == userId);
+                var tempEvent = db.Events.SingleOrDefault(e => e.Id == eventId);
+                if(tempEvent == null)
+                    throw new InvalidOperationException("Event not found.");
+                var attandee = tempEvent.Users.SingleOrDefault(u => u.Id == userId);
 
-                if (attandee == null)
-                    throw new InvalidOperationException("No particpant is found.");
-                db.EventUsers.Remove(attandee);
-                db.SaveChanges();
+                if (attandee != null)
+                {
+                    tempEvent.Users.Remove(attandee);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -243,7 +254,8 @@ namespace EventBot.Entities.Service
                     }).ToArray();
             }
         }
-
+        #endregion
+#region eventtype
         public void CreateOrUpdateEventType(EventTypeModel model)
         {
             using (var db = new EventBotDb())
@@ -318,7 +330,8 @@ namespace EventBot.Entities.Service
                 return userIds.Distinct().ToArray();
             }
         }
-
+#endregion
+        #region Images
         public byte[] GetImage(int imageId)
         {
             using (var db = new EventBotDb())
@@ -342,37 +355,85 @@ namespace EventBot.Entities.Service
             }
             return image.Id;
         }
-
-        public IEnumerable<Notification> GetNewNotificationsFor(string userId)
+#endregion
+        #region Notifications
+        public IEnumerable<NotificationModel> GetNewNotificationsFor(string userId)
         {
             using (var db = new EventBotDb())
             {
-                return db.UserNotifications
-                    .Where(u => u.UserId == userId && !u.IsRead)
-                    .Select(n => n.Notification)
-                    .Include(o => o.Event.Organiser)
+                return db.Notifications
+                    .Where(n => n.User.Id == userId && !n.IsRead)
+                    .Select( n => new NotificationModel()
+                    { DateTime = n.DateTime,
+                        Id = n.Id,
+                        EventName = n.Event.Title,
+                        IsRead = n.IsRead,
+                        OriginalStartDate = n.OriginalStartDate,
+                        Type = n.Type})
                     .ToList();                  
             }
         }
-
-        public void MarkNotificationAsRead(string userId)
+        public void MarkAllNotificationsAsRead(string userId)
         {
+            //TODO världens jävla fullösning, men vanliga fungerar inte...
+            var notIds = new List<int>();
             using (var db = new EventBotDb())
             {
-                var notifications = db.UserNotifications
-                    .Where(user => user.UserId == userId && !user.IsRead)
-                    .ToList();
-
-                notifications.ForEach(notification => notification.NotificationsRead());
-                db.SaveChanges();
+                notIds =  db.Notifications.Where(n => !n.IsRead && n.User.Id == userId).Select(n => n.Id).ToList();
+            }
+            foreach (var notId in notIds)
+            {
+                MarkNotificationAsRead(notId,userId);
             }
         }
 
+        public void MarkNotificationAsRead(int id,string userId)
+        {
+            //TODO världens jävla fullösning, men vanliga fungerar inte...
+            using (var db = new EventBotDb())
+            {
+                var user = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false).User;
+                var date = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false).DateTime;
+                var ev = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false).Event;
+                var or = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false).OriginalStartDate;
+                var type = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false).Type;
+                var result = db.Notifications.FirstOrDefault(n => n.Id == id && n.IsRead == false && n.User.Id == userId);
+                if (result != null)
+                {
+                    result.User = user;
+                    result.DateTime = date;
+                    result.Event = ev;
+                    result.OriginalStartDate = or;
+                    result.Type = type;
+                    result.IsRead = true;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+        private void CreateEventNotification(EventBotDb db, Event e,NotificationType type)
+        {
+            var eventUsers = e.Users;
+            foreach (var eventUser in eventUsers)
+            {
+                db.Notifications.AddOrUpdate(new Notification()
+                {
+                    DateTime = DateTime.Now,
+                    Event = e,
+                    OriginalStartDate = e.StartDate,
+                    Type = type,
+                    User = eventUser
+                });
+            }
+        }
+        
+        #endregion
         public bool CheckParticipant(string userId, int eventId)
         {
             using (var db = new EventBotDb())
             {
-                return db.EventUsers.Any(s => s.User.Id == userId && s.Event.Id == eventId);
+                var tempEvent = db.Events.SingleOrDefault(e => e.Id == eventId);
+                return tempEvent.Users.Any(s => s.Id == userId);
             }
         }
 

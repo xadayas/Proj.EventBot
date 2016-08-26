@@ -186,18 +186,18 @@ namespace EventBot.Entities.Migrations
                     });
             }
 
-            for (var i = 0; i < 5; i++)
-            {
-                context.EventUsers.AddOrUpdate(x => x.Id,
-                    new EventUser[]
-                    {
-                        new EventUser {Id=i*5+1,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[0])},
-                        new EventUser {Id=i*5+2,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[1])},
-                        new EventUser {Id=i*5+3,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[2])},
-                        new EventUser {Id=i*5+4,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[3])},
-                        new EventUser {Id=i*5+5,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[4])},
-                    });
-            }
+            //for (var i = 0; i < 5; i++)
+            //{
+            //    context.EventUsers.AddOrUpdate(x => x.Id,
+            //        new EventUser[]
+            //        {
+            //            new EventUser {Id=i*5+1,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[0])},
+            //            new EventUser {Id=i*5+2,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[1])},
+            //            new EventUser {Id=i*5+3,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[2])},
+            //            new EventUser {Id=i*5+4,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[3])},
+            //            new EventUser {Id=i*5+5,Event = context.Events.Find(i+1),Rating = rnd.Next(0,10),User = context.Users.Find(testIds[4])},
+            //        });
+            //}
 
 
 

@@ -19,6 +19,6 @@ namespace EventBot.Entities.Models
         public EventBotImage Image { get; set; }
         public bool IsCanceled { get; set; }
         public virtual ICollection<EventType> EventTypes { get; set; }
-        public virtual ICollection<EventUser> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
