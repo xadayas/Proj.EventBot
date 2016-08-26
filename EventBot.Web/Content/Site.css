@@ -3,11 +3,11 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background: #f9fafb;
+    background: #fff;
 }
 
 .body-content {
-    background: #f9fafb;
+    background: #fff;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -30,16 +30,17 @@ body {
 }
 
 .navbar-brand {
-    font-family: 'Lobster', cursive;
-
+        font-family: 'Lobster', cursive;
         font-weight: 100;
         font-style:initial;
         font-size: 25px;
         color:white;
+        padding:5px;
+        margin-left:15px;
+        margin-top:10px;
 }
 
 .navbar-collapse {
-    background: #fff;
 }
 
 .jumbotron {
@@ -70,7 +71,6 @@ body {
     color:white;
 }
 .navbar-default .navbar-nav > li > a {
-
     color: #777777;
 }
 
@@ -80,3 +80,25 @@ body {
 }
 
 
+
+.navbar-default .navbar-nav > li > a {
+  border-bottom: 2px solid transparent;
+  padding: 0; /*removing spacing*/
+  margin: 14px; /*add spacing*/
+}
+
+.badge {
+    background-color: #009fcb;
+}
+
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.my-fluid-container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
