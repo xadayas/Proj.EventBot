@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
+using EventBot.Entities.Service.Models;
 
 namespace EventBot.Web.Controllers
 {
@@ -13,18 +14,23 @@ namespace EventBot.Web.Controllers
         // GET: Images
         public void View(int id)
         {
-            var imageBytes = _service.GetImage(id);
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImage(id==0?6:id);
 
             var ms = new MemoryStream(imageBytes);
             Response.ContentType = "Image/Png";
             ms.CopyTo(Response.OutputStream);
         }
 
-        public ActionResult Upload()
+
+
+        public ActionResult Upload(string title,string description, string meetingPlace)
         {
+            
+            Session["imageUploadEventSave"]= new EventModel {Title = title,Description = description,MeetingPlace = meetingPlace};
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -32,9 +38,12 @@ namespace EventBot.Web.Controllers
             {
                 var ms = new MemoryStream();
                 file.InputStream.CopyTo(ms);
-                _service.CreateImage(ms.ToArray());
+                var imageId =_service.CreateImage(ms.ToArray());
+                EventModel model = Session["imageUploadEventSave"] as EventModel;
+                if (model != null) model.ImageId = imageId;
             }
-            return View();
+            return RedirectToAction("Create","Event");
+            //return View();
         }
         [HttpPost]
         public ActionResult UploadGetId(HttpPostedFileBase file)

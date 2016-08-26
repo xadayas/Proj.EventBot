@@ -1,4 +1,5 @@
-﻿@model EventBot.Web.Models.LocationViewModel
+﻿@using System.Globalization
+@model EventBot.Web.Models.LocationViewModel
 @{
     double latitude= 63.863663d, longitude= 20.3268386d;
     if (Model != null)
@@ -8,7 +9,11 @@
     }
 
 }
-<iframe 
-        frameborder="0" style="border: 0; width:100%; height:400px;"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCnWx0t3oWPAUiv1sxfmdSKXN7k58L4JBU
-    &q=@latitude,@longitude" allowfullscreen></iframe>
+<h4 id="locationNameSpan">Location</h4>
+<iframe frameborder="0" style="border: 0; width: 100%; height: 400px;"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCnWx0t3oWPAUiv1sxfmdSKXN7k58L4JBU&center=@latitude.ToString(CultureInfo.InvariantCulture),@longitude.ToString(CultureInfo.InvariantCulture)&zoom=18&maptype=satellite&q=@latitude.ToString(CultureInfo.InvariantCulture),@longitude.ToString(CultureInfo.InvariantCulture)"
+        allowfullscreen></iframe>
+@section scripts{
+    <script>$("#locationNameSpan").load("https://maps.googleapis.com/maps/api/geocode/json?latlng=@latitude.ToString(CultureInfo.InvariantCulture),@longitude.ToString(CultureInfo.InvariantCulture)&key=AIzaSyCnWx0t3oWPAUiv1sxfmdSKXN7k58L4JBU");
+</script>
+}

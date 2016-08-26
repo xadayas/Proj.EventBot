@@ -1,19 +1,12 @@
-﻿using EventBot.Entities.Models;
+﻿using System.Web.Mvc;
 using EventBot.Entities.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using Microsoft.AspNet.Identity;
-using EventBot.Entities;
 
 namespace EventBot.Web.Controllers.Api
 {
 
-    [Authorize]
-    public class ParticipantsController : ApiController
+    [System.Web.Http.Authorize]
+    public class ParticipantsController : Controller
     {
         private readonly EventServiceEf _eventService;
 
@@ -21,29 +14,27 @@ namespace EventBot.Web.Controllers.Api
         {
             _eventService = new EventServiceEf();
         }
-
-        //Verifiera in parameter
         [HttpPost]
-        public IHttpActionResult Attend(int eventId)
+        public ActionResult Attend(int id)
         {
             var userId = User.Identity.GetUserId();
-            if (_eventService.CheckParticipant(userId, eventId))
-                return BadRequest("Participant already exists.");
-
-            _eventService.JoinEvent(userId, eventId);
-
-            return Ok();
+            _eventService.JoinEvent(userId, id);
+            return new HttpStatusCodeResult(200);
         }
-
-        [HttpDelete]
-        public IHttpActionResult DeleteAttendee(int eventId)
+        [HttpPost]
+        public ActionResult UnAttend(int id)
         {
             var userId = User.Identity.GetUserId();
-            if (!_eventService.CheckParticipant(userId, eventId))
-                return NotFound();
-
-            _eventService.LeaveEvent(userId, eventId);
-            return Ok();
+            if (!_eventService.CheckParticipant(userId, id))
+                return new HttpStatusCodeResult(404);
+            _eventService.LeaveEvent(userId,id);
+            return new HttpStatusCodeResult(200);
+        }
+        [HttpGet]
+        public JsonResult IsAttending(int id)
+        {
+            var attendStatus = new { Attending = _eventService.CheckParticipant(User.Identity.GetUserId(), id) };
+            return Json(attendStatus, JsonRequestBehavior.AllowGet);
         }
     }
 }

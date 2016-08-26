@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
+using EventBot.Web.Utils;
 using Microsoft.AspNet.Identity;
 
 namespace EventBot.Web.Controllers
@@ -42,8 +43,11 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-
-            return View(new EventModel());
+            EventModel model = (EventModel)Session["imageUploadEventSave"];
+            Session["imageUploadEventSave"]=null;
+            if(model==null)model = new EventModel();
+            if(model.Location==null)model.Location=new LocationModel();
+            return View(model);
         }
 
         // POST: Event/Create
@@ -54,7 +58,14 @@ namespace EventBot.Web.Controllers
             {
                 return View(model);
             }
+
+            model.Location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault()??new LocationModel {Name = model.MeetingPlace};
+            
             model.UserId = User.Identity.GetUserId();
+
+            //TODO select starttime and endtime
+            model.StartDate=DateTime.Now;
+            model.EndDate=DateTime.Now;
             _service.CreateOrUpdateEvent(model);
             return RedirectToAction("UserEvents");
         }
