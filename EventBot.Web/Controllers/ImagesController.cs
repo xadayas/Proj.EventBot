@@ -13,7 +13,8 @@ namespace EventBot.Web.Controllers
         // GET: Images
         public void View(int id)
         {
-            var imageBytes = _service.GetImage(id);
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImage(id==0?6:id);
 
             var ms = new MemoryStream(imageBytes);
             Response.ContentType = "Image/Png";
