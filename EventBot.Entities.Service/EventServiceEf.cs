@@ -108,7 +108,44 @@ namespace EventBot.Entities.Service
                         UserId = @event.Organiser.Id
                     }).ToList();
             }
-        } 
+        }
+
+        public ICollection<EventModel> GetAllUpComingEvents()
+        {
+            using (var db = new EventBotDb())
+            {
+                return db.Events.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
+                     .Select(@event => new EventModel
+                     {
+                         Id = @event.Id,
+                         Title = @event.Title,
+                         Description = @event.Description,
+                         CreatedDate = @event.CreatedDate,
+                         ModifiedDate = @event.ModifiedDate,
+                         MeetingPlace = @event.MeetingPlace,
+                         Location = new LocationModel
+                         {
+                             Id = @event.Location.Id,
+                             Latitude = @event.Location.Latitude,
+                             Longitude = @event.Location.Longitude,
+                             Altitude = @event.Location.Altitude,
+                             Name = @event.Location.Name
+                         },
+                         StartDate = @event.StartDate,
+                         EndDate = @event.EndDate,
+                         IsCanceled = @event.IsCanceled,
+                         ImageId = @event.Image == null ? 0 : @event.Image.Id,
+                         VisitCount = @event.VisitCount,
+                         EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
+                         {
+                             Id = eventType.Id,
+                             Name = eventType.Name
+                         }).ToList(),
+                         UserId = @event.Organiser.Id
+                     }).ToList();
+            }
+        }
+
         public void JoinEvent(string userId, int eventId)
         {
             using (var db = new EventBotDb())

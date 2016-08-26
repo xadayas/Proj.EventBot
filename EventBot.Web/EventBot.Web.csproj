@@ -271,6 +271,7 @@
     <Content Include="Views\Event\Search.cshtml" />
     <Content Include="Views\Manage\ChangeName.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
+    <Content Include="Views\Home\GetUpComingEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
