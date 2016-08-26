@@ -21,3 +21,18 @@
     };
     xhr.send(formData);
 }
+
+$('#EventImageLink').click(() => {
+    console.log("ODG!");
+    var title = $('#titleInput').val();
+    var desc = $('#descriptionInput').val();
+    var place = $('#meetingPlaceInput').val();
+    var link = $('#EventImageLink').prop('href');
+    console.log(link);
+    link = link.replace("titleText", title);
+    link = link.replace("descriptionText", desc);
+    link = link.replace("meetingPlaceText", place);
+    $('#EventImageLink').prop('href',link);
+
+});
+    
