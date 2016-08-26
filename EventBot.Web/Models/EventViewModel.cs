@@ -21,10 +21,10 @@ namespace EventBot.Web.Models
         public string Description { get; set; }
         public int ImageId { get; set; }
         public LocationViewModel Location { get; set; }=new LocationViewModel();
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; } = DateTime.Now;
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}",ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}",ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; } 
+        public DateTime EndDate { get; set; } =DateTime.Now;
     }
 
     public class LocationViewModel

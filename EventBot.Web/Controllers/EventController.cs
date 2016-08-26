@@ -64,8 +64,6 @@ namespace EventBot.Web.Controllers
             model.UserId = User.Identity.GetUserId();
 
             //TODO select starttime and endtime
-            model.StartDate = DateTime.Now;
-            model.EndDate = DateTime.Now;
             _service.CreateOrUpdateEvent(new EventModel
             {
                 UserId = model.UserId,
