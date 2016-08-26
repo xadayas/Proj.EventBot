@@ -52,3 +52,21 @@ $('.datetimefield').AnyPicker({
     vAlign: "center",
     hAlign: "top"
 });
+
+
+window.addEventListener("load", () => {
+    var defaultBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(53, 0),
+      new google.maps.LatLng(70, 27));
+
+    var input = document.getElementById('meetingPlaceInput');
+    var options = {
+        bounds: defaultBounds
+       };
+
+    autocomplete = new google.maps.places.Autocomplete(input, options);
+    console.log(autocomplete);
+    console.log(input);
+   });
+  
+
