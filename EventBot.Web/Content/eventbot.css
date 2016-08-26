@@ -1,5 +1,6 @@
 ﻿
 /* Css test for create event */
+
 body {
     margin: 0;
     padding: 0;
@@ -8,6 +9,21 @@ form {
     margin: 0;
     padding: 0;
 }
+.form-horizontal {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+.col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+}
 hr {
     color: #f0f0f0;
     padding: 0;
@@ -15,7 +31,7 @@ hr {
 }
 img#EventImage {
     height: 299px;
-    /*width: 299px;*/
+    width: auto;
     display: block;
     margin: 0 auto;
     padding: 70px 60px;
@@ -27,6 +43,8 @@ input.form-control {
     border: none;
     background-color: transparent;
     box-shadow: none;
+    box-sizing: border-box;
+    width: 100% !important;
 }
 input.form-control:focus {
     
@@ -38,7 +56,7 @@ input.form-control:focus {
 }
 input.btn {
     height: 91px;
-    width: 100%;
+    width: 100% !important;
     display: block;
     border: none;
     padding: 0;
@@ -47,7 +65,15 @@ input.btn {
     text-align: center;
     background-color: #ff5c47;
     color: white;
+    box-sizing: border-box;
 }
 input.btn:focus {
  
+}
+
+@media(min-width: 992px) {
+    img#EventImage {
+        width: auto;
+    }
+
 }
