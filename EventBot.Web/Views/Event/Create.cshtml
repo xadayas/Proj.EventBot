@@ -49,9 +49,10 @@
             </div>
         </div>
         <hr/>
+        <span/>
         <div class="form-group">
             <div class="col-md-12">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datetimefield", id = "endDateInput" } })
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datetimefield", id = "endDateInput",@readonly = true } })
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>

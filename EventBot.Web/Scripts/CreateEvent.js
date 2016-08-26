@@ -46,6 +46,9 @@ $('#EventImageLink').click(() => {
 $('.datetimefield').AnyPicker({
     mode: "datetime",
     dateTimeFormat: "yyyy-MM-dd HH:mm",
-    showComponentLabel: true
-
+    showComponentLabel: true,
+    parent: "div.container-fluid",
+    layout: "fixed",
+    vAlign: "center",
+    hAlign: "top"
 });
