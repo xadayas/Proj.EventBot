@@ -43,11 +43,11 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-
-            return View(new EventModel
-            {
-                Location = new LocationModel()
-            });
+            EventModel model = (EventModel)Session["imageUploadEventSave"];
+            Session["imageUploadEventSave"]=null;
+            if(model==null)model = new EventModel();
+            if(model.Location==null)model.Location=new LocationModel();
+            return View(model);
         }
 
         // POST: Event/Create
