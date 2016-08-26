@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
+using EventBot.Web.Models;
 using EventBot.Web.Utils;
 using Microsoft.AspNet.Identity;
 
@@ -28,7 +29,7 @@ namespace EventBot.Web.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Search(string query)
         {
             return PartialView(_service.SearchEvents(query));
@@ -43,30 +44,44 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            EventModel model = (EventModel)Session["imageUploadEventSave"];
-            Session["imageUploadEventSave"]=null;
-            if(model==null)model = new EventModel();
-            if(model.Location==null)model.Location=new LocationModel();
+            EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
+            Session["imageUploadEventSave"] = null;
+            if (model == null) model = new EventViewModel();
             return View(model);
         }
 
         // POST: Event/Create
         [HttpPost]
-        public ActionResult Create(EventModel model)
+        public ActionResult Create(EventViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            model.Location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault()??new LocationModel {Name = model.MeetingPlace};
-            
+            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+
             model.UserId = User.Identity.GetUserId();
 
             //TODO select starttime and endtime
-            model.StartDate=DateTime.Now;
-            model.EndDate=DateTime.Now;
-            _service.CreateOrUpdateEvent(model);
+            model.StartDate = DateTime.Now;
+            model.EndDate = DateTime.Now;
+            _service.CreateOrUpdateEvent(new EventModel
+            {
+                UserId = model.UserId,
+                Title = model.Title,
+                Description = model.Description,
+                Location = new LocationModel
+                {
+                    Name = model.Location.Name,
+                    Latitude = model.Location.Latitude,
+                    Longitude = model.Location.Longitude
+                },
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                ImageId = model.ImageId,
+                MeetingPlace = model.Location.Name
+            });
             return RedirectToAction("UserEvents");
         }
 
@@ -83,7 +98,14 @@ namespace EventBot.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             model.UserId = User.Identity.GetUserId();
-            model.Location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault() ?? new LocationModel { Name = model.MeetingPlace };
+            var location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault() ?? new LocationViewModel { Name = model.MeetingPlace };
+            model.Location = new LocationModel
+            {
+                Id = location.Id,
+                Name = location.Name,
+                Longitude = location.Longitude,
+                Latitude = location.Latitude
+            };
             _service.CreateOrUpdateEvent(model);
             return RedirectToAction("UserEvents");
         }

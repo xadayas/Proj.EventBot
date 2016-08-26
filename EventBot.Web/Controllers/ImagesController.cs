@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using EventBot.Entities.Models;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
+using EventBot.Web.Models;
 
 namespace EventBot.Web.Controllers
 {
@@ -24,10 +28,14 @@ namespace EventBot.Web.Controllers
 
 
 
-        public ActionResult Upload(string title,string description, string meetingPlace)
+        public ActionResult Upload(string title,string description, string meetingPlace,string startDate,string endDate)
         {
-            
-            Session["imageUploadEventSave"]= new EventModel {Title = title,Description = description,MeetingPlace = meetingPlace};
+            DateTime parsedStartDate, parsedEndDate;
+            DateTime.TryParse(startDate, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces,
+                out parsedStartDate);
+            DateTime.TryParse(endDate, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces,
+                out parsedEndDate);
+            Session["imageUploadEventSave"]= new EventViewModel {Title = title,Description = description,Location = new LocationViewModel { Name = meetingPlace},StartDate = parsedStartDate,EndDate = parsedEndDate};
             return View();
         }
         
@@ -39,7 +47,7 @@ namespace EventBot.Web.Controllers
                 var ms = new MemoryStream();
                 file.InputStream.CopyTo(ms);
                 var imageId =_service.CreateImage(ms.ToArray());
-                EventModel model = Session["imageUploadEventSave"] as EventModel;
+                var model = Session["imageUploadEventSave"] as EventViewModel;
                 if (model != null) model.ImageId = imageId;
             }
             return RedirectToAction("Create","Event");

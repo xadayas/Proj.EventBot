@@ -11,7 +11,8 @@ namespace EventBot.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/underscore-min.js",
-                        "~/Scrips/moment.js"));
+                        "~/Scrips/moment.js",
+                        "~/Scripts/anypicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
@@ -30,7 +31,8 @@ namespace EventBot.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/animate.css",
-                      "~/Content/eventbot.css"));
+                      "~/Content/eventbot.css",
+                      "~/Content/anypicker.css"));
         }
     }
 }

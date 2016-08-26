@@ -201,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
+    <Content Include="Content\anypicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\eventbot.css" />
@@ -210,6 +211,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\all-underscore.js" />
     <Content Include="Scripts\all.js" />
+    <Content Include="Scripts\anypicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\local IIS.pubxml" />

@@ -27,12 +27,25 @@ $('#EventImageLink').click(() => {
     var title = $('#titleInput').val();
     var desc = $('#descriptionInput').val();
     var place = $('#meetingPlaceInput').val();
+    var start = $('#startDateInput').val();
+    var end = $('#endDateInput').val();
+
     var link = $('#EventImageLink').prop('href');
-    console.log(link);
+
+    console.log(start);
     link = link.replace("titleText", title);
     link = link.replace("descriptionText", desc);
     link = link.replace("meetingPlaceText", place);
+    link = link.replace("startDateText", start);
+    link = link.replace("endDateText", end);
+
     $('#EventImageLink').prop('href',link);
 
 });
-    
+
+$('.datetimefield').AnyPicker({
+    mode: "datetime",
+    dateTimeFormat: "yyyy-MM-dd HH:mm",
+    showComponentLabel: true
+
+});
