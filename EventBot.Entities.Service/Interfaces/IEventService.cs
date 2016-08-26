@@ -8,7 +8,8 @@ namespace EventBot.Entities.Service.Interfaces
     {
         void CreateOrUpdateEvent(EventModel model);
         EventModel GetEvent(int id);
-        ICollection<EventModel> GetUserCreatedEvents(string userId); 
+        ICollection<EventModel> GetUserCreatedEvents(string userId);
+        ICollection<EventModel> GetAllUpComingEvents();
         void JoinEvent(string userId, int eventId);
         void LeaveEvent(string userId, int eventId);
         ICollection<EventModel> SearchEvents(string query,string location = null);
