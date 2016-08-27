@@ -1,0 +1,26 @@
+﻿@model EventBot.Entities.Service.Models.EventModel
+
+@{
+    ViewBag.Title = "Details2";
+}
+<input type="hidden" id="hdnVal" value="@Model.Id" />
+
+<div class="col-md-12 img-fade-container">
+    <img src="/Images/View/@Html.Raw(Model.ImageId)" id="EventImage" class="img-fade"/>
+    <div class="circle">
+        <p>@Model.StartDate.ToString("dd MMM")</p>
+    </div>
+</div>
+<div class="col-md-12">
+    <h1>@Model.Title</h1>
+</div>
+<hr style="line-height: 0"/>
+<div class="col-md-12 ">
+    <p>@Model.Description</p>
+</div>
+<div class="col-md-12">
+    @Html.Action("Static", "Map", Model.Location)
+    <div class="circle">
+        <p id="attend"></p>
+    </div>
+</div>

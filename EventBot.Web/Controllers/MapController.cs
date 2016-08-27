@@ -17,5 +17,10 @@ namespace EventBot.Web.Controllers
             
             return PartialView(location);
         }
+
+        public PartialViewResult Static(LocationViewModel location)
+        {
+            return PartialView(location);
+        }
     }
 }

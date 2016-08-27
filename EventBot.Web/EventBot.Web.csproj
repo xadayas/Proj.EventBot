@@ -277,6 +277,8 @@
     <Content Include="Views\Manage\ChangeName.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Home\GetUpComingEvents.cshtml" />
+    <Content Include="Views\Event\Details2.cshtml" />
+    <Content Include="Views\Map\Static.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

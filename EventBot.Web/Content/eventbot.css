@@ -3,31 +3,37 @@
 body {
     overflow-x: hidden;
 }
+
 form {
     margin: 0;
     padding: 0;
 }
+
 .form-horizontal {
     max-width: 700px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.form-horizontal .form-group {
-    margin-left: 0;
-    margin-right: 0;
-    box-sizing: border-box;
-}
+
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+
 .col-md-12 {
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
 }
+
 hr {
     color: #f0f0f0;
     padding: 0;
     margin: 19px 0;
 }
+
 img#EventImage {
     height: 299px;
     width: auto;
@@ -35,6 +41,7 @@ img#EventImage {
     margin: 0 auto;
     padding: 70px 60px;
 }
+
 input.form-control {
     padding: 0 20px;
     text-align: center;
@@ -45,18 +52,19 @@ input.form-control {
     box-sizing: border-box;
     width: 100% !important;
 }
-input.form-control:focus {
-    
-    outline: none;
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-    
-}
-input.form-control[readonly] {
-    background-color: transparent;
-    cursor: pointer;
-}
+
+    input.form-control:focus {
+        outline: none;
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    input.form-control[readonly] {
+        background-color: transparent;
+        cursor: pointer;
+    }
+
 input.btn {
     height: 91px;
     width: 100% !important;
@@ -70,46 +78,95 @@ input.btn {
     color: white;
     box-sizing: border-box;
 }
-input.btn:focus {
- 
-}
+
+    input.btn:focus {
+    }
 
 @media(min-width: 992px) {
     img#EventImage {
         width: auto;
     }
-
 }
 
 /* Input file */
 .inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
     margin: 0;
     padding: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
-.inputfile + label {
-    font-weight: lighter;
-    height: 91px;
-    width: 100%;
-    padding-top: 40px;
-    margin: 0;
+    .inputfile + label {
+        font-weight: lighter;
+        height: 91px;
+        width: 100%;
+        padding-top: 40px;
+        margin: 0;
+        text-align: center;
+        display: block;
+        color: white;
+        background-color: #ff5c47;
+    }
+
+        .inputfile:focus + label,
+        .inputfile + label:hover {
+            background-color: whitesmoke;
+            color: black;
+        }
+
+    .inputfile + label {
+        cursor: pointer; /* "hand" cursor */
+    }
+
+
+/* Event details */
+h1 {
     text-align: center;
-    display: block;
-    color: white;
-    background-color: #ff5c47;
+}
+p {
+    text-align: center;
+}
+.img-fade-container {
+
+    margin-bottom: -100px;
+  }
+
+.img-fade-container:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  bottom: 0;
+  background: -webkit-linear-gradient(transparent, #FFF) left repeat;
+  background: linear-gradient(transparent, #FFF) left repeat; 
+}
+#staticMapImage {
+    width: 100%;
+    height: auto;
 }
 
-.inputfile:focus + label,
-.inputfile + label:hover {
-    background-color: whitesmoke;
-    color: black;
+.circle {
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    margin:  auto;
+    padding: 0;
+    width: 70px;
+      height: 70px;
+      -webkit-border-radius: 35px;
+      -moz-border-radius: 35px;
+      border-radius: 35px;
+      background: #ff5c47;
+      
 }
-.inputfile + label {
-	cursor: pointer; /* "hand" cursor */
+
+.circle p {
+    position: absolute;
+    top: 35%;
+    left: 15%;    
 }
