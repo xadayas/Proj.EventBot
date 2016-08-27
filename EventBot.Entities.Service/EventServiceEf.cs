@@ -41,11 +41,12 @@ namespace EventBot.Entities.Service
                     Name = model.Location.Name
                 };
                 if (even.EventTypes == null) even.EventTypes = new List<EventType>();
-                foreach (var eventTypeModel in model.EventTypes)
-                {
-                    var eventTypeToAdd = db.EventTypes.FirstOrDefault(f => f.Id == eventTypeModel.Id);
-                    if (eventTypeToAdd != null) even.EventTypes.Add(eventTypeToAdd);
-                }
+                if (model.EventTypes != null)
+                    foreach (var eventTypeModel in model.EventTypes)
+                    {
+                        var eventTypeToAdd = db.EventTypes.FirstOrDefault(f => f.Id == eventTypeModel.Id);
+                        if (eventTypeToAdd != null) even.EventTypes.Add(eventTypeToAdd);
+                    }
                 if (even.IsCanceled)
                     notificationType = NotificationType.EventCanceled;
                 db.Events.AddOrUpdate(even);
@@ -61,12 +62,12 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var ev = db.Events.Include(p=>p.Location).Include(p=>p.Organiser).Include(p=>p.Image).SingleOrDefault(s=>s.Id==id);
+                var ev = db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == id);
                 if (ev == null)
                     return null;
                 var rEvent = new EventModel
                 {
-                    Id=ev.Id,
+                    Id = ev.Id,
                     CreatedDate = ev.CreatedDate,
                     EndDate = ev.EndDate,
                     Description = ev.Description,
@@ -76,7 +77,7 @@ namespace EventBot.Entities.Service
                     ModifiedDate = ev.ModifiedDate,
                     StartDate = ev.StartDate,
                     Title = ev.Title,
-                    UserId = ev.Organiser?.Id??"",
+                    UserId = ev.Organiser?.Id ?? "",
                     VisitCount = ev.VisitCount,
                     EventTypes = ev.EventTypes.Select(s => new EventTypeModel
                     {
@@ -84,7 +85,7 @@ namespace EventBot.Entities.Service
                         Name = s.Name
                     }).ToArray()
                 };
-                
+
                 if (ev.Location != null)
                 {
                     rEvent.Location = new LocationModel
