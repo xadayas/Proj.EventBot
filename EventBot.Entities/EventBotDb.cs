@@ -37,6 +37,12 @@ namespace EventBot.Entities
                 .ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserLogin>()
                 .ToTable("UserLogins");
+            modelBuilder.Entity<User>().HasMany(p => p.AttendingEvents).WithMany(p=>p.Users).Map(x =>
+            {
+                x.MapLeftKey("UserId");
+                x.MapRightKey("EventId");
+                x.ToTable("EventUser");
+            });
             //modelBuilder.Entity<Event>().HasRequired(p => p.Organiser).WithMany(p => p.OrganisedEvents);
         }
         // Add a DbSet for each entity type that you want to include in your model. For more information 

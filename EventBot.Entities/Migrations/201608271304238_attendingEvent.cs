@@ -3,7 +3,7 @@ namespace EventBot.Entities.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NotInitial : DbMigration
+    public partial class attendingEvent : DbMigration
     {
         public override void Up()
         {
@@ -23,17 +23,14 @@ namespace EventBot.Entities.Migrations
                         IsCanceled = c.Boolean(nullable: false),
                         Image_Id = c.Int(),
                         Location_Id = c.Int(),
-                        User_Id = c.String(maxLength: 128),
                         Organiser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.EventBotImages", t => t.Image_Id)
                 .ForeignKey("dbo.Locations", t => t.Location_Id)
-                .ForeignKey("dbo.Users", t => t.User_Id)
                 .ForeignKey("dbo.Users", t => t.Organiser_Id)
                 .Index(t => t.Image_Id)
                 .Index(t => t.Location_Id)
-                .Index(t => t.User_Id)
                 .Index(t => t.Organiser_Id);
             
             CreateTable(
@@ -92,16 +89,13 @@ namespace EventBot.Entities.Migrations
                         UserName = c.String(nullable: false, maxLength: 256),
                         User_Id = c.String(maxLength: 128),
                         Image_Id = c.Int(),
-                        Event_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.User_Id)
                 .ForeignKey("dbo.EventBotImages", t => t.Image_Id)
-                .ForeignKey("dbo.Events", t => t.Event_Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex")
                 .Index(t => t.User_Id)
-                .Index(t => t.Image_Id)
-                .Index(t => t.Event_Id);
+                .Index(t => t.Image_Id);
             
             CreateTable(
                 "dbo.UserClaims",
@@ -169,15 +163,26 @@ namespace EventBot.Entities.Migrations
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
+            CreateTable(
+                "dbo.EventUser",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        EventId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.EventId })
+                .ForeignKey("dbo.Users", t => t.UserId)
+                .ForeignKey("dbo.Events", t => t.EventId)
+                .Index(t => t.UserId)
+                .Index(t => t.EventId);
+            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.UserRoles", "RoleId", "dbo.Roles");
-            DropForeignKey("dbo.Users", "Event_Id", "dbo.Events");
-            DropForeignKey("dbo.Events", "Organiser_Id", "dbo.Users");
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
-            DropForeignKey("dbo.Events", "User_Id", "dbo.Users");
+            DropForeignKey("dbo.Events", "Organiser_Id", "dbo.Users");
             DropForeignKey("dbo.Notifications", "User_Id", "dbo.Users");
             DropForeignKey("dbo.Notifications", "Event_Id", "dbo.Events");
             DropForeignKey("dbo.UserLogins", "UserId", "dbo.Users");
@@ -185,9 +190,13 @@ namespace EventBot.Entities.Migrations
             DropForeignKey("dbo.Users", "User_Id", "dbo.Users");
             DropForeignKey("dbo.EventTypes", "User_Id", "dbo.Users");
             DropForeignKey("dbo.UserClaims", "UserId", "dbo.Users");
+            DropForeignKey("dbo.EventUser", "EventId", "dbo.Events");
+            DropForeignKey("dbo.EventUser", "UserId", "dbo.Users");
             DropForeignKey("dbo.Events", "Location_Id", "dbo.Locations");
             DropForeignKey("dbo.Events", "Image_Id", "dbo.EventBotImages");
             DropForeignKey("dbo.EventTypes", "Event_Id", "dbo.Events");
+            DropIndex("dbo.EventUser", new[] { "EventId" });
+            DropIndex("dbo.EventUser", new[] { "UserId" });
             DropIndex("dbo.Roles", "RoleNameIndex");
             DropIndex("dbo.UserRoles", new[] { "RoleId" });
             DropIndex("dbo.UserRoles", new[] { "UserId" });
@@ -195,16 +204,15 @@ namespace EventBot.Entities.Migrations
             DropIndex("dbo.Notifications", new[] { "Event_Id" });
             DropIndex("dbo.UserLogins", new[] { "UserId" });
             DropIndex("dbo.UserClaims", new[] { "UserId" });
-            DropIndex("dbo.Users", new[] { "Event_Id" });
             DropIndex("dbo.Users", new[] { "Image_Id" });
             DropIndex("dbo.Users", new[] { "User_Id" });
             DropIndex("dbo.Users", "UserNameIndex");
             DropIndex("dbo.EventTypes", new[] { "User_Id" });
             DropIndex("dbo.EventTypes", new[] { "Event_Id" });
             DropIndex("dbo.Events", new[] { "Organiser_Id" });
-            DropIndex("dbo.Events", new[] { "User_Id" });
             DropIndex("dbo.Events", new[] { "Location_Id" });
             DropIndex("dbo.Events", new[] { "Image_Id" });
+            DropTable("dbo.EventUser");
             DropTable("dbo.Roles");
             DropTable("dbo.UserRoles");
             DropTable("dbo.Notifications");

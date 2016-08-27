@@ -60,9 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventBotDb.cs" />
-    <Compile Include="Migrations\201608261351003_NotInitial.cs" />
-    <Compile Include="Migrations\201608261351003_NotInitial.Designer.cs">
-      <DependentUpon>201608261351003_NotInitial.cs</DependentUpon>
+    <Compile Include="Migrations\201608271304238_attendingEvent.cs" />
+    <Compile Include="Migrations\201608271304238_attendingEvent.Designer.cs">
+      <DependentUpon>201608271304238_attendingEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -82,8 +82,8 @@
     <Folder Include="Unfinished Migrations\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608261351003_NotInitial.resx">
-      <DependentUpon>201608261351003_NotInitial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608271304238_attendingEvent.resx">
+      <DependentUpon>201608271304238_attendingEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
