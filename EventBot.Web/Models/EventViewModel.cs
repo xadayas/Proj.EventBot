@@ -20,6 +20,8 @@ namespace EventBot.Web.Models
         [MaxLength(1000)]
         public string Description { get; set; }
         public int ImageId { get; set; }
+        //public ICollection<EventTypeViewModel> EventTypes { get; set; }=new List<EventTypeViewModel>();
+        public ICollection<int> EventTypes { get; set; } = new List<int>(); 
         public LocationViewModel Location { get; set; }=new LocationViewModel();
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; } = DateTime.Now;
@@ -34,5 +36,11 @@ namespace EventBot.Web.Models
         public double Altitude { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+    }
+
+    public class EventTypeViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

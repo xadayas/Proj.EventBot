@@ -25,14 +25,16 @@ namespace EventBot.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/bootstrap-select.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/animate.css",
                       "~/Content/eventbot.css",
-                      "~/Content/anypicker.css"));
+                      "~/Content/anypicker.css",
+                      "~/Content/bootstrap-select.css"));
         }
     }
 }

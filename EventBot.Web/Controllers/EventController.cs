@@ -50,7 +50,12 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
+            ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
+            {
+                Id = s.Id,
+                Name = s.Name
+            });
+                EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             Session["imageUploadEventSave"] = null;
             if (model == null) model = new EventViewModel();
             return View(model);
@@ -64,7 +69,7 @@ namespace EventBot.Web.Controllers
             {
                 return View(model);
             }
-
+            var eventTypes = _service.GetEventTypes();
             model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
 
             model.UserId = User.Identity.GetUserId();
@@ -81,6 +86,11 @@ namespace EventBot.Web.Controllers
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude
                 },
+                EventTypes = model.EventTypes.Select(s=>new EventTypeModel
+                {
+                    Id=s,
+                    Name = eventTypes.FirstOrDefault(f=>f.Id==s)?.Name??""
+                }).ToArray(),
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 ImageId = model.ImageId,

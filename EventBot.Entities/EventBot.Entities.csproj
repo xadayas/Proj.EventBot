@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201608271304238_attendingEvent.Designer.cs">
       <DependentUpon>201608271304238_attendingEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608272141311_kopplingstabeller.cs" />
+    <Compile Include="Migrations\201608272141311_kopplingstabeller.Designer.cs">
+      <DependentUpon>201608272141311_kopplingstabeller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
@@ -84,6 +88,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608271304238_attendingEvent.resx">
       <DependentUpon>201608271304238_attendingEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608272141311_kopplingstabeller.resx">
+      <DependentUpon>201608272141311_kopplingstabeller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

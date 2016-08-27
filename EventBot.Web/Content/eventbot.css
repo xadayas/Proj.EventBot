@@ -123,6 +123,50 @@ input.btn {
     }
 
 
+    /* Select box */
+    .bootstrap-select.btn-group .dropdown-toggle span.filter-option {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+    }
+    .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default {
+        width: 100%;
+        padding-left:0;
+        padding-right:0;
+        margin: 0;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+    button.btn-default {
+        background-color: transparent;
+        border-color: transparent;
+    }
+    button.btn-default:hover {
+        background-color: transparent;
+        border-color: transparent;
+    }
+    button.btn-default:focus {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    .bootstrap-select button.btn.btn-default.dropdown-toggle:focus {
+        outline: none !important;
+        background-color: transparent;
+}
+    .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default:hover {
+        outline: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+
+    div.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
 /* Event details */
 h1 {
     text-align: center;

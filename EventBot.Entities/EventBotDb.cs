@@ -43,7 +43,24 @@ namespace EventBot.Entities
                 x.MapRightKey("EventId");
                 x.ToTable("EventUser");
             });
-            //modelBuilder.Entity<Event>().HasRequired(p => p.Organiser).WithMany(p => p.OrganisedEvents);
+            modelBuilder.Entity<Event>().HasMany(p => p.EventTypes).WithMany().Map(x =>
+            {
+                x.MapLeftKey("EventId");
+                x.MapRightKey("EventTypeId");
+                x.ToTable("EventEventType");
+            });
+            modelBuilder.Entity<User>().HasMany(p => p.EventTypeInterests).WithMany().Map(x =>
+            {
+                x.MapLeftKey("UserId");
+                x.MapRightKey("EventTypeId");
+                x.ToTable("UserEventType");
+            });
+            modelBuilder.Entity<User>().HasMany(p => p.FollowingUsers).WithMany(p => p.Followers).Map(x =>
+            {
+                x.MapLeftKey("FollowingId");
+                x.MapRightKey("FollowewId");
+                x.ToTable("UserUser");
+            });
         }
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.

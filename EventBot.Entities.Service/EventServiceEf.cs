@@ -18,7 +18,7 @@ namespace EventBot.Entities.Service
             {
                 var notificationType = NotificationType.EventCreated;
                 var even = db.Events.FirstOrDefault(e => e.Id == model.Id) ?? new Event();
-                if(even.Id != 0)
+                if (even.Id != 0)
                     notificationType = NotificationType.EventUpdated;
                 even.Id = model.Id;
                 even.Title = model.Title;
@@ -32,7 +32,7 @@ namespace EventBot.Entities.Service
                 even.Image = model.ImageId == 0 ? null : db.Images.FirstOrDefault(w => w.Id == model.ImageId);
                 even.MeetingPlace = model.MeetingPlace;
                 even.VisitCount = model.VisitCount;
-                even.Location=new Location
+                even.Location = new Location
                 {
                     Id = model.Location.Id,
                     Latitude = model.Location.Latitude,
@@ -40,10 +40,16 @@ namespace EventBot.Entities.Service
                     Altitude = model.Location.Altitude,
                     Name = model.Location.Name
                 };
-                if(even.IsCanceled)
+                if (even.EventTypes == null) even.EventTypes = new List<EventType>();
+                foreach (var eventTypeModel in model.EventTypes)
+                {
+                    var eventTypeToAdd = db.EventTypes.FirstOrDefault(f => f.Id == eventTypeModel.Id);
+                    if (eventTypeToAdd != null) even.EventTypes.Add(eventTypeToAdd);
+                }
+                if (even.IsCanceled)
                     notificationType = NotificationType.EventCanceled;
                 db.Events.AddOrUpdate(even);
-                if(notificationType == NotificationType.EventUpdated || notificationType == NotificationType.EventCanceled)
+                if (notificationType == NotificationType.EventUpdated || notificationType == NotificationType.EventCanceled)
                     CreateEventNotification(db, even, notificationType);
                 db.SaveChanges();
                 model.Id = even.Id;
@@ -55,30 +61,42 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var ev = db.Events.Where(e => e.Id == id);
+                var ev = db.Events.Include(p=>p.Location).Include(p=>p.Organiser).Include(p=>p.Image).SingleOrDefault(s=>s.Id==id);
                 if (ev == null)
                     return null;
-                return ev.Select(e =>  new EventModel()
+                var rEvent = new EventModel
                 {
-                    Id = e.Id,
-                    CreatedDate = e.CreatedDate,
-                    EndDate = e.EndDate,
-                    Description = e.Description,
-                    ImageId = e.Image == null ? 0 : e.Image.Id,
-                    IsCanceled = e.IsCanceled,
-                    MeetingPlace = e.MeetingPlace,
-                    ModifiedDate = e.ModifiedDate,
-                    StartDate = e.StartDate,
-                    Title = e.Title,
-                    Location = new LocationModel
+                    Id=ev.Id,
+                    CreatedDate = ev.CreatedDate,
+                    EndDate = ev.EndDate,
+                    Description = ev.Description,
+                    ImageId = ev.Image?.Id ?? 0,
+                    IsCanceled = ev.IsCanceled,
+                    MeetingPlace = ev.MeetingPlace,
+                    ModifiedDate = ev.ModifiedDate,
+                    StartDate = ev.StartDate,
+                    Title = ev.Title,
+                    UserId = ev.Organiser?.Id??"",
+                    VisitCount = ev.VisitCount,
+                    EventTypes = ev.EventTypes.Select(s => new EventTypeModel
                     {
-                        Id = e.Location.Id,
-                        Latitude = e.Location.Latitude,
-                        Longitude = e.Location.Longitude,
-                        Altitude = e.Location.Altitude,
-                        Name = e.Location.Name
-                    }
-                }).FirstOrDefault();
+                        Id = s.Id,
+                        Name = s.Name
+                    }).ToArray()
+                };
+                
+                if (ev.Location != null)
+                {
+                    rEvent.Location = new LocationModel
+                    {
+                        Id = ev.Location.Id,
+                        Latitude = ev.Location.Latitude,
+                        Longitude = ev.Location.Longitude,
+                        Altitude = ev.Location.Altitude,
+                        Name = ev.Location.Name
+                    };
+                }
+                return rEvent;
             }
         }
 
@@ -86,35 +104,35 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-               return db.Events.Where(e => e.Organiser.Id == userId)
-                    .Select(@event => new EventModel
-                    {
-                        Id = @event.Id,
-                        Title = @event.Title,
-                        Description = @event.Description,
-                        CreatedDate = @event.CreatedDate,
-                        ModifiedDate = @event.ModifiedDate,
-                        MeetingPlace = @event.MeetingPlace,
-                        Location = new LocationModel
-                        {
-                          Id  = @event.Location.Id,
-                          Latitude = @event.Location.Latitude,
-                          Longitude = @event.Location.Longitude,
-                          Altitude = @event.Location.Altitude,
-                          Name = @event.Location.Name
-                        },
-                        StartDate = @event.StartDate,
-                        EndDate = @event.EndDate,
-                        IsCanceled = @event.IsCanceled,
-                        ImageId = @event.Image == null ? 0 : @event.Image.Id,
-                        VisitCount = @event.VisitCount,
-                        EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
-                        {
-                            Id = eventType.Id,
-                            Name = eventType.Name
-                        }).ToList(),
-                        UserId = @event.Organiser.Id
-                    }).ToList();
+                return db.Events.Where(e => e.Organiser.Id == userId)
+                     .Select(@event => new EventModel
+                     {
+                         Id = @event.Id,
+                         Title = @event.Title,
+                         Description = @event.Description,
+                         CreatedDate = @event.CreatedDate,
+                         ModifiedDate = @event.ModifiedDate,
+                         MeetingPlace = @event.MeetingPlace,
+                         Location = new LocationModel
+                         {
+                             Id = @event.Location.Id,
+                             Latitude = @event.Location.Latitude,
+                             Longitude = @event.Location.Longitude,
+                             Altitude = @event.Location.Altitude,
+                             Name = @event.Location.Name
+                         },
+                         StartDate = @event.StartDate,
+                         EndDate = @event.EndDate,
+                         IsCanceled = @event.IsCanceled,
+                         ImageId = @event.Image == null ? 0 : @event.Image.Id,
+                         VisitCount = @event.VisitCount,
+                         EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
+                         {
+                             Id = eventType.Id,
+                             Name = eventType.Name
+                         }).ToList(),
+                         UserId = @event.Organiser.Id
+                     }).ToList();
             }
         }
 
@@ -162,14 +180,14 @@ namespace EventBot.Entities.Service
                 if (tempUser == null) throw new InvalidOperationException("User not found.");
                 var tempEvent = db.Events.SingleOrDefault(w => w.Id == eventId);
                 if (tempEvent == null) throw new InvalidOperationException("Event not found.");
-                
+
                 //TODO Return something if user already joined event ? For now just return.
                 if (tempEvent == null || tempUser == null) return;
 
                 if (!tempEvent.Users.Contains(tempUser))
                 {
-                     tempEvent.Users.Add(tempUser);
-                     db.SaveChanges();
+                    tempEvent.Users.Add(tempUser);
+                    db.SaveChanges();
                 }
             }
         }
@@ -179,7 +197,7 @@ namespace EventBot.Entities.Service
             using (var db = new EventBotDb())
             {
                 var tempEvent = db.Events.SingleOrDefault(e => e.Id == eventId);
-                if(tempEvent == null)
+                if (tempEvent == null)
                     throw new InvalidOperationException("Event not found.");
                 var attandee = tempEvent.Users.SingleOrDefault(u => u.Id == userId);
 
@@ -255,7 +273,7 @@ namespace EventBot.Entities.Service
             }
         }
         #endregion
-#region eventtype
+        #region eventtype
         public void CreateOrUpdateEventType(EventTypeModel model)
         {
             using (var db = new EventBotDb())
@@ -271,7 +289,7 @@ namespace EventBot.Entities.Service
                 db.SaveChanges();
                 model.Id = eventType.Id;
             }
-            
+
         }
 
         public ICollection<EventTypeModel> GetEventTypes()
@@ -330,14 +348,14 @@ namespace EventBot.Entities.Service
                 return userIds.Distinct().ToArray();
             }
         }
-#endregion
+        #endregion
         #region Images
         public byte[] GetImage(int imageId)
         {
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
-                if(image==null)throw new InvalidOperationException("Image not found");
+                if (image == null) throw new InvalidOperationException("Image not found");
                 return image.ImageBytes;
             }
         }
@@ -355,7 +373,7 @@ namespace EventBot.Entities.Service
             }
             return image.Id;
         }
-#endregion
+        #endregion
         #region Notifications
         public IEnumerable<NotificationModel> GetNewNotificationsFor(string userId)
         {
@@ -363,17 +381,18 @@ namespace EventBot.Entities.Service
             {
                 return db.Notifications
                     .Where(n => n.User.Id == userId && !n.IsRead)
-                    .Select( n => new NotificationModel()
-                    { DateTime = n.DateTime,
+                    .Select(n => new NotificationModel()
+                    {
+                        DateTime = n.DateTime,
                         Id = n.Id,
                         EventName = n.Event.Title,
                         IsRead = n.IsRead,
                         OriginalStartDate = n.OriginalStartDate,
                         EventType = n.Type,
                         EventId = n.Event.Id,
-                        
+
                     })
-                    .ToList();                  
+                    .ToList();
             }
         }
         public void MarkAllNotificationsAsRead(string userId)
@@ -382,15 +401,15 @@ namespace EventBot.Entities.Service
             var notIds = new List<int>();
             using (var db = new EventBotDb())
             {
-                notIds =  db.Notifications.Where(n => !n.IsRead && n.User.Id == userId).Select(n => n.Id).ToList();
+                notIds = db.Notifications.Where(n => !n.IsRead && n.User.Id == userId).Select(n => n.Id).ToList();
             }
             foreach (var notId in notIds)
             {
-                MarkNotificationAsRead(notId,userId);
+                MarkNotificationAsRead(notId, userId);
             }
         }
 
-        public void MarkNotificationAsRead(int id,string userId)
+        public void MarkNotificationAsRead(int id, string userId)
         {
             //TODO världens jävla fullösning, men vanliga fungerar inte...
             using (var db = new EventBotDb())
@@ -414,7 +433,7 @@ namespace EventBot.Entities.Service
                 }
             }
         }
-        private void CreateEventNotification(EventBotDb db, Event e,NotificationType type)
+        private void CreateEventNotification(EventBotDb db, Event e, NotificationType type)
         {
             var eventUsers = e.Users;
             foreach (var eventUser in eventUsers)
@@ -429,7 +448,7 @@ namespace EventBot.Entities.Service
                 });
             }
         }
-        
+
         #endregion
         public bool CheckParticipant(string userId, int eventId)
         {
@@ -445,7 +464,7 @@ namespace EventBot.Entities.Service
             using (var db = new EventBotDb())
             {
                 var user = db.Users.FirstOrDefault(u => u.Id == userId);
-                if (user == null || name == null) 
+                if (user == null || name == null)
                     throw new InvalidOperationException("User not found, or name string empty.");
 
                 user.Name = name;
