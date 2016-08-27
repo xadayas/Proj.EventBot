@@ -2,6 +2,7 @@
 using EventBot.Entities.Service;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,19 +31,22 @@ namespace EventBot.Web.Controllers.Api
             return notification;
         }
 
-        [HttpPost]
-        public IHttpActionResult MarkAllAsRead()
-        {
-            var user = User.Identity.GetUserId();
-            _eventService.MarkAllNotificationsAsRead(user);
+        //[HttpPost]
+        //public IHttpActionResult MarkAllAsRead()
+        //{
+        //    var user = User.Identity.GetUserId();
+        //    _eventService.MarkAllNotificationsAsRead(user);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
         [HttpPost]
-        public IHttpActionResult MarkSingleAsRead(int notId)
+        public IHttpActionResult MarkSingleAsRead(int id)
         {
+            //int notId;
+            //Int32.TryParse(id, out notId);
+            if(id==0)return NotFound();
             var user = User.Identity.GetUserId();
-            _eventService.MarkNotificationAsRead(notId,user);
+            _eventService.MarkNotificationAsRead(id,user);
 
             return Ok();
         }

@@ -1,7 +1,7 @@
 ﻿var MyNotifications;
 
 $(document).ready(function () {
-            $.getJSON("api/notifications", function (notifications) {
+            $.getJSON("/api/Notifications/GetNewNotifications/", function (notifications) {
                 if (notifications.length == 0)
                     return;
                 MyNotifications = notifications;
@@ -39,12 +39,12 @@ function UpdateNotifications() {
     });
 }
 
-function OnNotificationClicked(notId,eventId) {
-    //console.log(notId + " "+ eventId);
-    //$.post("api/Notifications/MarkSingleAsRead/" + notId)
-    //            .done(function () {
+function OnNotificationClicked(notId, eventId) {
+    console.log(notId + " " + eventId);
+    $.post("/api/Notifications/MarkSingleAsRead/"+notId)
+                .done(function () {
                     window.location = "/event/details/" + eventId;
-    //            });
+                });
 }
 function NotificationTypeToString(ntype) {
     
