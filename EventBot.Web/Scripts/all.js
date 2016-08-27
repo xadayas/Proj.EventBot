@@ -1,9 +1,12 @@
-﻿$(document).ready(function () {
-            $.getJSON("/api/notifications", function (notifications) {
+﻿var MyNotifications;
+
+$(document).ready(function () {
+            $.getJSON("api/notifications", function (notifications) {
                 if (notifications.length == 0)
                     return;
+                MyNotifications = notifications;
                 console.log(notifications);
-                $(".js-notifications-count")
+                $("#notificationsbadge")
                     .text(notifications.length)
                     .removeClass("hide")
                     .addClass("animated bounceInDown");
@@ -16,18 +19,45 @@
                         return compiled({ notifications: notifications });
             },
                 placement: "bottom",
-                template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div id="notcontent"></div></div>'
 
             }).on("shown.bs.popover", function() {
-                $.post("/api/Notifications/MarkAllAsRead")
-                        .done(function () {
-                            $(".js-notifications-count")
-                                .text("")
-                                .addClass("hide");
-            });
-            });
+            //    $.post("/api/Notifications/MarkAllAsRead")
+            //            .done(function () {
+            //                $(".js-notifications-count")
+            //                    .text("")
+            //                    .addClass("hide");
+                //});
+                    UpdateNotifications();
+                });
             });
 });
+
+function UpdateNotifications() {
+    $.each(MyNotifications, function (i, item) {
+        $('#notcontent').append('<div class="row"><button type="button" class="btn btn-default btn-block" onClick="OnNotificationClicked(' + item.id+","+item.eventId + ')">' + item.eventName +" " +NotificationTypeToString(item.eventType)+ "</button> </div>");
+    });
+}
+
+function OnNotificationClicked(notId,eventId) {
+    //console.log(notId + " "+ eventId);
+    //$.post("api/Notifications/MarkSingleAsRead/" + notId)
+    //            .done(function () {
+                    window.location = "/event/details/" + eventId;
+    //            });
+}
+function NotificationTypeToString(ntype) {
+    
+    if (ntype === 1)
+        return "Cancelled";
+    else if (ntype === 2)
+        return "Updated";
+    else if (ntype === 3)
+        return "Created";
+    else {
+        return "wat";
+    }
+}
 //$.getScript('https://www.google.com/jsapi', function () {
 //    google.load('maps', '3', {
 //        callback: function () {

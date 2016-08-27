@@ -369,7 +369,10 @@ namespace EventBot.Entities.Service
                         EventName = n.Event.Title,
                         IsRead = n.IsRead,
                         OriginalStartDate = n.OriginalStartDate,
-                        Type = n.Type})
+                        EventType = n.Type,
+                        EventId = n.Event.Id,
+                        
+                    })
                     .ToList();                  
             }
         }

@@ -12,9 +12,10 @@ namespace EventBot.Entities.Service.Models
     {
         public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        public NotificationType Type { get; set; }
+        public NotificationType EventType { get; set; }
         public DateTime? OriginalStartDate { get; set; }
         public string EventName { get; set; }
+        public int EventId { get; set; }
         //public virtual User User { get; set; }
         public bool IsRead { get; set; }
     }

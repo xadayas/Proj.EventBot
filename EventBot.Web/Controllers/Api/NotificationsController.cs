@@ -39,10 +39,10 @@ namespace EventBot.Web.Controllers.Api
             return Ok();
         }
         [HttpPost]
-        public IHttpActionResult MarkSingleAsRead(int id)
+        public IHttpActionResult MarkSingleAsRead(int notId)
         {
             var user = User.Identity.GetUserId();
-            _eventService.MarkNotificationAsRead(id,user);
+            _eventService.MarkNotificationAsRead(notId,user);
 
             return Ok();
         }
