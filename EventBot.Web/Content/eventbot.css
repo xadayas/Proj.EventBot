@@ -11,21 +11,24 @@ form {
 
 .form-horizontal {
     max-width: 700px;
-    margin: 0;
+    margin: 10px;
     padding: 0;
     box-sizing: border-box;
+    position: relative;
 }
 
     .form-horizontal .form-group {
         margin-left: 0;
         margin-right: 0;
         box-sizing: border-box;
+        text-align: center;
     }
 
 .col-md-12 {
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
+    text-align: center;
 }
 
 hr {
