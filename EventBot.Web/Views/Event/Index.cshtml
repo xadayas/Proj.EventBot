@@ -3,17 +3,34 @@
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
+<h2></h2>
 
-@using (Ajax.BeginForm("Search", "Event", new AjaxOptions
-{
-    HttpMethod = "GET",
-    UpdateTargetId = "EventTable"
-}))
-{
-    <input type="text" name="query" />
-    <input type="submit" value="Search" />
-}
+@*@using (Ajax.BeginForm("Search", "Event", new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "EventTable",
+
+    }))
+    {*@
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="text" class="form-control" id="query" placeholder="Ange sökord."/>
+        </div>
+    </div>
+    @*<div class="form-group">
+        <div class="col-md-12">
+            <input type="button" class="btn btn-default" id="eventSearchButton" value="Search" />
+        </div>
+    </div>*@
+</div>
+
+@*}*@
+
 <div id="EventTable">
 
 </div>
+
+@section scripts{
+    <script src="~/Scripts/eventsearch.js"></script>
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventBot.Entities.Service;
@@ -55,7 +56,7 @@ namespace EventBot.Web.Controllers
                 Id = s.Id,
                 Name = s.Name
             });
-                EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
+            EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             Session["imageUploadEventSave"] = null;
             if (model == null) model = new EventViewModel();
             return View(model);
@@ -86,10 +87,10 @@ namespace EventBot.Web.Controllers
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude
                 },
-                EventTypes = model.EventTypes.Select(s=>new EventTypeModel
+                EventTypes = model.EventTypes.Select(s => new EventTypeModel
                 {
-                    Id=s,
-                    Name = eventTypes.FirstOrDefault(f=>f.Id==s)?.Name??""
+                    Id = s,
+                    Name = eventTypes.FirstOrDefault(f => f.Id == s)?.Name ?? ""
                 }).ToArray(),
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
@@ -102,13 +103,22 @@ namespace EventBot.Web.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_service.GetEvent(id));
+            var editEvent = _service.GetEvent(id);
+            if (editEvent.UserId == User.Identity.GetUserId())
+                return View(editEvent);
+            else
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
         }
 
         // POST: Event/Edit/5
         [HttpPost]
         public ActionResult Edit(EventModel model)
         {
+
+            var originalEvent = _service.GetEvent(model.Id);
+            if (originalEvent==null||originalEvent.UserId!=User.Identity.GetUserId())
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
+
             if (!ModelState.IsValid)
                 return View(model);
             model.UserId = User.Identity.GetUserId();
