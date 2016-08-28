@@ -15,9 +15,9 @@ $(document).ready(function () {
     });
 });
 function checkIsAttending(eventId) {
+    if (eventId == null)return;
     $.getJSON('/participants/isattending/' + eventId, function (attendStatus) {
         IsAttending = attendStatus.Attending;
-        console.log(attendStatus);
         var jl = IsAttending ? "Leave" : "Join";
         $("#bt").val(jl);
     });

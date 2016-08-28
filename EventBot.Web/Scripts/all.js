@@ -3,12 +3,11 @@
         if (notifications.length == 0)
             return;
 
-        console.log(notifications);
+
         $(".js-notification-count")
             .text(notifications.length)
             .removeClass("hide")
             .addClass("animated bounceInDown");
-        console.log("end of method");
 
         $(".notifications").popover({
             html: true,

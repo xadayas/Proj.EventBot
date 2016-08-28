@@ -66,9 +66,7 @@
 <script type="text/x-template" id="notifications-template">
         <ul class="notifications">
             <%
-            console.log(notifications);
             _.each(notifications, function(notification){
-            console.log(notification);
             if (notification.eventType == 1) { %>
             <li>Planerade aktiviteten <span class="highlight"><%= notification.eventName %></span> som var planerad <%= moment(notification.dateTime).format("D MMM HH:mm") %> är tyvärr inställd.</li>
             <% }

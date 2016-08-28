@@ -4,7 +4,6 @@
     var fileUploadButton = document.getElementById('fileUploadButton');
 
     formData.append('file', fileUpload.files[0]);
-    console.log(fileUpload.files[0]);
     fileUploadButton.value = "Uploading....";
     
     var imgId = document.getElementById('EventImage');
@@ -23,7 +22,6 @@
 }
 
 $('#EventImageLink').click(() => {
-    console.log("ODG!");
     var title = $('#titleInput').val();
     var desc = $('#descriptionInput').val();
     var place = $('#meetingPlaceInput').val();
@@ -32,7 +30,6 @@ $('#EventImageLink').click(() => {
 
     var link = $('#EventImageLink').prop('href');
 
-    console.log(start);
     link = link.replace("titleText", title);
     link = link.replace("descriptionText", desc);
     link = link.replace("meetingPlaceText", place);
@@ -64,8 +61,6 @@ window.addEventListener("load", () => {
        };
 
     autocomplete = new google.maps.places.Autocomplete(input, options);
-    console.log(autocomplete);
-    console.log(input);
    });
   
 
