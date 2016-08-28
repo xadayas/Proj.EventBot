@@ -393,6 +393,7 @@ namespace EventBot.Entities.Service
                         EventName = n.Event.Title,
                         IsRead = n.IsRead,
                         OriginalStartDate = n.OriginalStartDate,
+                        StartDate = n.StartDate,
                         EventType = n.Type,
                         EventId = n.Event.Id,
 
