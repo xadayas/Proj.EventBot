@@ -47,7 +47,7 @@ $('.datetimefield').AnyPicker({
     mode: "datetime",
     dateTimeFormat: "yyyy-MM-dd HH:mm",
     showComponentLabel: true,
-    parent: "div.container-fluid",
+    parent: "div.form-horizontal",
     layout: "fixed",
     vAlign:"top"
 });
