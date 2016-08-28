@@ -47,7 +47,7 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-live-search="true" data-mobile="" data-title="Kategorier">
+                <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
                     @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
                     {
                         <option value="@item.Id">@item.Name</option>
