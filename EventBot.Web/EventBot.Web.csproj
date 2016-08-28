@@ -211,7 +211,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\all-underscore.js" />
     <Content Include="Scripts\all.js" />
     <Content Include="Scripts\anypicker.js" />
     <Content Include="Scripts\bootstrap-select.js" />

@@ -13,6 +13,7 @@ namespace EventBot.Entities.Models
         public DateTime DateTime { get; set; }
         public NotificationType Type { get; set; }
         public DateTime? OriginalStartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }
         public bool IsRead { get; set; }

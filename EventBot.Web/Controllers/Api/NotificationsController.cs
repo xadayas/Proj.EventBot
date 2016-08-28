@@ -31,24 +31,24 @@ namespace EventBot.Web.Controllers.Api
             return notification;
         }
 
-        //[HttpPost]
-        //public IHttpActionResult MarkAllAsRead()
-        //{
-        //    var user = User.Identity.GetUserId();
-        //    _eventService.MarkAllNotificationsAsRead(user);
-
-        //    return Ok();
-        //}
         [HttpPost]
-        public IHttpActionResult MarkSingleAsRead(int id)
+        public IHttpActionResult MarkAllAsRead()
         {
-            //int notId;
-            //Int32.TryParse(id, out notId);
-            if(id==0)return NotFound();
             var user = User.Identity.GetUserId();
-            _eventService.MarkNotificationAsRead(id,user);
+            _eventService.MarkAllNotificationsAsRead(user);
 
             return Ok();
         }
+        //[HttpPost]
+        //public IHttpActionResult MarkSingleAsRead(int id)
+        //{
+        //    //int notId;
+        //    //Int32.TryParse(id, out notId);
+        //    if(id==0)return NotFound();
+        //    var user = User.Identity.GetUserId();
+        //    _eventService.MarkNotificationAsRead(id,user);
+
+        //    return Ok();
+        //}
     }
 }
