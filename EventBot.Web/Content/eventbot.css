@@ -34,14 +34,31 @@ hr {
     margin: 19px 0;
 }
 
-img#EventImage {
+/*img#EventImage {
     height: 299px;
     width: auto;
     display: block;
     margin: 0 auto;
-    padding: 70px 60px;
+}*/
+img#EventImage {
+    position: absolute;
+    display: block;
+    
+    left: 50%;
+    top: 190px;
+    max-height: 299px;
+    max-width: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
+div.eventBot-img-container {
+    height: 299px;
+    width: 100%;
+}
 input.form-control {
     padding: 0 20px;
     text-align: center;
@@ -123,72 +140,79 @@ input.btn {
     }
 
 
-    /* Select box */
-    .bootstrap-select.btn-group .dropdown-toggle span.filter-option {
-        text-align: center;
-        display: block;
-        margin: 0 auto;
-    }
-    .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default {
-        width: 100%;
-        padding-left:0;
-        padding-right:0;
-        margin: 0;
-        border: none;
-        outline: none;
-        background-color: transparent;
-    }
-    button.btn-default {
-        background-color: transparent;
-        border-color: transparent;
-    }
+/* Select box */
+.bootstrap-select.btn-group .dropdown-toggle span.filter-option {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+button.btn-default {
+    background-color: transparent;
+    border-color: transparent;
+}
+
     button.btn-default:hover {
         background-color: transparent;
         border-color: transparent;
     }
+
     button.btn-default:focus {
         background-color: transparent;
         border-color: transparent;
     }
 
-    .bootstrap-select button.btn.btn-default.dropdown-toggle:focus {
-        outline: none !important;
-        background-color: transparent;
+.bootstrap-select button.btn.btn-default.dropdown-toggle:focus {
+    outline: none !important;
+    background-color: transparent;
 }
-    .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default:hover {
-        outline: none;
-        box-shadow: none;
-        background-color: transparent;
-    }
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder.btn-default:hover {
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+}
 
 
-    div.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
+div.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
 /* Event details */
 h1 {
     text-align: center;
 }
+
 p {
     text-align: center;
 }
+
 .img-fade-container {
-
     margin-bottom: -100px;
-  }
-
-.img-fade-container:after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 70%;
-  bottom: 0;
-  background: -webkit-linear-gradient(transparent, #FFF) left repeat;
-  background: linear-gradient(transparent, #FFF) left repeat; 
 }
+
+    .img-fade-container:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        bottom: 0;
+        background: -webkit-linear-gradient(transparent, #FFF) left repeat;
+        background: linear-gradient(transparent, #FFF) left repeat;
+    }
+
 #staticMapImage {
     width: 100%;
     height: auto;
@@ -196,21 +220,31 @@ p {
 
 .circle {
     position: absolute;
-    top: 35%;
-    left: 40%;
-    margin:  auto;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    /*margin:  auto;*/
     padding: 0;
     width: 70px;
-      height: 70px;
-      -webkit-border-radius: 35px;
-      -moz-border-radius: 35px;
-      border-radius: 35px;
-      background: #ff5c47;
-      
+    height: 70px;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    -ms-border-radius: 35px;
+    border-radius: 35px;
+    background: #ff5c47;
 }
+.circle.circle-fixed {
+    position: fixed;
+    bottom: 0px;
+    top: auto;
 
-.circle p {
-    position: absolute;
-    top: 35%;
-    left: 15%;    
 }
+    .circle p {
+        position: absolute;
+        top: 35%;
+        left: 15%;
+    }
