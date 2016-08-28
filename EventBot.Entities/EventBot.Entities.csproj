@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201608272141311_kopplingstabeller.Designer.cs">
       <DependentUpon>201608272141311_kopplingstabeller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608281207380_AddedStartDateToNotification.cs" />
+    <Compile Include="Migrations\201608281207380_AddedStartDateToNotification.Designer.cs">
+      <DependentUpon>201608281207380_AddedStartDateToNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
@@ -91,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608272141311_kopplingstabeller.resx">
       <DependentUpon>201608272141311_kopplingstabeller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281207380_AddedStartDateToNotification.resx">
+      <DependentUpon>201608281207380_AddedStartDateToNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

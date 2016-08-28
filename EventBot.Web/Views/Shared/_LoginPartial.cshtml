@@ -10,17 +10,19 @@
             <li class="notifications">
                 <a href="#">
                     <i class="glyphicon glyphicon-globe"></i>
-                    <span id="notificationsbadge" class="badge js-notification-count animated bounce"></span>
+                    <span class="badge js-notification-count hide"></span>
                 </a>
             </li>
-
-            <li>
-                <a href="/Manage"><span class="glyphicon glyphicon-user"></span> @User.Identity.GetUserName()</a>
-
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName() <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("UserEvents", "Event")">Mina kommande aktiviteter</a></li>
+                    <li><a href="@Url.Action("UserEvents", "Event")">Kommande aktiviterer jag skapat</a></li>
+                    <li><a href="@Url.Action("Index", "Manage")">Konto inställningar</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+                </ul>
             </li>
-
-            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-in"></span> Log off</a></li>
-
         </ul>
     }
 }

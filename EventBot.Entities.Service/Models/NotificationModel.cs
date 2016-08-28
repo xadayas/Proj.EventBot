@@ -14,6 +14,7 @@ namespace EventBot.Entities.Service.Models
         public DateTime DateTime { get; set; }
         public NotificationType EventType { get; set; }
         public DateTime? OriginalStartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public string EventName { get; set; }
         public int EventId { get; set; }
         //public virtual User User { get; set; }

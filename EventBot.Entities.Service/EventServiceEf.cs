@@ -18,8 +18,12 @@ namespace EventBot.Entities.Service
             {
                 var notificationType = NotificationType.EventCreated;
                 var even = db.Events.FirstOrDefault(e => e.Id == model.Id) ?? new Event();
+                var originalDateTime = model.StartDate;
                 if (even.Id != 0)
+                {
                     notificationType = NotificationType.EventUpdated;
+                    originalDateTime = even.StartDate;
+                }
                 even.Id = model.Id;
                 even.Title = model.Title;
                 even.Description = model.Description;
@@ -51,7 +55,7 @@ namespace EventBot.Entities.Service
                     notificationType = NotificationType.EventCanceled;
                 db.Events.AddOrUpdate(even);
                 if (notificationType == NotificationType.EventUpdated || notificationType == NotificationType.EventCanceled)
-                    CreateEventNotification(db, even, notificationType);
+                    CreateEventNotification(db, even, notificationType, originalDateTime);
                 db.SaveChanges();
                 model.Id = even.Id;
             }
@@ -434,7 +438,7 @@ namespace EventBot.Entities.Service
                 }
             }
         }
-        private void CreateEventNotification(EventBotDb db, Event e, NotificationType type)
+        private void CreateEventNotification(EventBotDb db, Event e, NotificationType type, DateTime originalDateTime)
         {
             var eventUsers = e.Users;
             foreach (var eventUser in eventUsers)
@@ -443,7 +447,8 @@ namespace EventBot.Entities.Service
                 {
                     DateTime = DateTime.Now,
                     Event = e,
-                    OriginalStartDate = e.StartDate,
+                    StartDate = e.StartDate,
+                    OriginalStartDate = originalDateTime,
                     Type = type,
                     User = eventUser
                 });

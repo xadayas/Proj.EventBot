@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -62,11 +63,33 @@
         @Scripts.Render("~/bundles/jqueryval")
         @RenderSection("scripts", required: false)
         <!-- Single button -->
+    <script type="text/x-template" id="notifications-template">
+        <ul class="notifications">
+            <%
+            _.each(notifications, function(notification){
+            if (notification.type == 1) { %>
+            <li>Planerade aktiviteten <span class="highlight"><%= notification.eventName %></span> som var planerad <%= moment(notification.dateTime).format("D MMM HH:mm") %> är tyvärr inställd.</li>
+            <% }
+            else if (notification.type == 2) {
+            var changes = [],
+            originalValues = [],
+            newValues = [];
 
-
-        <script src="~/Scripts/all-underscore.js" type="text/x-template" id="notifications-template">
-        </script>
-
+            if (notification.originalStartDate != notification.startDate) {
+            changes.push('datum/tid');
+            originalValues.push(moment(notification.originalStartDate).format("D MMM HH:mm"));
+            newValues.push(moment(notification.startDate).format("D MMM HH:mm"));
+            %>
+            <li><span class="highlight"><%= notification.eventName %></span> har ändrat <%= changes.join(' and ') %> från <%= originalValues.join('/') %> till <%= newValues.join('/') %></li>
+            <%}
+            else {%>
+            <li><span class="highlight"><%= notification.eventName %></span> har uppdaterat aktiviteten som är planerad <%= moment(notification.startDate).format("D MMM HH:mm") %>.</li>
+            <%}
+            }
+            })%>
+            <li><a href="#">Visa alla</a></li>
+        </ul>
+    </script>
 <script src="~/Scripts/all.js"></script>
 <script src="~/Scripts/details.js"></script>
 
