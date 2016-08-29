@@ -66,6 +66,7 @@ $(document).ready(function () {
 });
 
 function UpdateNotifications() {
+    $('#notcontent').text('');
     $.each(MyNotifications, function (i, item) {
         if (item.eventType==1) {
             $('#notcontent').append('<li onClick="OnNotificationClicked(' +item.id +','+ item.eventId+');">Planerade aktiviteten <span class="highlight">'+ item.eventName +'</span> som var planerad '+ moment(item.dateTime).format("D MMM HH:mm")+ ' är tyvärr inställd.</li>');
