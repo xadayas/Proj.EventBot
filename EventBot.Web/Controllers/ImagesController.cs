@@ -19,7 +19,7 @@ namespace EventBot.Web.Controllers
         public void View(int id)
         {
             //TODO better way to fetch default image if id==0
-            var imageBytes = _service.GetImage(id==0?6:id);
+            var imageBytes = _service.GetImage(id == 0 ? 6 : id);
 
             var ms = new MemoryStream(imageBytes);
             Response.ContentType = "Image/Png";
@@ -28,17 +28,18 @@ namespace EventBot.Web.Controllers
 
 
 
-        public ActionResult Upload(string title,string description, string meetingPlace,string startDate,string endDate)
+        public ActionResult Upload(string title, string description, string meetingPlace, string startDate, string endDate, int returnto)
         {
             DateTime parsedStartDate, parsedEndDate;
             DateTime.TryParse(startDate, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces,
                 out parsedStartDate);
             DateTime.TryParse(endDate, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces,
                 out parsedEndDate);
-            Session["imageUploadEventSave"]= new EventViewModel {Title = title,Description = description,Location = new LocationViewModel { Name = meetingPlace},StartDate = parsedStartDate,EndDate = parsedEndDate};
+            if (returnto != 0) Session["ReturnToEditId"] = returnto;
+            Session["imageUploadEventSave"] = new EventViewModel { Title = title, Description = description, Location = new LocationViewModel { Name = meetingPlace }, StartDate = parsedStartDate, EndDate = parsedEndDate };
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -46,11 +47,19 @@ namespace EventBot.Web.Controllers
             {
                 var ms = new MemoryStream();
                 file.InputStream.CopyTo(ms);
-                var imageId =_service.CreateImage(ms.ToArray());
+                var imageId = _service.CreateImage(ms.ToArray());
+                if (Session["ReturnToEditId"] is int)
+                {
+                    Session["imageUploadEventSave"] = null;
+                    Session["EditImageId"] = imageId;
+                    var eventId = (int)Session["ReturnToEditId"];
+                    Session["ReturnToEditId"] = null;
+                    return RedirectToAction("Edit", "Event",new {id=eventId});
+                }
                 var model = Session["imageUploadEventSave"] as EventViewModel;
                 if (model != null) model.ImageId = imageId;
             }
-            return RedirectToAction("Create","Event");
+            return RedirectToAction("Create", "Event");
             //return View();
         }
         [HttpPost]
@@ -61,7 +70,7 @@ namespace EventBot.Web.Controllers
             {
                 var ms = new MemoryStream();
                 file.InputStream.CopyTo(ms);
-                id=_service.CreateImage(ms.ToArray());
+                id = _service.CreateImage(ms.ToArray());
             }
             return Content(id.ToString());
         }

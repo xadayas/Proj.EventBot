@@ -13,7 +13,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group eventBot-img-container">
-            <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText"}) id="EventImageLink">
+            <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=@Model.Id}) id="EventImageLink">
                 <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
             </a>
         </div>
@@ -66,7 +66,15 @@
                 <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
                     @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
                     {
-                        <option value="@item.Id">@item.Name</option>
+                        if (Model.EventTypes.Contains(item.Id))
+                        {
+                            <option selected value="@item.Id">@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.EventTypes, "", new {@class = "text-danger"})
@@ -85,7 +93,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
     </div>

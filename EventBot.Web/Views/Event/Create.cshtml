@@ -14,7 +14,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group eventBot-img-container">
-            <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText"}) id="EventImageLink">
+            <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=0}) id="EventImageLink">
                 <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
             </a>
         </div>

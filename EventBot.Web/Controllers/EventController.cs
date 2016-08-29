@@ -103,8 +103,16 @@ namespace EventBot.Web.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
-
             var editEvent = _service.GetEvent(id);
+
+            // check if returning from image upload
+            if (Session["EditImageId"] is int)
+            {
+                editEvent.ImageId = (int)Session["EditImageId"];
+                Session["EditImageId"] = null;
+            }
+
+
             if (editEvent.UserId == User.Identity.GetUserId())
             {
                 ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
