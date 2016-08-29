@@ -11,7 +11,7 @@ form {
 
 .form-horizontal {
     max-width: 700px;
-    margin: 10px;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     position: relative;
@@ -29,6 +29,7 @@ form {
     padding-right: 0;
     box-sizing: border-box;
     text-align: center;
+    margin: 0 auto;
 }
 
 hr {
