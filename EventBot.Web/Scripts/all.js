@@ -85,9 +85,9 @@ function UpdateNotifications() {
             } else {
                 $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');"><span class="highlight">' + item.eventName + '</span> har uppdaterat aktiviteten som är planerad ' + moment(item.startDate).format("D MMM HH:mm") + '.</li>');
             }
-         
-        }   
-       
+            $('#notcontent').append('<hr>');
+        }
+        $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
     });
 }
 
@@ -97,6 +97,18 @@ function OnNotificationClicked(notId, eventId) {
                 .done(function () {
                     window.location = "/event/details/" + eventId;
                 });
+}
+function MarkAllAsRead() {
+        $.post("/api/Notifications/MarkAllAsRead")
+                .done(function () {
+                    $("#notificationsbadge")
+                        .text("")
+                        .addClass("hide");
+                $('.notifications').popover('disable');
+                MyNotifications = "";
+                    $('#notcontent').text('');
+                $('#notificationsbadge').click();
+            });
 }
 function NotificationTypeToString(ntype) {
     

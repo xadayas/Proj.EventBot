@@ -31,14 +31,14 @@ namespace EventBot.Web.Controllers.Api
             return notification;
         }
 
-        //[HttpPost]
-        //public IHttpActionResult MarkAllAsRead()
-        //{
-        //    var user = User.Identity.GetUserId();
-        //    _eventService.MarkAllNotificationsAsRead(user);
+        [HttpPost]
+        public IHttpActionResult MarkAllAsRead()
+        {
+            var user = User.Identity.GetUserId();
+            _eventService.MarkAllNotificationsAsRead(user);
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
         [HttpPost]
         public IHttpActionResult MarkSingleAsRead(int id)
         {
