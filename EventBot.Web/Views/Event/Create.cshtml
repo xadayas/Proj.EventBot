@@ -2,7 +2,7 @@
 @using ModelBinderAttribute = System.Web.Http.ModelBinding.ModelBinderAttribute
 @model EventBot.Web.Models.EventViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Skapa Aktivitet";
 }
 
 
@@ -15,70 +15,74 @@
 
         <div class="form-group eventBot-img-container">
             <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText"}) id="EventImageLink">
-                <img src="/Images/View/@Html.Raw(Model.ImageId)" class="control-label col-md-12" id="EventImage" />
+                <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
             </a>
         </div>
         @Html.HiddenFor(model => model.ImageId)
-        <hr />
+        <hr class="eventbot-divider"/>
         <div class="form-group">
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Rubrik", id = "titleInput" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @Html.Label("Rubrik", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control", PlaceHolder = "Rubrik", id = "titleInput"}})
+                @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
             </div>
         </div>
-        <hr />
+        <hr class="eventbot-divider" />
         <div class="form-group">
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Beskrivning", id = "descriptionInput" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            @Html.Label("Beskrivning", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control", PlaceHolder = "Beskrivning", id = "descriptionInput"}})
+                @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
             </div>
         </div>
-        <hr />
+        <hr class="eventbot-divider" />
 
 
 
         <div class="form-group">
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Location.Name, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Plats", id = "meetingPlaceInput" } })
-                @Html.ValidationMessageFor(model => model.Location.Name, "", new { @class = "text-danger" })
+            @Html.Label("Plats", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Location.Name, new {htmlAttributes = new {@class = "form-control", PlaceHolder = "Plats", id = "meetingPlaceInput"}})
+                @Html.ValidationMessageFor(model => model.Location.Name, "", new {@class = "text-danger"})
             </div>
         </div>
-        <hr />
+        <hr class="eventbot-divider" />
 
         <div class="form-group">
-            <div class="col-md-12">
+            @Html.Label("Kategorier", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
                     @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
                 </select>
-                @Html.ValidationMessageFor(model => model.EventTypes, "", new { @class = "text-danger" })
-            </div>
-            @*<div class="test">
-                    @Html.DropDownListFor(model=>model.EventTypes,((IEnumerable<EventTypeViewModel>)ViewBag.EventTypes??new List<EventTypeViewModel>()).Select(s=>new SelectListItem {Text = s.Name,Value = s.Id.ToString()}),new {@class="select-multiple selectpicker", data_mobile="",data_title="Kategorier",data_live_search="true", multiple=""})
-                </div>*@
-        </div>
-        <hr />
-
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datetimefield", id = "startDateInput", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.EventTypes, "", new {@class = "text-danger"})
             </div>
         </div>
-        <hr />
+        <hr class="eventbot-divider"/>
 
         <div class="form-group">
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datetimefield", id = "endDateInput", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            @Html.Label("Börjar", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "startDateInput", @readonly = true}})
+                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <hr class="eventbot-divider" />
+
+        <div class="form-group">
+            @Html.Label("Slutar", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "endDateInput", @readonly = true}})
+                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
 
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-12">
+            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lägg till" class="btn btn-default" />
             </div>
         </div>

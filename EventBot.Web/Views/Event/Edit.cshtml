@@ -1,104 +1,80 @@
-﻿@model EventBot.Entities.Service.Models.EventModel
+﻿@using EventBot.Web.Models
+@model EventBot.Web.Models.EventViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Ändra Aktivitet";
 }
-
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>EventModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
+        <div class="form-group eventBot-img-container">
+            <a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText"}) id="EventImageLink">
+                <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
+            </a>
+        </div>
+        @Html.HiddenFor(model => model.ImageId)
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Rubrik", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <hr class="eventbot-divider" />
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Beskrivning", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <hr class="eventbot-divider" />
         <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Börjar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "startDateInput", @readonly = true}})
+                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
             </div>
         </div>
+        <hr class="eventbot-divider" />
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Slutar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "endDateInput", @readonly = true}})
+                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.ModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.VisitCount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VisitCount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VisitCount, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
+        <hr class="eventbot-divider" />
         <div class="form-group">
-            @Html.LabelFor(model => model.MeetingPlace, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Plats", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MeetingPlace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MeetingPlace, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Location.Name, new {htmlAttributes = new {@class = "form-control", PlaceHolder = "Plats", id = "meetingPlaceInput"}})
+                @Html.ValidationMessageFor(model => model.Location.Name, "", new {@class = "text-danger"})
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.ImageId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
+        <hr class="eventbot-divider" />
         <div class="form-group">
-            @Html.LabelFor(model => model.IsCanceled, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Kategorier", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
+                    @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.EventTypes, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <hr class="eventbot-divider" />
+        <div class="form-group">
+            @Html.Label("Inställt", htmlAttributes: new { @class = "control-label cancel-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.IsCanceled)
@@ -116,9 +92,12 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "UserEvents")
+    @Html.ActionLink("Tillbaka", "UserEvents",null,new {@class="back-link"})
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU&libraries=places"></script>
+    <script src="~/Scripts/CreateEvent.js"></script>
+
 }

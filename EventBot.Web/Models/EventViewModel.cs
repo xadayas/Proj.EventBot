@@ -27,6 +27,7 @@ namespace EventBot.Web.Models
         public DateTime StartDate { get; set; } = DateTime.Now;
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}",ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; } =DateTime.Now;
+        public bool IsCanceled { get; set; }
     }
 
     public class LocationViewModel

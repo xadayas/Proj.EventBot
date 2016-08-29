@@ -103,34 +103,83 @@ namespace EventBot.Web.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
+
             var editEvent = _service.GetEvent(id);
             if (editEvent.UserId == User.Identity.GetUserId())
-                return View(editEvent);
+            {
+                ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                });
+                var editEventViewModel = new EventViewModel
+                {
+                    Id = editEvent.Id,
+                    Title = editEvent.Title,
+                    Description = editEvent.Description,
+                    StartDate = editEvent.StartDate,
+                    EndDate = editEvent.EndDate,
+                    ImageId = editEvent.ImageId,
+                    UserId = editEvent.UserId,
+                    IsCanceled = editEvent.IsCanceled,
+                    EventTypes = editEvent.EventTypes.Select(s=>s.Id).ToArray(),
+                    Location = new LocationViewModel
+                    {
+                        Id = editEvent.Location.Id,
+                        Name = editEvent.Location.Name,
+                        Latitude = editEvent.Location.Latitude,
+                        Longitude = editEvent.Location.Longitude,
+                        Altitude = editEvent.Location.Altitude
+                    }
+                };
+                return View(editEventViewModel);
+            }
             else
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
         }
 
         // POST: Event/Edit/5
         [HttpPost]
-        public ActionResult Edit(EventModel model)
+        public ActionResult Edit(EventViewModel model)
         {
-
+            // Check that user owns the event
             var originalEvent = _service.GetEvent(model.Id);
             if (originalEvent==null||originalEvent.UserId!=User.Identity.GetUserId())
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
-
             if (!ModelState.IsValid)
                 return View(model);
             model.UserId = User.Identity.GetUserId();
-            var location = GeoCode.GoogleGeoCode(model.MeetingPlace).FirstOrDefault() ?? new LocationViewModel { Name = model.MeetingPlace };
-            model.Location = new LocationModel
+            // get latitude and longitude
+            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+
+            var eventTypes = _service.GetEventTypes();
+            //translate to dto
+            var editedEvent = new EventModel
             {
-                Id = location.Id,
-                Name = location.Name,
-                Longitude = location.Longitude,
-                Latitude = location.Latitude
+                UserId = model.UserId,
+                Id=model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                ImageId = model.ImageId,
+                IsCanceled = model.IsCanceled,
+                MeetingPlace = model.Location.Name,
+                Location = new LocationModel
+                {
+                    Id = model.Location.Id,
+                    Latitude = model.Location.Latitude,
+                    Longitude = model.Location.Longitude,
+                    Altitude = model.Location.Altitude,
+                    Name = model.Location.Name
+                },
+                EventTypes = model.EventTypes.Select(s => new EventTypeModel
+                {
+                    Id = s,
+                    Name = eventTypes.FirstOrDefault(f => f.Id == s)?.Name ?? ""
+                }).ToArray()
             };
-            _service.CreateOrUpdateEvent(model);
+            _service.CreateOrUpdateEvent(editedEvent);
             return RedirectToAction("UserEvents");
         }
 
