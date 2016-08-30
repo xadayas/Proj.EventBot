@@ -18,6 +18,8 @@ namespace EventBot.Entities.Models
         public Location Location { get; set; }
         public EventBotImage Image { get; set; }
         public bool IsCanceled { get; set; }
+        public Decimal ParticipationCost { get; set; }
+        public int MaxAttendees { get; set; }
         public virtual ICollection<EventType> EventTypes { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

@@ -33,6 +33,8 @@ namespace EventBot.Entities.Service
                 even.StartDate = model.StartDate;
                 even.EndDate = model.EndDate;
                 even.IsCanceled = model.IsCanceled;
+                even.ParticipationCost = model.ParticipationCost;
+                even.MaxAttendees = model.MaxAttendees;
                 even.Image = model.ImageId == 0 ? null : db.Images.FirstOrDefault(w => w.Id == model.ImageId);
                 even.MeetingPlace = model.MeetingPlace;
                 even.VisitCount = model.VisitCount;

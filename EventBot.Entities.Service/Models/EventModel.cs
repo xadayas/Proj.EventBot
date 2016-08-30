@@ -17,17 +17,17 @@ namespace EventBot.Entities.Service.Models
         public DateTime EndDate { get; set; }
 
         public string UserId { get; set; }
-        //public User Organiser { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public long VisitCount { get; set; }
         public string MeetingPlace { get; set; }
+        public Decimal ParticipationCost { get; set; }
+        public int MaxAttendees { get; set; }
         public LocationModel Location { get; set; }
+        
 
         public int ImageId { get; set; }
-        // public EventBotImage Image { get; set; }
         public bool IsCanceled { get; set; }
         public virtual ICollection<EventTypeModel> EventTypes { get; set; }
-        //public virtual ICollection<EventUser> Users { get; set; }
     }
 }
