@@ -81,6 +81,8 @@ namespace EventBot.Web.Controllers
                 UserId = model.UserId,
                 Title = model.Title,
                 Description = model.Description,
+                ParticipationCost = model.ParticipationCost,
+                MaxAttendees = model.MaxAttendees,
                 Location = new LocationModel
                 {
                     Name = model.Location.Name,
@@ -130,6 +132,8 @@ namespace EventBot.Web.Controllers
                     ImageId = editEvent.ImageId,
                     UserId = editEvent.UserId,
                     IsCanceled = editEvent.IsCanceled,
+                    ParticipationCost = editEvent.ParticipationCost,
+                    MaxAttendees = editEvent.MaxAttendees,
                     EventTypes = editEvent.EventTypes.Select(s=>s.Id).ToArray(),
                     Location = new LocationViewModel
                     {
@@ -173,6 +177,8 @@ namespace EventBot.Web.Controllers
                 ImageId = model.ImageId,
                 IsCanceled = model.IsCanceled,
                 MeetingPlace = model.Location.Name,
+                ParticipationCost = model.ParticipationCost,
+                MaxAttendees = model.MaxAttendees,
                 Location = new LocationModel
                 {
                     Id = model.Location.Id,

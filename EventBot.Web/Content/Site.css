@@ -128,8 +128,23 @@ body {
 }
 
 .events-menu > li > a {
-    background: #000); /* Standard syntax */
+    background: #000; /* Standard syntax */
     color:white;
 }
 
 
+a.classname
+{
+    background: url(/Content/logo-small.png) no-repeat top left;
+     display: block;
+    margin-top: 14px;
+    margin-left: 30px;
+     width: 150px;
+     height: 30px;
+     text-indent: -9999px; /* hides the link text */
+}
+
+.navbar-default {
+  background-color: #fff;
+  border-color: #e7e7e7;
+}
