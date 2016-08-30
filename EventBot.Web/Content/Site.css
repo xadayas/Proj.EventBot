@@ -1,5 +1,14 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
 
+html {
+   box-sizing: border-box;
+   /*padding: (Vad som passar)*/
+}
+
+*, *:before, *:after {
+   box-sizing:inherit;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -132,18 +141,20 @@ body {
     color:white;
 }
 
-
-a.classname
+.eventius-logo
 {
     background: url(/Content/logo-small.png) no-repeat top left;
-     display: block;
+     display: inline-block;
     margin-top: 14px;
     margin-left: 30px;
      width: 150px;
      height: 30px;
      text-indent: -9999px; /* hides the link text */
 }
-
+.logo-holder {
+    display: inline-block;
+    margin-top: 0;
+}
 .navbar-default {
   background-color: #fff;
   border-color: #e7e7e7;

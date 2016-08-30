@@ -22,10 +22,19 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    @*@Html.ActionLink("eventius", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @id = "grad" })*@
-                    <div>
-                        @Html.ActionLink("Button Name", "Index", "Home", null, new { @class = "classname" })
+                    @Html.ActionLink("Button Name", "Index", "Home", null, new {@class = "eventius-logo navbar-brand"})
+                    
+                    <div class="notifications-container">
+                        <ul class="nav navbar-nav">
+                            <li class="notifications">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-globe"></i>
+                                    <span id="notificationsbadge" class="badge js-notification-count hide"></span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+                    
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
