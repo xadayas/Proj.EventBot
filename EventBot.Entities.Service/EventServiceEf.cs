@@ -273,7 +273,7 @@ namespace EventBot.Entities.Service
             }
         }
 
-        public ICollection<EventModel> SearchEvents(string query, string location = null)
+        public ICollection<EventModel> SearchEvents(string query,int maxCost=-1,int minFreePlaces=0, string location = null)
         {
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
@@ -282,13 +282,16 @@ namespace EventBot.Entities.Service
             {
                 return db.Events
                     .Where(w => w.StartDate > DateTime.Now)
-                    .Where(w => queryEmpty
+                    .Where(w => (queryEmpty
                                || w.Title.ToLower().Contains(queryLowerCase)
                                || w.Description.ToLower().Contains(queryLowerCase)
-                               || w.MeetingPlace.ToLower().Contains(queryLowerCase)
+                               || w.MeetingPlace.ToLower().Contains(queryLowerCase))
                                && (locationEmpty
                                    || w.MeetingPlace.ToLower() == location.ToLower()
                                    )
+                                   && (maxCost<0
+                                   ||w.ParticipationCost<=maxCost)
+                                   &&((w.MaxAttendees-w.Users.Count)>=minFreePlaces)
                     )
                     .Select(o => new
                     {

@@ -40,13 +40,13 @@ namespace EventBot.Web.Controllers
 
         public ActionResult Search(string query,int persons=0,int cost=Int32.MaxValue)
         {
-            var events = _service.SearchEvents(query);
-            if (persons != 0)
-            {
-                events = events.Where(w => w.MaxAttendees >= persons).ToArray();
-            }
+            var events = _service.SearchEvents(query,cost,persons);
+            //if (persons != 0)
+            //{
+            //    events = events.Where(w => w.MaxAttendees >= persons).ToArray();
+            //}
             
-                events = events.Where(w => w.ParticipationCost <= cost).ToArray();
+            //    events = events.Where(w => w.ParticipationCost <= cost).ToArray();
             
             return PartialView(events);
         }

@@ -12,25 +12,30 @@
 
     }))
     {*@
-<div class="form-horizontal">
+<div class="form-horizontal" style="margin-top: 50px;">
     <div class="form-group">
-        <div class="col-md-10 col-md-offset-2">
-            <input type="text" class="form-control" id="query" placeholder="Ange sökord." />
+        <label for="query" class="control-label col-md-2">Sök</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control search-input" id="query" placeholder="Ange sökord."/>
         </div>
-
-
-    </div>
-    <div class="form-group">
-        <label for="searchPersons" class="control-label col-md-2">Min platser</label>
-        <div class="col-md-10">
-            <input type="number" id="searchPersons" class="form-control" />
+        <div class="col-md-2">
+            <a href="#" onClick="ToggleAdvancedSearch(); return false;">Avancerad sök</a>
         </div>
     </div>
-    <div class="form-group">
-        <label for="searchOnlyFreeEvents" class="control-label col-md-2">Gratis</label>
-        <div class="col-md-10">
-            <div class="form-control">
-                <input type="checkbox" id="searchOnlyFreeEvents" />
+    <div id="advancedSearchContainer" style="display: none;">
+        <div class="form-group">
+            <label for="searchPersons" class="control-label col-md-3">Min lediga platser</label>
+            <div class="col-md-2">
+                <input type="number" id="searchPersons" class="form-control search-input" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="MaxCost" class="control-label col-md-3">Max Pris</label>
+            <div class="col-md-2">
+                <input type="number" id="MaxCost" class="form-control search-input"/>
+            </div>
+            <div class="col-md-2">
+                <input type="button"  id="freeButton" value="Visa bara gratis" onclick="CostButtonAction();"/>
             </div>
         </div>
     </div>
