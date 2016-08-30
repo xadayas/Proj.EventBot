@@ -302,6 +302,8 @@ namespace EventBot.Entities.Service
                         o.StartDate,
                         o.EndDate,
                         o.IsCanceled,
+                        o.MaxAttendees,
+                        o.ParticipationCost,
                         ImageId = o.Image == null ? 0 : o.Image.Id,
                         o.VisitCount,
                         o.EventTypes,
@@ -315,6 +317,8 @@ namespace EventBot.Entities.Service
                         CreatedDate = s.CreatedDate,
                         ModifiedDate = s.ModifiedDate,
                         MeetingPlace = s.MeetingPlace,
+                        MaxAttendees = s.MaxAttendees,
+                        ParticipationCost = s.ParticipationCost,
                         Location = new LocationModel
                         {
                             Id = s.Location.Id,

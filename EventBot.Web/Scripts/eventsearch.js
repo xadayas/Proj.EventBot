@@ -10,5 +10,11 @@
 
 function eventSearch() {
     var query = $('#query').val();
-    $('#EventTable').load('/Event/Search/', { query:query });
+    var onlyFree = $('#searchOnlyFreeEvents').prop('checked');
+    var minPlaces = $('#searchPersons').val();
+    $('#EventTable').load('/Event/Search/', {
+        query: query,
+        persons: minPlaces,
+        cost: onlyFree ? 0 : 1000000
+    });
 }

@@ -14,15 +14,31 @@
     {*@
 <div class="form-horizontal">
     <div class="form-group">
-        <div class="col-md-12">
-            <input type="text" class="form-control" id="query" placeholder="Ange sökord."/>
+        <div class="col-md-10 col-md-offset-2">
+            <input type="text" class="form-control" id="query" placeholder="Ange sökord." />
+        </div>
+
+
+    </div>
+    <div class="form-group">
+        <label for="searchPersons" class="control-label col-md-2">Min platser</label>
+        <div class="col-md-10">
+            <input type="number" id="searchPersons" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="searchOnlyFreeEvents" class="control-label col-md-2">Gratis</label>
+        <div class="col-md-10">
+            <div class="form-control">
+                <input type="checkbox" id="searchOnlyFreeEvents" />
+            </div>
         </div>
     </div>
     @*<div class="form-group">
-        <div class="col-md-12">
-            <input type="button" class="btn btn-default" id="eventSearchButton" value="Search" />
-        </div>
-    </div>*@
+            <div class="col-md-12">
+                <input type="button" class="btn btn-default" id="eventSearchButton" value="Search" />
+            </div>
+        </div>*@
 </div>
 
 @*}*@
