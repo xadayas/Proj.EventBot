@@ -99,8 +99,8 @@ function UpdateNotifications() {
         else if (item.eventType == 7) {//EventUserHasLeaved
             $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
-        $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
     });
+    $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
 }
 
 function OnNotificationClicked(notId, eventId) {
