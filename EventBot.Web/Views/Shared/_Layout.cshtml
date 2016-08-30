@@ -23,7 +23,7 @@
                     </button>
 
                     @Html.ActionLink("Button Name", "Index", "Home", null, new {@class = "eventius-logo navbar-brand"})
-                    
+                    @if (Request.IsAuthenticated) {
                     <div class="notifications-container">
                         <ul class="nav navbar-nav">
                             <li class="notifications">
@@ -34,7 +34,7 @@
                             </li>
                         </ul>
                     </div>
-                    
+                    }
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
