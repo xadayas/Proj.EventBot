@@ -185,6 +185,7 @@ namespace EventBot.Entities.Service
                 if (tempUser == null) throw new InvalidOperationException("User not found.");
                 var tempEvent = db.Events.SingleOrDefault(w => w.Id == eventId);
                 if (tempEvent == null) throw new InvalidOperationException("Event not found.");
+                var tempOwner = db.Events.Where(d => d.Id == eventId).Select(e => e.Organiser).Single();
 
                 //TODO Return something if user already joined event ? For now just return.
                 if (tempEvent == null || tempUser == null) return;
@@ -192,6 +193,9 @@ namespace EventBot.Entities.Service
                 if (!tempEvent.Users.Contains(tempUser))
                 {
                     tempEvent.Users.Add(tempUser);
+                    CreateEventNotificationForUser(db,tempEvent,tempUser,NotificationType.EventJoined, tempEvent.StartDate);
+                    if (tempOwner.Id != tempUser.Id)
+                        CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasJoined, tempEvent.StartDate);
                     db.SaveChanges();
                 }
             }
@@ -205,9 +209,12 @@ namespace EventBot.Entities.Service
                 if (tempEvent == null)
                     throw new InvalidOperationException("Event not found.");
                 var attandee = tempEvent.Users.SingleOrDefault(u => u.Id == userId);
-
+                var tempOwner = db.Events.Where(d => d.Id == eventId).Select(e => e.Organiser).Single();
                 if (attandee != null)
                 {
+                    CreateEventNotificationForUser(db, tempEvent,attandee, NotificationType.EventLeaved, tempEvent.StartDate);
+                    if (tempOwner.Id != attandee.Id)
+                        CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasLeaved, tempEvent.StartDate);
                     tempEvent.Users.Remove(attandee);
                     db.SaveChanges();
                 }
@@ -456,6 +463,18 @@ namespace EventBot.Entities.Service
             }
         }
 
+        private void CreateEventNotificationForUser(EventBotDb db, Event e, User user, NotificationType type,DateTime originalDateTime)
+        {
+            db.Notifications.AddOrUpdate(new Notification()
+            {
+                DateTime = DateTime.Now,
+                Event = e,
+                StartDate = e.StartDate,
+                OriginalStartDate = originalDateTime,
+                Type = type,
+                User = user
+            });
+        }
         #endregion
         public bool CheckParticipant(string userId, int eventId)
         {
