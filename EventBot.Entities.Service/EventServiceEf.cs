@@ -280,8 +280,9 @@ namespace EventBot.Entities.Service
             var locationEmpty = string.IsNullOrWhiteSpace(location);
             using (var db = new EventBotDb())
             {
-                return db.Events.
-                    Where(w => queryEmpty
+                return db.Events
+                    .Where(w => w.StartDate > DateTime.Now)
+                    .Where(w => queryEmpty
                                || w.Title.ToLower().Contains(queryLowerCase)
                                || w.Description.ToLower().Contains(queryLowerCase)
                                || w.MeetingPlace.ToLower().Contains(queryLowerCase)
