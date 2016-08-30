@@ -143,3 +143,8 @@ a.classname
      height: 30px;
      text-indent: -9999px; /* hides the link text */
 }
+
+.navbar-default {
+  background-color: #fff;
+  border-color: #e7e7e7;
+}
