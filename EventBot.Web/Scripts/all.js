@@ -85,7 +85,6 @@ function UpdateNotifications() {
             } else {
                 $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');"><span class="highlight">' + item.eventName + '</span> har uppdaterat aktiviteten som är planerad ' + moment(item.startDate).format("D MMM HH:mm") + '.</li>');
             }
-            $('#notcontent').append('<hr>');
         }
         else if (item.eventType == 4) {//EventJoined
             $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Du har anmält dig till <span class="highlight">' + item.eventName + '!</span> </li>');
@@ -99,6 +98,7 @@ function UpdateNotifications() {
         else if (item.eventType == 7) {//EventUserHasLeaved
             $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
+        $('#notcontent').append('<hr>');
     });
     $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
 }
