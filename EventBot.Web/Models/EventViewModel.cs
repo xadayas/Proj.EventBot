@@ -20,7 +20,9 @@ namespace EventBot.Web.Models
         [MaxLength(1000)]
         public string Description { get; set; }
         public int ImageId { get; set; }
-        //public ICollection<EventTypeViewModel> EventTypes { get; set; }=new List<EventTypeViewModel>();
+        [DisplayFormat(DataFormatString = "{0:F2}",ApplyFormatInEditMode = true)]
+        public Decimal ParticipationCost { get; set; }
+        public int MaxAttendees { get; set; }
         public ICollection<int> EventTypes { get; set; } = new List<int>(); 
         public LocationViewModel Location { get; set; }=new LocationViewModel();
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]

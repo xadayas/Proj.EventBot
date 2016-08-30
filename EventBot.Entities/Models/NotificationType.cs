@@ -10,6 +10,10 @@ namespace EventBot.Entities.Models
     {
         EventCanceled = 1,
         EventUpdated = 2,
-        EventCreated = 3
+        EventCreated = 3,
+        EventJoined = 4,
+        EventLeaved = 5,
+        EventUserHasJoined = 6,
+        EventUserHasLeaved = 7
     }
 }

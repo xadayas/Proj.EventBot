@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201608281207380_AddedStartDateToNotification.Designer.cs">
       <DependentUpon>201608281207380_AddedStartDateToNotification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608300827195_addPlacesAndCostToEvent.cs" />
+    <Compile Include="Migrations\201608300827195_addPlacesAndCostToEvent.Designer.cs">
+      <DependentUpon>201608300827195_addPlacesAndCostToEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608281207380_AddedStartDateToNotification.resx">
       <DependentUpon>201608281207380_AddedStartDateToNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608300827195_addPlacesAndCostToEvent.resx">
+      <DependentUpon>201608300827195_addPlacesAndCostToEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
