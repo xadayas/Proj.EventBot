@@ -1,23 +1,23 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
 
 html {
-   box-sizing: border-box;
-   /*padding: (Vad som passar)*/
+    box-sizing: border-box;
+    /*padding: (Vad som passar)*/
 }
 
 *, *:before, *:after {
-   box-sizing:inherit;
+    box-sizing: inherit;
 }
 
 body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
-    background: #f9fafb;
+    background: #edeff0;
     margin: 15px;
 }
 
 .body-content {
-    background: #f9fafb;
+    background: #edeff0;
     padding-left: 0;
     padding-right: 0;
 }
@@ -30,7 +30,6 @@ input,
 select,
 textarea {
     /*max-width: 400px;*/
-
 }
 
 /* Bootstrap overrides */
@@ -40,17 +39,18 @@ textarea {
     position: relative;
 }
 
-.notifications .badge {
-    position: absolute;
-    top: 8px;
-    right: 0;
-}
+    .notifications .badge {
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
 
 
 .popover {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
+
 .popover-title {
     text-align: center;
 }
@@ -65,26 +65,27 @@ ul.notifications {
     text-align: center;
 }
 
-ul.notifications > li {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-}
+    ul.notifications > li {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+    }
 
-ul.notifications > li:last-child {
-    border-bottom: none;
-}
-ul.notifications .highlight {
-    font-weight: bold;
-}
+        ul.notifications > li:last-child {
+            border-bottom: none;
+        }
 
-ul.notifications > li > a.linkAllNotifications{
-    text-align: center;
-}
+    ul.notifications .highlight {
+        font-weight: bold;
+    }
+
+    ul.notifications > li > a.linkAllNotifications {
+        text-align: center;
+    }
 
 .ul.notifications > li > a:hover {
-  color: #ffffff;
-  text-decoration: none;
-  background-color: #428bca;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #428bca;
 }
 
 body {
@@ -93,11 +94,10 @@ body {
 
 .navbar-brand {
     font-family: 'Lobster', cursive;
-
-        font-weight: 100;
-        font-style:initial;
-        font-size: 25px;
-        color:white;
+    font-weight: 100;
+    font-style: initial;
+    font-size: 25px;
+    color: white;
 }
 
 .navbar-collapse {
@@ -106,11 +106,9 @@ body {
 
 .jumbotron {
     background: #fff;
-
 }
 
-.footer
-{
+.footer {
     height: 50px;
     background-color: black;
     position: absolute;
@@ -123,39 +121,50 @@ body {
     background: linear-gradient(#ffffff, #009fcb); /* Standard syntax */
     border-bottom-left-radius: 12px;
     border-top-right-radius: 24px;
-    color:white;
+    color: white;
 }
 
 .grad {
     background: linear-gradient(#ffffff, #000000); /* Standard syntax */
     border-top-right-radius: 24px;
-    color:white;
+    color: white;
 }
-.navbar-default .navbar-nav > li > a {
 
+.navbar-default .navbar-nav > li > a {
     color: #777777;
 }
 
 .events-menu > li > a {
     background: #000; /* Standard syntax */
-    color:white;
+    color: white;
 }
 
-.eventius-logo
-{
+.eventius-logo {
     background: url(/Content/logo-small.png) no-repeat top left;
-     display: inline-block;
+    display: inline-block;
     margin-top: 14px;
     margin-left: 30px;
-     width: 150px;
-     height: 30px;
-     text-indent: -9999px; /* hides the link text */
+    width: 150px;
+    height: 30px;
+    text-indent: -9999px; /* hides the link text */
 }
+
 .logo-holder {
     display: inline-block;
     margin-top: 0;
 }
+
 .navbar-default {
-  background-color: #fff;
-  border-color: #e7e7e7;
+    background-color: #fff;
+    border-color: #e7e7e7;
+}
+
+.jumbotron {
+    padding: 6em;
+    text-shadow: 0 0 10px black;
+    background: linear-gradient(transparent, #edeff0), url("http://loremflickr.com/1920/1080") no-repeat center;
+    background-size: cover;
+    -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
 }
