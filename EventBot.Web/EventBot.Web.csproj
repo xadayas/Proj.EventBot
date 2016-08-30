@@ -348,6 +348,7 @@
     <Content Include="Views\Home\GetUpComingEvents.cshtml" />
     <Content Include="Views\Event\Details2.cshtml" />
     <Content Include="Views\Map\Static.cshtml" />
+    <Content Include="Views\Event\GetJoinedEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

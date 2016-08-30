@@ -1,0 +1,22 @@
+﻿@model IEnumerable<EventBot.Entities.Service.Models.EventModel>
+
+<h2>Kommande aktiviteter du ska delta i</h2>
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="/Images/View/@Html.Raw(item.ImageId)" width="100" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MeetingPlace)
+            </td>
+        </tr>
+    }
+
+</table>

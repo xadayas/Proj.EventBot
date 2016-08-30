@@ -10,6 +10,7 @@ namespace EventBot.Entities.Service.Interfaces
         EventModel GetEvent(int id);
         ICollection<EventModel> GetUserCreatedEvents(string userId);
         ICollection<EventModel> GetAllUpComingEvents();
+        ICollection<EventModel> GetAllUpcomingEventsFor(string userId);
 
         void JoinEvent(string userId, int eventId);
         void LeaveEvent(string userId, int eventId);
