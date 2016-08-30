@@ -31,6 +31,13 @@ namespace EventBot.Web.Controllers
             return View();
         }
 
+        public ActionResult GetJoinedEvents()
+        {
+            var userId = User.Identity.GetUserId();
+
+            return View(_service.GetAllUpcomingEventsFor(userId));
+        }
+
         public ActionResult Search(string query)
         {
             return PartialView(_service.SearchEvents(query));

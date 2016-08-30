@@ -179,6 +179,56 @@ namespace EventBot.Entities.Service
             }
         }
 
+        public ICollection<EventModel> GetAllUpcomingEventsFor(string userId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var user = db.Users.FirstOrDefault(e => e.Id == userId);
+
+                //Fullösning.se tillsvidare...
+                var listInts = new List<int>();
+                foreach (var whot in user.AttendingEvents)
+                {
+                    listInts.Add(whot.Id);
+                }
+                var listEvent = new List<Event>();
+                foreach (var item in listInts)
+                {
+                    listEvent.Add(db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == item));
+                }
+
+                return listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
+                     .Select(@event => new EventModel
+                     {
+                         Id = @event.Id,
+                         Title = @event.Title,
+                         Description = @event.Description,
+                         CreatedDate = @event.CreatedDate,
+                         ModifiedDate = @event.ModifiedDate,
+                         MeetingPlace = @event.MeetingPlace,
+                         Location = new LocationModel
+                         {
+                             Id = @event.Location.Id,
+                             Latitude = @event.Location.Latitude,
+                             Longitude = @event.Location.Longitude,
+                             Altitude = @event.Location.Altitude,
+                             Name = @event.Location.Name
+                         },
+                         StartDate = @event.StartDate,
+                         EndDate = @event.EndDate,
+                         IsCanceled = @event.IsCanceled,
+                         ImageId = @event.Image == null ? 0 : @event.Image.Id,
+                         VisitCount = @event.VisitCount,
+                         EventTypes = @event.EventTypes.Select(eventType => new EventTypeModel
+                         {
+                             Id = eventType.Id,
+                             Name = eventType.Name
+                         }).ToList(),
+                         UserId = @event.Organiser.Id
+                     }).ToList();
+            }
+        }
+
         public void JoinEvent(string userId, int eventId)
         {
             using (var db = new EventBotDb())
