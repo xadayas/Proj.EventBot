@@ -6,10 +6,16 @@
 }
 
 <h2>Details</h2>
-
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            OnReady();
+        });
+    </script>
+}
 <div>
     <input type="hidden" id="hdnVal" value="@Model.Id" />
-    <h4>EventModel</h4>
     <hr/>
     <dl class="dl-horizontal">
         <dt>
@@ -91,14 +97,14 @@
         </dt>
         <dd>
             <ul>
-            @foreach (var eventType in Model.EventTypes)
-            {
-                <li>@eventType.Name</li> 
-            }
+                @foreach (var eventType in Model.EventTypes)
+                {
+                    <li>@eventType.Name</li>
+                }
             </ul>
         </dd>
         <dd>
-            <img src="/Images/view/@Html.Raw(Model.ImageId)"  height="100"/>
+            <img src="/Images/view/@Html.Raw(Model.ImageId)" height="100"/>
         </dd>
 
         <dt>
@@ -122,6 +128,10 @@
 
         <dd id="attend">
 
+        </dd>
+        <dd>
+            <div id="alertbox">
+            </div>
         </dd>
     </dl>
 </div>
