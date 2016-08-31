@@ -15,7 +15,7 @@ namespace EventBot.Entities.Service.Interfaces
         void JoinEvent(string userId, int eventId);
         void LeaveEvent(string userId, int eventId);
 
-        ICollection<EventModel> SearchEvents(string query,string location = null);
+        ICollection<EventModel> SearchEvents(string query,int maxCost=-1,int minPlaces=0,string location = null);
         void CreateOrUpdateEventType(EventTypeModel model);
         ICollection<EventTypeModel> GetEventTypes();
 

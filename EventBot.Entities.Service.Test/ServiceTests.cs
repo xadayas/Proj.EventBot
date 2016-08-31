@@ -96,7 +96,7 @@ namespace EventBot.Entities.Service.Test
         [Test]
         public void GetAllEventsFilterByLocation()
         {
-            var eventsCountBefore = _service.SearchEvents(string.Empty, "Umeå").Count;
+            var eventsCountBefore = _service.SearchEvents(string.Empty, location:"Umeå").Count;
             var userid = string.Empty;
             using (var db = new EventBotDb()) userid = db.Users.First().Id;
             _service.CreateOrUpdateEvent(
@@ -109,7 +109,7 @@ namespace EventBot.Entities.Service.Test
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now
                 });
-            var eventCountAfter = _service.SearchEvents(String.Empty, "Umeå").Count;
+            var eventCountAfter = _service.SearchEvents(String.Empty, location:"Umeå").Count;
             Assert.That(eventCountAfter == eventsCountBefore + 1);
         }
 

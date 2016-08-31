@@ -38,9 +38,17 @@ namespace EventBot.Web.Controllers
             return View(_service.GetAllUpcomingEventsFor(userId));
         }
 
-        public ActionResult Search(string query)
+        public ActionResult Search(string query,int persons=0,int cost=Int32.MaxValue)
         {
-            return PartialView(_service.SearchEvents(query));
+            var events = _service.SearchEvents(query,cost,persons);
+            //if (persons != 0)
+            //{
+            //    events = events.Where(w => w.MaxAttendees >= persons).ToArray();
+            //}
+            
+            //    events = events.Where(w => w.ParticipationCost <= cost).ToArray();
+            
+            return PartialView(events);
         }
         // GET: Event/Details/5
         public ActionResult Details(int id)
