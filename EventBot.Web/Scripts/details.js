@@ -27,7 +27,7 @@ function checkIsAttending(eventId) {
     if (eventId == null)return;
     $.getJSON('/participants/isattending/' + eventId, function (attendStatus) {
         IsAttending = attendStatus.Attending;
-        var jl = IsAttending ? "Gå med" : "Lämna";
+        var jl = IsAttending ? "Lämna" : "Gå med";
         $("#bt").val(jl);
     });
 }
@@ -42,7 +42,7 @@ function JoinOrLeave() {
         url: '/Participants/' + ToFunctionName()+'/'+eventId,
         success: function (data) {
             buildButton();
-            //checkIsAttending(eventId);
+            checkIsAttending(eventId);
             SetAlert();
             
         },
