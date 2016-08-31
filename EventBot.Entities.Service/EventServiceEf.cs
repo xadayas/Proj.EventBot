@@ -48,11 +48,19 @@ namespace EventBot.Entities.Service
                 };
                 if (even.EventTypes == null) even.EventTypes = new List<EventType>();
                 if (model.EventTypes != null)
+                {
+                    even.EventTypes.Clear();
                     foreach (var eventTypeModel in model.EventTypes)
                     {
                         var eventTypeToAdd = db.EventTypes.FirstOrDefault(f => f.Id == eventTypeModel.Id);
                         if (eventTypeToAdd != null) even.EventTypes.Add(eventTypeToAdd);
+                        else
+                        {
+                            var newEventType = new EventType {Name = eventTypeModel.Name};
+                            even.EventTypes.Add(newEventType);
+                        }
                     }
+                }
                 if (even.IsCanceled)
                     notificationType = NotificationType.EventCanceled;
                 db.Events.AddOrUpdate(even);
