@@ -37,7 +37,6 @@ namespace EventBot.Entities.Service
                 even.MaxAttendees = model.MaxAttendees;
                 even.Image = model.ImageId == 0 ? null : db.Images.FirstOrDefault(w => w.Id == model.ImageId);
                 even.MeetingPlace = model.MeetingPlace;
-                even.VisitCount = model.VisitCount;
                 even.Location = new Location
                 {
                     Id = model.Location.Id,
@@ -293,14 +292,16 @@ namespace EventBot.Entities.Service
             }
         }
 
-        public ICollection<EventModel> SearchEvents(string query,int maxCost=-1,int minFreePlaces=0, string location = null)
+        public ICollection<EventModel> SearchEvents(string query,int maxCost=-1,int minFreePlaces=0, EventSortBy sortBy=EventSortBy.Popularity,string location="")
         {
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
             var locationEmpty = string.IsNullOrWhiteSpace(location);
+            
             using (var db = new EventBotDb())
             {
-                return db.Events
+                //Search
+                var eventsMatchingQuery= db.Events
                     .Where(w => w.StartDate > DateTime.Now)
                     .Where(w => (queryEmpty
                                || w.Title.ToLower().Contains(queryLowerCase)
@@ -312,63 +313,50 @@ namespace EventBot.Entities.Service
                                    )
                                    && (maxCost<0
                                    ||w.ParticipationCost<=maxCost)
-                                   &&((w.MaxAttendees-w.Users.Count)>=minFreePlaces)
-                    )
-                    .Select(o => new
+                                   &&(w.MaxAttendees==0||((w.MaxAttendees-w.Users.Count)>=minFreePlaces))
+                    );
+                IQueryable<Event> eventsMatchingQueryOrdered;
+                switch (sortBy)
+                {
+                    case EventSortBy.Price:
+                        eventsMatchingQueryOrdered = eventsMatchingQuery.OrderBy(p => p.ParticipationCost);
+                        break;
+                    case EventSortBy.Date:
+                        eventsMatchingQueryOrdered = eventsMatchingQuery.OrderBy(p => p.StartDate);
+                        break;
+                    case EventSortBy.Title:
+                        eventsMatchingQueryOrdered = eventsMatchingQuery.OrderBy(p => p.Title);
+                        break;
+                    case EventSortBy.Popularity:
+                        eventsMatchingQueryOrdered = eventsMatchingQuery.OrderByDescending(p => p.VisitCount);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(sortBy), sortBy, null);
+                }
+
+
+                return eventsMatchingQueryOrdered.Select(o => new
+                {
+                    o.Id, o.Title, o.Description, o.CreatedDate, o.ModifiedDate, o.MeetingPlace, o.Location, o.StartDate, o.EndDate, o.IsCanceled, o.MaxAttendees, o.ParticipationCost, ImageId = o.Image == null ? 0 : o.Image.Id, o.VisitCount, o.EventTypes, UserCount = o.Users.Count, UserId = o.Organiser.Id
+                }).ToArray().Select(s => new EventModel
+                {
+                    Id = s.Id, Title = s.Title, Description = s.Description, CreatedDate = s.CreatedDate, ModifiedDate = s.ModifiedDate, MeetingPlace = s.MeetingPlace, MaxAttendees = s.MaxAttendees, ParticipationCost = s.ParticipationCost, UserCount = s.UserCount, Location = new LocationModel
                     {
-                        o.Id,
-                        o.Title,
-                        o.Description,
-                        o.CreatedDate,
-                        o.ModifiedDate,
-                        o.MeetingPlace,
-                        o.Location,
-                        o.StartDate,
-                        o.EndDate,
-                        o.IsCanceled,
-                        o.MaxAttendees,
-                        o.ParticipationCost,
-                        ImageId = o.Image == null ? 0 : o.Image.Id,
-                        o.VisitCount,
-                        o.EventTypes,
-                        UserCount=o.Users.Count,
-                        UserId = o.Organiser.Id
-                    }).ToArray()
-                    .Select(s => new EventModel
+                        Id = s.Location.Id, Latitude = s.Location.Latitude, Longitude = s.Location.Longitude, Altitude = s.Location.Altitude, Name = s.Location.Name
+                    },
+                    StartDate = s.StartDate, EndDate = s.EndDate, IsCanceled = s.IsCanceled, ImageId = s.ImageId, VisitCount = s.VisitCount, EventTypes = s.EventTypes.Select(ss => new EventTypeModel
                     {
-                        Id = s.Id,
-                        Title = s.Title,
-                        Description = s.Description,
-                        CreatedDate = s.CreatedDate,
-                        ModifiedDate = s.ModifiedDate,
-                        MeetingPlace = s.MeetingPlace,
-                        MaxAttendees = s.MaxAttendees,
-                        ParticipationCost = s.ParticipationCost,
-                        UserCount = s.UserCount,
-                        Location = new LocationModel
-                        {
-                            Id = s.Location.Id,
-                            Latitude = s.Location.Latitude,
-                            Longitude = s.Location.Longitude,
-                            Altitude = s.Location.Altitude,
-                            Name = s.Location.Name
-                        },
-                        StartDate = s.StartDate,
-                        EndDate = s.EndDate,
-                        IsCanceled = s.IsCanceled,
-                        ImageId = s.ImageId,
-                        VisitCount = s.VisitCount,
-                        EventTypes = s.EventTypes.Select(ss => new EventTypeModel
-                        {
-                            Id = ss.Id,
-                            Name = ss.Name
-                        }).ToArray(),
-                        UserId = s.UserId
-                    }).ToArray();
+                        Id = ss.Id, Name = ss.Name
+                    }).ToArray(),
+                    UserId = s.UserId
+                }).ToArray();
             }
         }
+
         #endregion
+
         #region eventtype
+
         public void CreateOrUpdateEventType(EventTypeModel model)
         {
             using (var db = new EventBotDb())
@@ -377,26 +365,22 @@ namespace EventBot.Entities.Service
                 if (model.Id == 0 && db.EventTypes.Any(w => w.Name == model.Name)) return;
                 var eventType = new EventType
                 {
-                    Id = model.Id,
-                    Name = model.Name
+                    Id = model.Id, Name = model.Name
                 };
                 db.EventTypes.AddOrUpdate(eventType);
                 db.SaveChanges();
                 model.Id = eventType.Id;
             }
-
         }
 
         public ICollection<EventTypeModel> GetEventTypes()
         {
             using (var db = new EventBotDb())
             {
-                return db.EventTypes.Select(s =>
-                    new EventTypeModel
-                    {
-                        Id = s.Id,
-                        Name = s.Name
-                    }).ToArray();
+                return db.EventTypes.Select(s => new EventTypeModel
+                {
+                    Id = s.Id, Name = s.Name
+                }).ToArray();
             }
         }
 
@@ -435,16 +419,17 @@ namespace EventBot.Entities.Service
                 {
                     var eventType = db.EventTypes.SingleOrDefault(w => w.Id == eventTypeModel.Id);
                     if (eventType == null) throw new InvalidOperationException("EventType not found.");
-                    var tempIds =
-                        db.Users.Where(w => w.EventTypeInterests.Contains(eventType))
-                            .Select(s => s.Id).ToArray();
+                    var tempIds = db.Users.Where(w => w.EventTypeInterests.Contains(eventType)).Select(s => s.Id).ToArray();
                     userIds.AddRange(tempIds);
                 }
                 return userIds.Distinct().ToArray();
             }
         }
+
         #endregion
+
         #region Images
+
         public byte[] GetImage(int imageId)
         {
             using (var db = new EventBotDb())
@@ -468,29 +453,22 @@ namespace EventBot.Entities.Service
             }
             return image.Id;
         }
+
         #endregion
+
         #region Notifications
+
         public IEnumerable<NotificationModel> GetNewNotificationsFor(string userId)
         {
             using (var db = new EventBotDb())
             {
-                return db.Notifications
-                    .Where(n => n.User.Id == userId && !n.IsRead)
-                    .Select(n => new NotificationModel()
-                    {
-                        DateTime = n.DateTime,
-                        Id = n.Id,
-                        EventName = n.Event.Title,
-                        IsRead = n.IsRead,
-                        OriginalStartDate = n.OriginalStartDate,
-                        StartDate = n.StartDate,
-                        EventType = n.Type,
-                        EventId = n.Event.Id,
-
-                    })
-                    .ToList();
+                return db.Notifications.Where(n => n.User.Id == userId && !n.IsRead).Select(n => new NotificationModel()
+                {
+                    DateTime = n.DateTime, Id = n.Id, EventName = n.Event.Title, IsRead = n.IsRead, OriginalStartDate = n.OriginalStartDate, StartDate = n.StartDate, EventType = n.Type, EventId = n.Event.Id,
+                }).ToList();
             }
         }
+
         public void MarkAllNotificationsAsRead(string userId)
         {
             //TODO världens jävla fullösning, men vanliga fungerar inte...
@@ -529,6 +507,7 @@ namespace EventBot.Entities.Service
                 }
             }
         }
+
         private void CreateEventNotification(EventBotDb db, Event e, NotificationType type, DateTime originalDateTime)
         {
             var eventUsers = e.Users;
@@ -536,29 +515,21 @@ namespace EventBot.Entities.Service
             {
                 db.Notifications.AddOrUpdate(new Notification()
                 {
-                    DateTime = DateTime.Now,
-                    Event = e,
-                    StartDate = e.StartDate,
-                    OriginalStartDate = originalDateTime,
-                    Type = type,
-                    User = eventUser
+                    DateTime = DateTime.Now, Event = e, StartDate = e.StartDate, OriginalStartDate = originalDateTime, Type = type, User = eventUser
                 });
             }
         }
 
-        private void CreateEventNotificationForUser(EventBotDb db, Event e, User user, NotificationType type,DateTime originalDateTime)
+        private void CreateEventNotificationForUser(EventBotDb db, Event e, User user, NotificationType type, DateTime originalDateTime)
         {
             db.Notifications.AddOrUpdate(new Notification()
             {
-                DateTime = DateTime.Now,
-                Event = e,
-                StartDate = e.StartDate,
-                OriginalStartDate = originalDateTime,
-                Type = type,
-                User = user
+                DateTime = DateTime.Now, Event = e, StartDate = e.StartDate, OriginalStartDate = originalDateTime, Type = type, User = user
             });
         }
+
         #endregion
+
         public bool CheckParticipant(string userId, int eventId)
         {
             using (var db = new EventBotDb())
@@ -592,6 +563,16 @@ namespace EventBot.Entities.Service
                     throw new InvalidOperationException("No user found.");
 
                 return user.Name;
+            }
+        }
+
+        public void AddVisitorToEvent(int id)
+        {
+            using (var db = new EventBotDb())
+            {
+                var ev = db.Events.SingleOrDefault(s => s.Id == id);
+                if (ev != null) ev.VisitCount++;
+                db.SaveChanges();
             }
         }
     }

@@ -14,6 +14,9 @@ window.addEventListener("load", () => {
     $('#searchPersons').change(() => {
         eventSearch();
     });
+    $('#SortBy').change(() => {
+        eventSearch();
+    });
     eventSearch();
 });
 
@@ -51,9 +54,11 @@ function eventSearch() {
     var query = $('#query').val();
     var maxCost = $('#MaxCost').val();
     var minPlaces = $('#searchPersons').val();
+    var sortBy = $('#SortBy').val();
     $('#EventTable').load('/Event/Search/', {
         query: query,
         persons: minPlaces,
-        cost: maxCost
+        cost: maxCost,
+        sortBy:sortBy
     });
 }

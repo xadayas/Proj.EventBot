@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -38,39 +39,32 @@ namespace EventBot.Web.Controllers
             return View(_service.GetAllUpcomingEventsFor(userId));
         }
 
-        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue)
+        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue,int sortBy=0)
         {
-            var events = _service.SearchEvents(query, cost, persons);
-            //if (persons != 0)
-            //{
-            //    events = events.Where(w => w.MaxAttendees >= persons).ToArray();
-            //}
-
-            //    events = events.Where(w => w.ParticipationCost <= cost).ToArray();
-
+            var sortByParsed = (EventSortBy) sortBy;
+            
+            
+            var events = _service.SearchEvents(query:query,maxCost: cost, minPlaces:persons,sortBy:sortByParsed);
             return PartialView(events);
         }
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
             var ev = _service.GetEvent(id);
+            _service.AddVisitorToEvent(id);
             return View(ev);
         }
         // GET: Event/Details/5
         public ActionResult Details2(int id)
         {
             var ev = _service.GetEvent(id);
+            _service.AddVisitorToEvent(id);
             return View(ev);
         }
 
         // GET: Event/Create
         public ActionResult Create()
         {
-            //ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
-            //{
-            //    Id = s.Id,
-            //    Name = s.Name
-            //});
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             Session["imageUploadEventSave"] = null;
             if (model == null) model = new EventViewModel();
