@@ -160,11 +160,31 @@ body {
 }
 
 .jumbotron {
-    padding: 6em;
+    padding: 7em;
     text-shadow: 0 0 10px black;
-    background: linear-gradient(transparent, #edeff0), url("http://loremflickr.com/1920/1080") no-repeat center;
+    background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
     background-size: cover;
     -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
+}
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.thumb {
+    margin-bottom: 30px;
+}
+
+a {
+  color: #7d7e7d;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #333333;
+  text-decoration: underline;
 }
