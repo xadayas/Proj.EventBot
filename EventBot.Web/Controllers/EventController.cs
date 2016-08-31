@@ -85,8 +85,12 @@ namespace EventBot.Web.Controllers
             {
                 return View(model);
             }
+            if (model.Tags == null) model.Tags = string.Empty;
             var eventTypes = _service.GetEventTypes();
-            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+            if (string.IsNullOrWhiteSpace(model.Location.Name))
+                model.Location.Name = string.Empty;
+            else
+                model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
 
             model.UserId = User.Identity.GetUserId();
 
@@ -123,11 +127,11 @@ namespace EventBot.Web.Controllers
             // check if event is saved in session variable
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             var editEvent = _service.GetEvent(id);
-            
+
             // else get from db.
             if (model == null)
             {
-                
+
                 model = new EventViewModel
                 {
                     Id = editEvent.Id,
@@ -140,7 +144,7 @@ namespace EventBot.Web.Controllers
                     IsCanceled = editEvent.IsCanceled,
                     ParticipationCost = editEvent.ParticipationCost,
                     MaxAttendees = editEvent.MaxAttendees,
-                    Tags = editEvent.EventTypes.Select(s => s.Name).Pipe(p=>String.Join(",",p)), //Aggregate((a, b) => a + ',' + b),
+                    Tags = editEvent.EventTypes.Select(s => s.Name).Pipe(p => String.Join(",", p)), //Aggregate((a, b) => a + ',' + b),
                     Location = new LocationViewModel
                     {
                         Id = editEvent.Location.Id,
@@ -151,7 +155,7 @@ namespace EventBot.Web.Controllers
                     }
                 };
             }
-            if(model.UserId==null) model.UserId = editEvent.UserId;
+            if (model.UserId == null) model.UserId = editEvent.UserId;
             if (model.UserId != User.Identity.GetUserId()) return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
             return View(model);
         }
