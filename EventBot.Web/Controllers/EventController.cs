@@ -140,7 +140,7 @@ namespace EventBot.Web.Controllers
                     IsCanceled = editEvent.IsCanceled,
                     ParticipationCost = editEvent.ParticipationCost,
                     MaxAttendees = editEvent.MaxAttendees,
-                    Tags = editEvent.EventTypes.Select(s => s.Name).Aggregate((a, b) => a + ',' + b),
+                    Tags = editEvent.EventTypes.Select(s => s.Name).Pipe(p=>String.Join(",",p)), //Aggregate((a, b) => a + ',' + b),
                     Location = new LocationViewModel
                     {
                         Id = editEvent.Location.Id,

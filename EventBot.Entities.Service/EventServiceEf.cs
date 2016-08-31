@@ -76,7 +76,7 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var ev = db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == id);
+                var ev = db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).Include(p=>p.Users).SingleOrDefault(s => s.Id == id);
                 if (ev == null)
                     return null;
                 var rEvent = new EventModel
@@ -95,6 +95,7 @@ namespace EventBot.Entities.Service
                     VisitCount = ev.VisitCount,
                     ParticipationCost = ev.ParticipationCost,
                     MaxAttendees = ev.MaxAttendees,
+                    UserCount = ev.Users.Count,
                     EventTypes = ev.EventTypes.Select(s => new EventTypeModel
                     {
                         Id = s.Id,
@@ -132,6 +133,7 @@ namespace EventBot.Entities.Service
                          MeetingPlace = @event.MeetingPlace,
                          MaxAttendees = @event.MaxAttendees,
                          ParticipationCost = @event.ParticipationCost,
+                         UserCount = @event.Users.Count,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,
@@ -170,6 +172,7 @@ namespace EventBot.Entities.Service
                          MeetingPlace = @event.MeetingPlace,
                          MaxAttendees = @event.MaxAttendees,
                          ParticipationCost = @event.ParticipationCost,
+                         UserCount = @event.Users.Count,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,
@@ -222,6 +225,7 @@ namespace EventBot.Entities.Service
                          MeetingPlace = @event.MeetingPlace,
                          MaxAttendees = @event.MaxAttendees,
                          ParticipationCost = @event.ParticipationCost,
+                         UserCount = @event.Users.Count,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,
@@ -326,6 +330,7 @@ namespace EventBot.Entities.Service
                         ImageId = o.Image == null ? 0 : o.Image.Id,
                         o.VisitCount,
                         o.EventTypes,
+                        UserCount=o.Users.Count,
                         UserId = o.Organiser.Id
                     }).ToArray()
                     .Select(s => new EventModel
@@ -338,6 +343,7 @@ namespace EventBot.Entities.Service
                         MeetingPlace = s.MeetingPlace,
                         MaxAttendees = s.MaxAttendees,
                         ParticipationCost = s.ParticipationCost,
+                        UserCount = s.UserCount,
                         Location = new LocationModel
                         {
                             Id = s.Location.Id,

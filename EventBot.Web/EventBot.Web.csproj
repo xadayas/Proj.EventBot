@@ -199,6 +199,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\GeoCode.cs" />
     <Compile Include="Utils\JsonHelper.cs" />
+    <Compile Include="Utils\PipeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />

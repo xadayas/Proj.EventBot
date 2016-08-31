@@ -59,7 +59,26 @@
         <dd>
             @Html.DisplayFor(model => model.VisitCount)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCount)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.UserCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxAttendees)
+        </dt>
+        <dd>
+            @if (Model.MaxAttendees != 0)
+            {
+                @Html.DisplayFor(model => model.MaxAttendees)
+            }
+            else
+            {
+                @Html.Raw("No Limit")
+            }
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.MeetingPlace)
         </dt>

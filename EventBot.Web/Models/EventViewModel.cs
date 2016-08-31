@@ -20,7 +20,7 @@ namespace EventBot.Web.Models
         [MaxLength(1000)]
         public string Description { get; set; }
         public int ImageId { get; set; }
-        [DisplayFormat(DataFormatString = "{0:F2}",ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:F0}",ApplyFormatInEditMode = true)]
         public Decimal ParticipationCost { get; set; }
         public int MaxAttendees { get; set; }
         public string Tags { get; set; }
