@@ -85,6 +85,8 @@ namespace EventBot.Entities.Service
                     Title = ev.Title,
                     UserId = ev.Organiser?.Id ?? "",
                     VisitCount = ev.VisitCount,
+                    ParticipationCost = ev.ParticipationCost,
+                    MaxAttendees = ev.MaxAttendees,
                     EventTypes = ev.EventTypes.Select(s => new EventTypeModel
                     {
                         Id = s.Id,
@@ -120,6 +122,8 @@ namespace EventBot.Entities.Service
                          CreatedDate = @event.CreatedDate,
                          ModifiedDate = @event.ModifiedDate,
                          MeetingPlace = @event.MeetingPlace,
+                         MaxAttendees = @event.MaxAttendees,
+                         ParticipationCost = @event.ParticipationCost,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,
@@ -156,6 +160,8 @@ namespace EventBot.Entities.Service
                          CreatedDate = @event.CreatedDate,
                          ModifiedDate = @event.ModifiedDate,
                          MeetingPlace = @event.MeetingPlace,
+                         MaxAttendees = @event.MaxAttendees,
+                         ParticipationCost = @event.ParticipationCost,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,
@@ -206,6 +212,8 @@ namespace EventBot.Entities.Service
                          CreatedDate = @event.CreatedDate,
                          ModifiedDate = @event.ModifiedDate,
                          MeetingPlace = @event.MeetingPlace,
+                         MaxAttendees = @event.MaxAttendees,
+                         ParticipationCost = @event.ParticipationCost,
                          Location = new LocationModel
                          {
                              Id = @event.Location.Id,

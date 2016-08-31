@@ -23,7 +23,7 @@ namespace EventBot.Web.Models
         [DisplayFormat(DataFormatString = "{0:F2}",ApplyFormatInEditMode = true)]
         public Decimal ParticipationCost { get; set; }
         public int MaxAttendees { get; set; }
-        public ICollection<int> EventTypes { get; set; } = new List<int>(); 
+        public string Tags { get; set; }
         public LocationViewModel Location { get; set; }=new LocationViewModel();
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; } = DateTime.Now;
@@ -41,9 +41,9 @@ namespace EventBot.Web.Models
         public double Longitude { get; set; }
     }
 
-    public class EventTypeViewModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    //public class EventTypeViewModel
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //}
 }

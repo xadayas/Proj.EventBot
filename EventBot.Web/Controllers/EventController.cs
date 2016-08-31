@@ -38,16 +38,16 @@ namespace EventBot.Web.Controllers
             return View(_service.GetAllUpcomingEventsFor(userId));
         }
 
-        public ActionResult Search(string query,int persons=0,int cost=Int32.MaxValue)
+        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue)
         {
-            var events = _service.SearchEvents(query,cost,persons);
+            var events = _service.SearchEvents(query, cost, persons);
             //if (persons != 0)
             //{
             //    events = events.Where(w => w.MaxAttendees >= persons).ToArray();
             //}
-            
+
             //    events = events.Where(w => w.ParticipationCost <= cost).ToArray();
-            
+
             return PartialView(events);
         }
         // GET: Event/Details/5
@@ -66,11 +66,11 @@ namespace EventBot.Web.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
-            {
-                Id = s.Id,
-                Name = s.Name
-            });
+            //ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
+            //{
+            //    Id = s.Id,
+            //    Name = s.Name
+            //});
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             Session["imageUploadEventSave"] = null;
             if (model == null) model = new EventViewModel();
@@ -104,10 +104,10 @@ namespace EventBot.Web.Controllers
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude
                 },
-                EventTypes = model.EventTypes.Select(s => new EventTypeModel
+                EventTypes = model.Tags.Split(',').Select(s => new EventTypeModel
                 {
-                    Id = s,
-                    Name = eventTypes.FirstOrDefault(f => f.Id == s)?.Name ?? ""
+                    Id = eventTypes.FirstOrDefault(f => f.Name == s)?.Id ?? 0,
+                    Name = s
                 }).ToArray(),
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
@@ -120,24 +120,15 @@ namespace EventBot.Web.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
+            // check if event is saved in session variable
+            EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             var editEvent = _service.GetEvent(id);
-
-            // check if returning from image upload
-            if (Session["EditImageId"] is int)
+            
+            // else get from db.
+            if (model == null)
             {
-                editEvent.ImageId = (int)Session["EditImageId"];
-                Session["EditImageId"] = null;
-            }
-
-
-            if (editEvent.UserId == User.Identity.GetUserId())
-            {
-                ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
-                {
-                    Id = s.Id,
-                    Name = s.Name
-                });
-                var editEventViewModel = new EventViewModel
+                
+                model = new EventViewModel
                 {
                     Id = editEvent.Id,
                     Title = editEvent.Title,
@@ -149,7 +140,7 @@ namespace EventBot.Web.Controllers
                     IsCanceled = editEvent.IsCanceled,
                     ParticipationCost = editEvent.ParticipationCost,
                     MaxAttendees = editEvent.MaxAttendees,
-                    EventTypes = editEvent.EventTypes.Select(s=>s.Id).ToArray(),
+                    Tags = editEvent.EventTypes.Select(s => s.Name).Aggregate((a, b) => a + ',' + b),
                     Location = new LocationViewModel
                     {
                         Id = editEvent.Location.Id,
@@ -159,10 +150,10 @@ namespace EventBot.Web.Controllers
                         Altitude = editEvent.Location.Altitude
                     }
                 };
-                return View(editEventViewModel);
             }
-            else
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
+            if(model.UserId==null) model.UserId = editEvent.UserId;
+            if (model.UserId != User.Identity.GetUserId()) return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
+            return View(model);
         }
 
         // POST: Event/Edit/5
@@ -171,7 +162,7 @@ namespace EventBot.Web.Controllers
         {
             // Check that user owns the event
             var originalEvent = _service.GetEvent(model.Id);
-            if (originalEvent==null||originalEvent.UserId!=User.Identity.GetUserId())
+            if (originalEvent == null || originalEvent.UserId != User.Identity.GetUserId())
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
             if (!ModelState.IsValid)
                 return View(model);
@@ -184,7 +175,7 @@ namespace EventBot.Web.Controllers
             var editedEvent = new EventModel
             {
                 UserId = model.UserId,
-                Id=model.Id,
+                Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
                 StartDate = model.StartDate,
@@ -202,10 +193,10 @@ namespace EventBot.Web.Controllers
                     Altitude = model.Location.Altitude,
                     Name = model.Location.Name
                 },
-                EventTypes = model.EventTypes.Select(s => new EventTypeModel
+                EventTypes = model.Tags.Split(',').Select(s => new EventTypeModel
                 {
-                    Id = s,
-                    Name = eventTypes.FirstOrDefault(f => f.Id == s)?.Name ?? ""
+                    Id = eventTypes.FirstOrDefault(f => f.Name == s)?.Id ?? 0,
+                    Name = s
                 }).ToArray()
             };
             _service.CreateOrUpdateEvent(editedEvent);

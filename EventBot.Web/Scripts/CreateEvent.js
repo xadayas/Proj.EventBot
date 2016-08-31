@@ -5,11 +5,11 @@
 
     formData.append('file', fileUpload.files[0]);
     fileUploadButton.value = "Uploading....";
-    
+
     var imgId = document.getElementById('EventImage');
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/Images/UploadGetId', true);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status === 200) {
             fileUploadButton.value = "Upload";
             document.getElementById('EventImage').src = '/Images/View/' + xhr.responseText;
@@ -22,21 +22,21 @@
 }
 
 $('#EventImageLink').click(() => {
-    var title = $('#titleInput').val();
-    var desc = $('#descriptionInput').val();
-    var place = $('#meetingPlaceInput').val();
-    var start = $('#startDateInput').val();
-    var end = $('#endDateInput').val();
 
-    var link = $('#EventImageLink').prop('href');
+    // Redirect form to /images/upload
+    $('#eventForm').action = "/Images/Upload";
+    $('#eventForm').prop('method', 'GET');
+    $('#eventForm').prop('action', '/images/upload');
 
-    link = link.replace("titleText", title);
-    link = link.replace("descriptionText", desc);
-    link = link.replace("meetingPlaceText", place);
-    link = link.replace("startDateText", start);
-    link = link.replace("endDateText", end);
+    // disable validation to be able to send incomplete form
+    $('.form-control').attr('data-val',false);
+    $('#eventForm').removeData('unobtrusiveValidation');
+    $('#eventForm').removeData('validator');
+    $.validator.unobtrusive.parse('#eventForm');
 
-    $('#EventImageLink').prop('href',link);
+    // submit form
+    $('#eventForm').submit();
+    
 
 });
 
@@ -46,7 +46,7 @@ $('.datetimefield').AnyPicker({
     showComponentLabel: true,
     parent: "div.form-horizontal",
     layout: "fixed",
-    vAlign:"top"
+    vAlign: "top"
 });
 
 
@@ -58,9 +58,15 @@ window.addEventListener("load", () => {
     var input = document.getElementById('meetingPlaceInput');
     var options = {
         bounds: defaultBounds
-       };
+    };
 
     autocomplete = new google.maps.places.Autocomplete(input, options);
-   });
-  
+    $('#eventTags').tagsinput({
+        typeahead: {
+            afterSelect: function (val) { this.$element.val(""); },
+            source: (query) => {return $.get('/api/tags/GetAllTags/');}
+        }
+    });
+});
+
 

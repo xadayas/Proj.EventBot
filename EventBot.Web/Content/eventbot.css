@@ -342,3 +342,7 @@ p {
     display: inline-block;
     margin-left: 20px;
 }
+.bootstrap-tagsinput {
+  width:100% !important;
+    display: block !important;
+}

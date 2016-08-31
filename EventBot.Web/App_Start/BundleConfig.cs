@@ -26,7 +26,9 @@ namespace EventBot.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/bootstrap-select.js"));
+                      "~/Scripts/bootstrap-select.js",
+                      "~/Scripts/bootstrap-tagsinput.js",
+                      "~/Scripts/bootstrap3-typeahead.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -34,7 +36,8 @@ namespace EventBot.Web
                       "~/Content/animate.css",
                       "~/Content/eventbot.css",
                       "~/Content/anypicker.css",
-                      "~/Content/bootstrap-select.css"));
+                      "~/Content/bootstrap-select.css",
+                      "~/Content/bootstrap-tagsinput.css"));
         }
     }
 }
