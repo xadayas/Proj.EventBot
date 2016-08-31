@@ -170,9 +170,15 @@ namespace EventBot.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
             if (!ModelState.IsValid)
                 return View(model);
+
             model.UserId = User.Identity.GetUserId();
             // get latitude and longitude
-            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+            if (string.IsNullOrWhiteSpace(model.Location.Name))
+                model.Location.Name = string.Empty;
+            else
+                model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+
+            if (model.Tags == null) model.Tags = string.Empty;
 
             var eventTypes = _service.GetEventTypes();
             //translate to dto

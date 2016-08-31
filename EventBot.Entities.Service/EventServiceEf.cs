@@ -305,7 +305,8 @@ namespace EventBot.Entities.Service
                     .Where(w => (queryEmpty
                                || w.Title.ToLower().Contains(queryLowerCase)
                                || w.Description.ToLower().Contains(queryLowerCase)
-                               || w.MeetingPlace.ToLower().Contains(queryLowerCase))
+                               || w.MeetingPlace.ToLower().Contains(queryLowerCase)
+                               || w.EventTypes.Any(eventtype=>eventtype.Name.ToLower().Contains(queryLowerCase)))
                                && (locationEmpty
                                    || w.MeetingPlace.ToLower() == location.ToLower()
                                    )
