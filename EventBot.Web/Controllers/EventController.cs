@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -38,39 +39,32 @@ namespace EventBot.Web.Controllers
             return View(_service.GetAllUpcomingEventsFor(userId));
         }
 
-        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue)
+        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue,int sortBy=0)
         {
-            var events = _service.SearchEvents(query, cost, persons);
-            //if (persons != 0)
-            //{
-            //    events = events.Where(w => w.MaxAttendees >= persons).ToArray();
-            //}
-
-            //    events = events.Where(w => w.ParticipationCost <= cost).ToArray();
-
+            var sortByParsed = (EventSortBy) sortBy;
+            
+            
+            var events = _service.SearchEvents(query:query,maxCost: cost, minPlaces:persons,sortBy:sortByParsed);
             return PartialView(events);
         }
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
             var ev = _service.GetEvent(id);
+            _service.AddVisitorToEvent(id);
             return View(ev);
         }
         // GET: Event/Details/5
         public ActionResult Details2(int id)
         {
             var ev = _service.GetEvent(id);
+            _service.AddVisitorToEvent(id);
             return View(ev);
         }
 
         // GET: Event/Create
         public ActionResult Create()
         {
-            //ViewBag.EventTypes = _service.GetEventTypes().Select(s => new EventTypeViewModel
-            //{
-            //    Id = s.Id,
-            //    Name = s.Name
-            //});
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             Session["imageUploadEventSave"] = null;
             if (model == null) model = new EventViewModel();
@@ -85,8 +79,12 @@ namespace EventBot.Web.Controllers
             {
                 return View(model);
             }
+            if (model.Tags == null) model.Tags = string.Empty;
             var eventTypes = _service.GetEventTypes();
-            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+            if (string.IsNullOrWhiteSpace(model.Location.Name))
+                model.Location.Name = string.Empty;
+            else
+                model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
 
             model.UserId = User.Identity.GetUserId();
 
@@ -123,11 +121,11 @@ namespace EventBot.Web.Controllers
             // check if event is saved in session variable
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
             var editEvent = _service.GetEvent(id);
-            
+
             // else get from db.
             if (model == null)
             {
-                
+
                 model = new EventViewModel
                 {
                     Id = editEvent.Id,
@@ -140,7 +138,7 @@ namespace EventBot.Web.Controllers
                     IsCanceled = editEvent.IsCanceled,
                     ParticipationCost = editEvent.ParticipationCost,
                     MaxAttendees = editEvent.MaxAttendees,
-                    Tags = editEvent.EventTypes.Select(s => s.Name).Pipe(p=>String.Join(",",p)), //Aggregate((a, b) => a + ',' + b),
+                    Tags = editEvent.EventTypes.Select(s => s.Name).Pipe(p => String.Join(",", p)), //Aggregate((a, b) => a + ',' + b),
                     Location = new LocationViewModel
                     {
                         Id = editEvent.Location.Id,
@@ -151,7 +149,7 @@ namespace EventBot.Web.Controllers
                     }
                 };
             }
-            if(model.UserId==null) model.UserId = editEvent.UserId;
+            if (model.UserId == null) model.UserId = editEvent.UserId;
             if (model.UserId != User.Identity.GetUserId()) return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
             return View(model);
         }
@@ -166,9 +164,15 @@ namespace EventBot.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Access denied");
             if (!ModelState.IsValid)
                 return View(model);
+
             model.UserId = User.Identity.GetUserId();
             // get latitude and longitude
-            model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+            if (string.IsNullOrWhiteSpace(model.Location.Name))
+                model.Location.Name = string.Empty;
+            else
+                model.Location = GeoCode.GoogleGeoCode(model.Location.Name).FirstOrDefault() ?? new LocationViewModel { Name = model.Location.Name };
+
+            if (model.Tags == null) model.Tags = string.Empty;
 
             var eventTypes = _service.GetEventTypes();
             //translate to dto

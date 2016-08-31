@@ -61,6 +61,7 @@
     <Compile Include="EventServiceEf.cs" />
     <Compile Include="Interfaces\IEventService.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\EventSortBy.cs" />
     <Compile Include="Models\EventTypeModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
