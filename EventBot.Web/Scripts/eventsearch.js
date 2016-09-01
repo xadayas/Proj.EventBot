@@ -3,21 +3,16 @@ window.addEventListener("load", () => {
     $('#eventSearchButton').click(() => {
         eventSearch();
     });
+    $('.update-button').change(() => {
+        UpdateCostButton();
+    });
+    $('.update-button').keyup(() => {
+        UpdateCostButton();
+    });
+    $('.search-input').change(() => {
+        eventSearch();
+    });
     $('.search-input').keyup(() => {
-        UpdateCostButton();
-        eventSearch();
-    });
-    $('#MaxCost').change(() => {
-        UpdateCostButton();
-        eventSearch();
-    });
-    $('#searchPersons').change(() => {
-        eventSearch();
-    });
-    $('#SortBy').change(() => {
-        eventSearch();
-    });
-    $('#MaxDistance').change(() => {
         eventSearch();
     });
     eventSearch();
