@@ -11,6 +11,7 @@ namespace EventBot.Entities.Service.Models
         Price,
         Date,
         Title,
-        Popularity
+        Popularity,
+        Distance
     }
 }
