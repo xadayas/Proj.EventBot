@@ -24,7 +24,7 @@ namespace EventBot.Entities.Service.Models
         public Decimal ParticipationCost { get; set; }
         public int MaxAttendees { get; set; }
         public LocationModel Location { get; set; }
-        
+        public double DistanceFromClient { get; set;}
 
         public int ImageId { get; set; }
         public bool IsCanceled { get; set; }

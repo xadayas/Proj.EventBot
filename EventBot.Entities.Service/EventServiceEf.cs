@@ -328,11 +328,12 @@ namespace EventBot.Entities.Service
                         eventsMatchingQueryOrdered = eventsMatchingQuery.OrderByDescending(p => p.VisitCount);
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(sortBy), sortBy, null);
+                        eventsMatchingQueryOrdered = eventsMatchingQuery;
+                        break;
                 }
 
 
-                return eventsMatchingQueryOrdered.Select(o => new
+                var result =  eventsMatchingQueryOrdered.Select(o => new
                 {
                     o.Id,
                     o.Title,
@@ -351,8 +352,7 @@ namespace EventBot.Entities.Service
                     o.EventTypes,
                     UserCount = o.Users.Count,
                     UserId = o.Organiser.Id
-                }).ToArray().Where(w=>(maxDistance == 0||location.Latitude==0||location.Longitude==0 || w.Location.DistanceTo(location) < maxDistance)
-)
+                }).ToArray().Where(w=>(maxDistance == 0||location.Latitude==0||location.Longitude==0 || w.Location.DistanceTo(location) < maxDistance))
                 .Select(s => new EventModel
                 {
                     Id = s.Id,
@@ -377,13 +377,17 @@ namespace EventBot.Entities.Service
                     IsCanceled = s.IsCanceled,
                     ImageId = s.ImageId,
                     VisitCount = s.VisitCount,
+                    DistanceFromClient=s.Location.DistanceTo(location),
                     EventTypes = s.EventTypes.Select(ss => new EventTypeModel
                     {
                         Id = ss.Id,
                         Name = ss.Name
                     }).ToArray(),
                     UserId = s.UserId
-                }).ToArray();
+                });
+
+                if (sortBy == EventSortBy.Distance) return result.OrderBy(o => o.DistanceFromClient).ToArray();
+                return result.ToArray();
             }
         }
 

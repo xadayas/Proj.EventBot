@@ -21,6 +21,7 @@ namespace EventBot.Entities.Service
 
         public static double DistanceTo(this Coordinates baseCoordinates, Coordinates targetCoordinates, UnitOfLength unitOfLength)
         {
+            if (baseCoordinates.Latitude == 0 || baseCoordinates.Longitude == 0 || targetCoordinates.Latitude == 0 || targetCoordinates.Longitude == 0) return 0;
             var baseRad = Math.PI * baseCoordinates.Latitude / 180;
             var targetRad = Math.PI * targetCoordinates.Latitude / 180;
             var theta = baseCoordinates.Longitude - targetCoordinates.Longitude;
@@ -40,13 +41,19 @@ namespace EventBot.Entities.Service
         {
             public Coordinates(Location location)
             {
-                Latitude = location.Latitude;
-                Longitude = location.Longitude;
+                if (location != null)
+                {
+                    Latitude = location.Latitude;
+                    Longitude = location.Longitude;
+                }
             }
             public Coordinates(LocationModel location)
             {
-                Latitude = location.Latitude;
-                Longitude = location.Longitude;
+                if (location != null)
+                {
+                    Latitude = location.Latitude;
+                    Longitude = location.Longitude;
+                }
             }
             public double Latitude { get; set; }
             public double Longitude { get; set; }

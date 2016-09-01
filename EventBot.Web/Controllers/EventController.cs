@@ -40,19 +40,17 @@ namespace EventBot.Web.Controllers
             return View(_service.GetAllUpcomingEventsFor(userId));
         }
 
-        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue,int sortBy=0,double maxDistance=0)
+        public ActionResult Search(string query, int persons = 0, int cost = Int32.MaxValue, int sortBy = 0, double maxDistance = 0)
         {
-            var sortByParsed = (EventSortBy) sortBy;
-            var location = GeoCode.IpToLocation(Request.UserHostAddress);
-            var events = _service.SearchEvents(query:query,maxCost: cost, minPlaces:persons,sortBy:sortByParsed,location:location,maxDistance:maxDistance*10);
-            //var ev = events.FirstOrDefault();
-            //if (ev != null)
-            //{
-            //    Debug.WriteLine($"Your coords: {location.Latitude}, {location.Longitude}.");
-            //    Debug.WriteLine($"{ev.Location.Name}'s coords: {ev.Location.Latitude}, {ev.Location.Longitude}");
-            //    Debug.WriteLine(ev.Location.DistanceTo(location));
-            //}
-            
+            var sortByParsed = (EventSortBy)sortBy;
+            // get user location 1 time per session ?? works ??
+            var sessionLocation = Session["UserLocation"] as LocationModel;
+            if (sessionLocation == null)
+            {
+                sessionLocation = GeoCode.IpToLocation(Request.UserHostAddress);
+                Session["UserLocation"] = sessionLocation;
+            }
+            var events = _service.SearchEvents(query: query, maxCost: cost, minPlaces: persons, sortBy: sortByParsed, location: sessionLocation, maxDistance: maxDistance * 10);
             return PartialView(events);
         }
         // GET: Event/Details/5
