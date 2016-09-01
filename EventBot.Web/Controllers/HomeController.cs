@@ -17,7 +17,8 @@ namespace EventBot.Web.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var location = IpLocator.GetIpLocation(Request.UserHostAddress);
+            return View(location);
         }
 
         public ActionResult GetUpComingEvents()
