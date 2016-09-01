@@ -22,5 +22,18 @@ namespace EventBot.Web.Utils
                 };
             }
         }
+        public static LocationModel IpToLocation(string ipaddr)
+        {
+            string url = "http://freegeoip.net/json/";
+            dynamic result = new Uri(url + ipaddr).GetDynamicJsonObject();
+            
+            return new LocationModel
+            {
+                Name = result.city,
+                Latitude = result.latitude,
+                Longitude = result.longitude
+            };
+
+        }
     }
 }

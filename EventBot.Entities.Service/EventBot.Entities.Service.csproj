@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistanceCalculator.cs" />
     <Compile Include="EventServiceEf.cs" />
     <Compile Include="Interfaces\IEventService.cs" />
     <Compile Include="Models\EventModel.cs" />

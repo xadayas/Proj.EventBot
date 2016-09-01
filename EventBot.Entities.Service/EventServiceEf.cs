@@ -55,7 +55,7 @@ namespace EventBot.Entities.Service
                         if (eventTypeToAdd != null) even.EventTypes.Add(eventTypeToAdd);
                         else
                         {
-                            var newEventType = new EventType {Name = eventTypeModel.Name};
+                            var newEventType = new EventType { Name = eventTypeModel.Name };
                             even.EventTypes.Add(newEventType);
                         }
                     }
@@ -75,7 +75,7 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                var ev = db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).Include(p=>p.Users).SingleOrDefault(s => s.Id == id);
+                var ev = db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).Include(p => p.Users).SingleOrDefault(s => s.Id == id);
                 if (ev == null)
                     return null;
                 var rEvent = new EventModel
@@ -264,7 +264,7 @@ namespace EventBot.Entities.Service
                 if (!tempEvent.Users.Contains(tempUser))
                 {
                     tempEvent.Users.Add(tempUser);
-                    CreateEventNotificationForUser(db,tempEvent,tempUser,NotificationType.EventJoined, tempEvent.StartDate);
+                    CreateEventNotificationForUser(db, tempEvent, tempUser, NotificationType.EventJoined, tempEvent.StartDate);
                     if (tempOwner.Id != tempUser.Id)
                         CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasJoined, tempEvent.StartDate);
                     db.SaveChanges();
@@ -283,7 +283,7 @@ namespace EventBot.Entities.Service
                 var tempOwner = db.Events.Where(d => d.Id == eventId).Select(e => e.Organiser).Single();
                 if (attandee != null)
                 {
-                    CreateEventNotificationForUser(db, tempEvent,attandee, NotificationType.EventLeaved, tempEvent.StartDate);
+                    CreateEventNotificationForUser(db, tempEvent, attandee, NotificationType.EventLeaved, tempEvent.StartDate);
                     if (tempOwner.Id != attandee.Id)
                         CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasLeaved, tempEvent.StartDate);
                     tempEvent.Users.Remove(attandee);
@@ -292,28 +292,25 @@ namespace EventBot.Entities.Service
             }
         }
 
-        public ICollection<EventModel> SearchEvents(string query,int maxCost=-1,int minFreePlaces=0, EventSortBy sortBy=EventSortBy.Popularity,string location="")
+        public ICollection<EventModel> SearchEvents(string query, int maxCost = -1, int minFreePlaces = 0, EventSortBy sortBy = EventSortBy.Popularity, LocationModel location = null, double maxDistance = 0)
         {
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
-            var locationEmpty = string.IsNullOrWhiteSpace(location);
-            
+            var locationEmpty = location == null;
+
             using (var db = new EventBotDb())
             {
                 //Search
-                var eventsMatchingQuery= db.Events
+                var eventsMatchingQuery = db.Events
                     .Where(w => w.StartDate > DateTime.Now)
                     .Where(w => (queryEmpty
                                || w.Title.ToLower().Contains(queryLowerCase)
                                || w.Description.ToLower().Contains(queryLowerCase)
                                || w.MeetingPlace.ToLower().Contains(queryLowerCase)
-                               || w.EventTypes.Any(eventtype=>eventtype.Name.ToLower().Contains(queryLowerCase)))
-                               && (locationEmpty
-                                   || w.MeetingPlace.ToLower() == location.ToLower()
-                                   )
-                                   && (maxCost<0
-                                   ||w.ParticipationCost<=maxCost)
-                                   &&(w.MaxAttendees==0||((w.MaxAttendees-w.Users.Count)>=minFreePlaces))
+                               || w.EventTypes.Any(eventtype => eventtype.Name.ToLower().Contains(queryLowerCase)))
+                               && (maxCost < 0
+                                   || w.ParticipationCost <= maxCost)
+                                   && (w.MaxAttendees == 0 || ((w.MaxAttendees - w.Users.Count) >= minFreePlaces))
                     );
                 IQueryable<Event> eventsMatchingQueryOrdered;
                 switch (sortBy)
@@ -337,16 +334,53 @@ namespace EventBot.Entities.Service
 
                 return eventsMatchingQueryOrdered.Select(o => new
                 {
-                    o.Id, o.Title, o.Description, o.CreatedDate, o.ModifiedDate, o.MeetingPlace, o.Location, o.StartDate, o.EndDate, o.IsCanceled, o.MaxAttendees, o.ParticipationCost, ImageId = o.Image == null ? 0 : o.Image.Id, o.VisitCount, o.EventTypes, UserCount = o.Users.Count, UserId = o.Organiser.Id
-                }).ToArray().Select(s => new EventModel
+                    o.Id,
+                    o.Title,
+                    o.Description,
+                    o.CreatedDate,
+                    o.ModifiedDate,
+                    o.MeetingPlace,
+                    o.Location,
+                    o.StartDate,
+                    o.EndDate,
+                    o.IsCanceled,
+                    o.MaxAttendees,
+                    o.ParticipationCost,
+                    ImageId = o.Image == null ? 0 : o.Image.Id,
+                    o.VisitCount,
+                    o.EventTypes,
+                    UserCount = o.Users.Count,
+                    UserId = o.Organiser.Id
+                }).ToArray().Where(w=>(maxDistance == 0||location.Latitude==0||location.Longitude==0 || w.Location.DistanceTo(location) < maxDistance)
+)
+                .Select(s => new EventModel
                 {
-                    Id = s.Id, Title = s.Title, Description = s.Description, CreatedDate = s.CreatedDate, ModifiedDate = s.ModifiedDate, MeetingPlace = s.MeetingPlace, MaxAttendees = s.MaxAttendees, ParticipationCost = s.ParticipationCost, UserCount = s.UserCount, Location = new LocationModel
+                    Id = s.Id,
+                    Title = s.Title,
+                    Description = s.Description,
+                    CreatedDate = s.CreatedDate,
+                    ModifiedDate = s.ModifiedDate,
+                    MeetingPlace = s.MeetingPlace,
+                    MaxAttendees = s.MaxAttendees,
+                    ParticipationCost = s.ParticipationCost,
+                    UserCount = s.UserCount,
+                    Location = new LocationModel
                     {
-                        Id = s.Location.Id, Latitude = s.Location.Latitude, Longitude = s.Location.Longitude, Altitude = s.Location.Altitude, Name = s.Location.Name
+                        Id = s.Location.Id,
+                        Latitude = s.Location.Latitude,
+                        Longitude = s.Location.Longitude,
+                        Altitude = s.Location.Altitude,
+                        Name = s.Location.Name
                     },
-                    StartDate = s.StartDate, EndDate = s.EndDate, IsCanceled = s.IsCanceled, ImageId = s.ImageId, VisitCount = s.VisitCount, EventTypes = s.EventTypes.Select(ss => new EventTypeModel
+                    StartDate = s.StartDate,
+                    EndDate = s.EndDate,
+                    IsCanceled = s.IsCanceled,
+                    ImageId = s.ImageId,
+                    VisitCount = s.VisitCount,
+                    EventTypes = s.EventTypes.Select(ss => new EventTypeModel
                     {
-                        Id = ss.Id, Name = ss.Name
+                        Id = ss.Id,
+                        Name = ss.Name
                     }).ToArray(),
                     UserId = s.UserId
                 }).ToArray();
@@ -365,7 +399,8 @@ namespace EventBot.Entities.Service
                 if (model.Id == 0 && db.EventTypes.Any(w => w.Name == model.Name)) return;
                 var eventType = new EventType
                 {
-                    Id = model.Id, Name = model.Name
+                    Id = model.Id,
+                    Name = model.Name
                 };
                 db.EventTypes.AddOrUpdate(eventType);
                 db.SaveChanges();
@@ -379,7 +414,8 @@ namespace EventBot.Entities.Service
             {
                 return db.EventTypes.Select(s => new EventTypeModel
                 {
-                    Id = s.Id, Name = s.Name
+                    Id = s.Id,
+                    Name = s.Name
                 }).ToArray();
             }
         }
@@ -464,7 +500,14 @@ namespace EventBot.Entities.Service
             {
                 return db.Notifications.Where(n => n.User.Id == userId && !n.IsRead).Select(n => new NotificationModel()
                 {
-                    DateTime = n.DateTime, Id = n.Id, EventName = n.Event.Title, IsRead = n.IsRead, OriginalStartDate = n.OriginalStartDate, StartDate = n.StartDate, EventType = n.Type, EventId = n.Event.Id,
+                    DateTime = n.DateTime,
+                    Id = n.Id,
+                    EventName = n.Event.Title,
+                    IsRead = n.IsRead,
+                    OriginalStartDate = n.OriginalStartDate,
+                    StartDate = n.StartDate,
+                    EventType = n.Type,
+                    EventId = n.Event.Id,
                 }).ToList();
             }
         }
@@ -515,7 +558,12 @@ namespace EventBot.Entities.Service
             {
                 db.Notifications.AddOrUpdate(new Notification()
                 {
-                    DateTime = DateTime.Now, Event = e, StartDate = e.StartDate, OriginalStartDate = originalDateTime, Type = type, User = eventUser
+                    DateTime = DateTime.Now,
+                    Event = e,
+                    StartDate = e.StartDate,
+                    OriginalStartDate = originalDateTime,
+                    Type = type,
+                    User = eventUser
                 });
             }
         }
@@ -524,7 +572,12 @@ namespace EventBot.Entities.Service
         {
             db.Notifications.AddOrUpdate(new Notification()
             {
-                DateTime = DateTime.Now, Event = e, StartDate = e.StartDate, OriginalStartDate = originalDateTime, Type = type, User = user
+                DateTime = DateTime.Now,
+                Event = e,
+                StartDate = e.StartDate,
+                OriginalStartDate = originalDateTime,
+                Type = type,
+                User = user
             });
         }
 

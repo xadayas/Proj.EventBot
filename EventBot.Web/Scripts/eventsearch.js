@@ -17,6 +17,9 @@ window.addEventListener("load", () => {
     $('#SortBy').change(() => {
         eventSearch();
     });
+    $('#MaxDistance').change(() => {
+        eventSearch();
+    });
     eventSearch();
 });
 
@@ -55,10 +58,12 @@ function eventSearch() {
     var maxCost = $('#MaxCost').val();
     var minPlaces = $('#searchPersons').val();
     var sortBy = $('#SortBy').val();
+    var maxDistance = $('#MaxDistance').val();
     $('#EventTable').load('/Event/Search/', {
         query: query,
         persons: minPlaces,
         cost: maxCost,
-        sortBy:sortBy
+        sortBy: sortBy,
+        maxDistance: maxDistance
     });
 }
