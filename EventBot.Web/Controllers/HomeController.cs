@@ -18,7 +18,7 @@ namespace EventBot.Web.Controllers
         }
         public ActionResult Index()
         {
-            ViewData["HotEvents"] = _service.SearchEvents("");
+            ViewData["HotEvents"] = _service.SearchEvents("",modulus:4);
             var location = IpLocator.GetIpLocation(Request.UserHostAddress);
             return View(location);
         }
