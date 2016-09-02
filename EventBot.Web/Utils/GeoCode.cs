@@ -11,11 +11,15 @@ namespace EventBot.Web.Utils
     {
         public static IEnumerable<LocationViewModel> GoogleGeoCode(string address)
         {
-            return address.AddressToLocation().results.Select(s=>new LocationViewModel
+
+            var result =  address.AddressToLocation().results;
+            return result.Select(s=>new LocationViewModel
             {
                 Latitude = s.geometry.location.lat,
                 Longitude = s.geometry.location.lng,
-                Name = s.address_components.FirstOrDefault(f=>f.types.Contains("postal_town"))?.short_name??""
+                Name = s.formatted_address,
+                City = s.address_components.FirstOrDefault(f=>f.types.Contains("postal_town"))?.long_name??"",
+                Country = s.address_components.FirstOrDefault(f => f.types.Contains("country"))?.long_name??""
             });
             //string url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=true&address=";
 

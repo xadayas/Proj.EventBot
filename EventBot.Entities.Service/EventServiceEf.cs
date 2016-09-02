@@ -43,7 +43,9 @@ namespace EventBot.Entities.Service
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude,
                     Altitude = model.Location.Altitude,
-                    Name = model.Location.Name
+                    Name = model.Location.Name,
+                    Country = model.Location.Country,
+                    City = model.Location.City
                 };
                 if (even.EventTypes == null) even.EventTypes = new List<EventType>();
                 if (model.EventTypes != null)
@@ -110,7 +112,9 @@ namespace EventBot.Entities.Service
                         Latitude = ev.Location.Latitude,
                         Longitude = ev.Location.Longitude,
                         Altitude = ev.Location.Altitude,
-                        Name = ev.Location.Name
+                        Name = ev.Location.Name,
+                        Country = ev.Location.Country,
+                        City = ev.Location.City
                     };
                 }
                 return rEvent;
@@ -139,7 +143,9 @@ namespace EventBot.Entities.Service
                              Latitude = @event.Location.Latitude,
                              Longitude = @event.Location.Longitude,
                              Altitude = @event.Location.Altitude,
-                             Name = @event.Location.Name
+                             Name = @event.Location.Name,
+                             Country = @event.Location.Country,
+                             City = @event.Location.City
                          },
                          StartDate = @event.StartDate,
                          EndDate = @event.EndDate,
@@ -178,7 +184,9 @@ namespace EventBot.Entities.Service
                              Latitude = @event.Location.Latitude,
                              Longitude = @event.Location.Longitude,
                              Altitude = @event.Location.Altitude,
-                             Name = @event.Location.Name
+                             Name = @event.Location.Name,
+                             Country = @event.Location.Country,
+                             City = @event.Location.City
                          },
                          StartDate = @event.StartDate,
                          EndDate = @event.EndDate,
@@ -231,7 +239,9 @@ namespace EventBot.Entities.Service
                              Latitude = @event.Location.Latitude,
                              Longitude = @event.Location.Longitude,
                              Altitude = @event.Location.Altitude,
-                             Name = @event.Location.Name
+                             Name = @event.Location.Name,
+                             Country = @event.Location.Country,
+                             City = @event.Location.City
                          },
                          StartDate = @event.StartDate,
                          EndDate = @event.EndDate,
@@ -294,6 +304,7 @@ namespace EventBot.Entities.Service
 
         public ICollection<EventModel> SearchEvents(string query, int maxCost = -1, int minFreePlaces = 0, EventSortBy sortBy = EventSortBy.Popularity, LocationModel location = null, double maxDistance = 0,int modulus=1)
         {
+            if (query == null) return null;
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
             var locationEmpty = location == null;
@@ -370,7 +381,9 @@ namespace EventBot.Entities.Service
                         Latitude = s.Location.Latitude,
                         Longitude = s.Location.Longitude,
                         Altitude = s.Location.Altitude,
-                        Name = s.Location.Name
+                        Name = s.Location.Name,
+                        Country = s.Location.Country,
+                        City = s.Location.City
                     },
                     StartDate = s.StartDate,
                     EndDate = s.EndDate,

@@ -7,6 +7,7 @@ var eventId = 0;
 function OnReady() {
     eventId = $("#hdnVal").val();
     buildButton();
+    $('#eventTags').tagsinput();
 }
 
 function buildButton() {

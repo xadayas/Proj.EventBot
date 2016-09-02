@@ -105,6 +105,8 @@ namespace EventBot.Web.Controllers
                 Location = new LocationModel
                 {
                     Name = model.Location.Name,
+                    Country = model.Location.Country,
+                    City = model.Location.City,
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude
                 },
@@ -150,6 +152,8 @@ namespace EventBot.Web.Controllers
                     {
                         Id = editEvent.Location.Id,
                         Name = editEvent.Location.Name,
+                        Country = editEvent.Location.Country,
+                        City = editEvent.Location.City,
                         Latitude = editEvent.Location.Latitude,
                         Longitude = editEvent.Location.Longitude,
                         Altitude = editEvent.Location.Altitude
@@ -202,7 +206,9 @@ namespace EventBot.Web.Controllers
                     Latitude = model.Location.Latitude,
                     Longitude = model.Location.Longitude,
                     Altitude = model.Location.Altitude,
-                    Name = model.Location.Name
+                    Name = model.Location.Name,
+                    Country = model.Location.Country,
+                    City = model.Location.City
                 },
                 EventTypes = model.Tags.Split(',').Select(s => new EventTypeModel
                 {

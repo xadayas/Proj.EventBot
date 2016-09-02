@@ -16,6 +16,7 @@ namespace EventBot.Entities.Service.Models
         public string Description { get; set; }
         [DisplayFormat(DataFormatString = "{0:dddd dd MMMM yyyy}")]
         public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dddd dd MMMM yyyy}")]
         public DateTime EndDate { get; set; }
 
         public string UserId { get; set; }

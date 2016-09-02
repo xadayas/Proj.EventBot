@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using EventBot.Web.Utils
+@using Microsoft.AspNet.Identity
 @model EventBot.Entities.Service.Models.EventModel
 
 @{
@@ -19,7 +20,7 @@
     <hr/>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            Rubrik
         </dt>
 
         <dd>
@@ -27,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+           Beskrivning
         </dt>
 
         <dd>
@@ -35,7 +36,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
+           Börjar
         </dt>
 
         <dd>
@@ -43,66 +44,71 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
+           Slutar
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 
+
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            @*@Html.DisplayNameFor(model => model.VisitCount)*@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
+            @Html.DisplayFor(model => model.VisitCount) besökare
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.VisitCount)
+            @*@Html.DisplayNameFor(model => model.UserCount)*@ 
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.VisitCount)
+            @Html.DisplayFor(model => model.UserCount) Anmälda
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UserCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserCount)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxAttendees)
+            @*@Html.DisplayNameFor(model => model.MaxAttendees)*@
+            @*Max deltagare*@
         </dt>
         <dd>
             @if (Model.MaxAttendees != 0)
             {
-                @Html.DisplayFor(model => model.MaxAttendees)
+               @(Model.MaxAttendees-Model.UserCount) @Html.Raw(" lediga platser")
             }
-            else
+            @*else
             {
-                @Html.Raw("No Limit")
-            }
+                @Html.Raw("Ingen gräns")
+            }*@
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MeetingPlace)
+            @*@Html.DisplayNameFor(model => model.MeetingPlace)*@
+            Plats
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MeetingPlace)
+            @Html.DisplayFor(model => model.Location.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EventTypes)
+           Taggar
         </dt>
+
         <dd>
+            @foreach (var tag in Model.EventTypes)
+            {
+                <span class="tag label label-info">@tag.Name</span>
+            }
+            @*@Html.EditorFor(model =>tags, new {htmlAttributes = new {@class = "form-control", id = "eventTags" ,@readonly=""}})*@
+        </dd>
+
+        @*<dd>
             <ul>
                 @foreach (var eventType in Model.EventTypes)
                 {
                     <li>@eventType.Name</li>
                 }
             </ul>
-        </dd>
+        </dd>*@
+        <dt></dt>
         <dd>
             <img src="/Images/view/@Html.Raw(Model.ImageId)" height="100"/>
         </dd>

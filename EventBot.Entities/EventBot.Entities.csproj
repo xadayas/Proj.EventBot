@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201608300827195_addPlacesAndCostToEvent.Designer.cs">
       <DependentUpon>201608300827195_addPlacesAndCostToEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609021946379_addCountryAndCityToLocation.cs" />
+    <Compile Include="Migrations\201609021946379_addCountryAndCityToLocation.Designer.cs">
+      <DependentUpon>201609021946379_addCountryAndCityToLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608300827195_addPlacesAndCostToEvent.resx">
       <DependentUpon>201608300827195_addPlacesAndCostToEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609021946379_addCountryAndCityToLocation.resx">
+      <DependentUpon>201609021946379_addCountryAndCityToLocation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
