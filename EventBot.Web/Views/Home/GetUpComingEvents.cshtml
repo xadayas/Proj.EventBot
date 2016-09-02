@@ -6,7 +6,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
             <td>
                 <img src="/Images/View/@Html.Raw(item.ImageId)" width="100" />
             </td>
@@ -14,9 +14,12 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
 
-            <td>
+            <dt>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </dt>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.MeetingPlace)
-            </td>
+            </td>*@
         </tr>
     }
 
