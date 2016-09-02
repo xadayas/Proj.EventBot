@@ -64,47 +64,21 @@
         </div>
     </header>
 
-
     <div class="body-content">
         @RenderBody()
-
-
     </div>
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/bootstrap-datetimepicker")
     @RenderSection("scripts", required: false)
     <!-- Single button -->
-    <script type="text/x-template" id="notifications-template">
+    @*<script type="text/x-template" id="notifications-template">
         <ul class="notifications">
-            @*<%
-                _.each(notifications, function(notification){
-                console.log(notification);
-                if (notification.eventType == 1) { %>
-                <li onClick="OnNotificationClicked(<%= notification.eventName %>, notification.eventId);">Planerade aktiviteten <span class="highlight"><%= notification.eventName %></span> som var planerad <%= moment(notification.dateTime).format("D MMM HH:mm") %> är tyvärr inställd.</li>
-                <% }
-                else if (notification.eventType == 2) {
-                var changes = [],
-                originalValues = [],
-                newValues = [];
-
-                if (notification.originalStartDate != notification.startDate) {
-                changes.push('datum/tid');
-                originalValues.push(moment(notification.originalStartDate).format("D MMM HH:mm"));
-                newValues.push(moment(notification.startDate).format("D MMM HH:mm"));
-                %>
-                <li onClick="OnNotificationClicked(notification.id, notification.eventId);"><span class="highlight"><%= notification.eventName %></span> har ändrat <%= changes.join(' and ') %> från <%= originalValues.join('/') %> till <%= newValues.join('/') %></li>
-                <%}
-                else {%>
-                <li onClick="OnNotificationClicked(notification.id, notification.eventId);"><span class="highlight"><%= notification.eventName %></span> har uppdaterat aktiviteten som är planerad <%= moment(notification.startDate).format("D MMM HH:mm") %>.</li>
-                <%}
-                }
-                })%>
-                <li ><a href="#">Visa alla</a></li>*@
         </ul>
-    </script>
+    </script>*@
     <script src="~/Scripts/all.js"></script>
     <script src="~/Scripts/details.js"></script>
 

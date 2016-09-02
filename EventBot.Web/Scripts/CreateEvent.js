@@ -40,15 +40,22 @@ $('#EventImageLink').click(() => {
 
 });
 
-$('.datetimefield').AnyPicker({
-    mode: "datetime",
-    dateTimeFormat: "yyyy-MM-dd HH:mm",
-    showComponentLabel: true,
-    parent: "div.form-horizontal",
-    layout: "fixed",
-    vAlign: "top"
-});
+//$('.datetimefield').AnyPicker({
+//    mode: "datetime",
+//    dateTimeFormat: "yyyy-MM-dd HH:mm",
+//    showComponentLabel: true,
+//    parent: "div.form-horizontal",
+//    layout: "fixed",
+//    vAlign: "top"
+//});
+$('.datetimefield').datetimepicker({
+    useCurrent: false,
+    format: "YYYY-MM-DD HH:mm",
+    //defaultDate: moment(item.ToTime)
+    defaultDate: moment()
+    //minDate: moment()
 
+});
 
 window.addEventListener("load", () => {
     var defaultBounds = new google.maps.LatLngBounds(
@@ -68,5 +75,36 @@ window.addEventListener("load", () => {
         }
     });
 });
+function BuildPickers() {
+    $('#startDateInput').datetimepicker({
+        useCurrent: false,
+        format: "YYYY-MM-DD HH:mm",
+        //defaultDate: moment(item.ToTime)
+        defaultDate: moment(),
+        //minDate: moment()
 
+    });
+    $('#endDateInput').datetimepicker({
+        useCurrent: false,
+        format: "YYYY-MM-DD HH:mm",
+        //defaultDate: moment(item.ToTime)
+        defaultDate: moment(),
+       // minDate: moment()
+
+    });
+    $("#startDateInput").on("dp.hide", function (from) {
+        var to = $("#endDateInput").data("DateTimePicker").date();
+        if (to <= from.date) {
+            $("#endDateInput").data("DateTimePicker").date(moment(from.date).add(30, 'minutes'));
+        }
+        to = $("#endDateInput").data("DateTimePicker").date();
+    });
+    $("#endDateInput").on("dp.hide", function (end) {
+        var start = $("#startDateInput").data("DateTimePicker").date();
+        if (start >= end.date) {
+            $("#startDateInput").data("DateTimePicker").date(moment(end.date).subtract(30, 'minutes'));
+        }
+        start = $("#startDateInput").data("DateTimePicker").date();
+    });
+}
 

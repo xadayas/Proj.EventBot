@@ -69,8 +69,8 @@
         <div class="form-group">
             @Html.Label("Börjar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "startDateInput", @readonly = true}})
-                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "text", id = "startDateInput" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr class="eventbot-divider" />
@@ -78,8 +78,8 @@
         <div class="form-group">
             @Html.Label("Slutar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control datetimefield", id = "endDateInput", @readonly = true}})
-                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "text", id = "endDateInput" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr class="eventbot-divider" />
@@ -137,5 +137,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU&libraries=places"></script>
     <script src="~/Scripts/CreateEvent.js"></script>
-
+    <script>
+        BuildPickers();
+    </script>
 }
