@@ -292,7 +292,7 @@ namespace EventBot.Entities.Service
             }
         }
 
-        public ICollection<EventModel> SearchEvents(string query, int maxCost = -1, int minFreePlaces = 0, EventSortBy sortBy = EventSortBy.Popularity, LocationModel location = null, double maxDistance = 0)
+        public ICollection<EventModel> SearchEvents(string query, int maxCost = -1, int minFreePlaces = 0, EventSortBy sortBy = EventSortBy.Popularity, LocationModel location = null, double maxDistance = 0,int modulus=1)
         {
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
@@ -386,8 +386,15 @@ namespace EventBot.Entities.Service
                     UserId = s.UserId
                 });
 
-                if (sortBy == EventSortBy.Distance) return result.OrderBy(o => o.DistanceFromClient).ToArray();
-                return result.ToArray();
+                if (sortBy == EventSortBy.Distance) result= result.OrderBy(o => o.DistanceFromClient);
+                var materializedResult = result.ToArray();
+                // modulus
+                if (modulus != 1 && materializedResult.Length > modulus)
+                {
+                    var count = materializedResult.Length-(materializedResult.Length%modulus);
+                    materializedResult = materializedResult.Take(count).ToArray();
+                }
+                return materializedResult;
             }
         }
 
