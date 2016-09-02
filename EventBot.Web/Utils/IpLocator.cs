@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 using System.Web.Helpers;
 
 namespace EventBot.Web
@@ -8,14 +9,15 @@ namespace EventBot.Web
         private const string _mainHost = "http://ip-api.com/json/";
         public static void GetLocation(string host, out double lat, out double lon)
         {
-            var jsonString = new WebClient().DownloadString(_mainHost + host);
-            var p = Json.Decode<IpLocation>(jsonString);
+            var p = GetIpLocation(host);
             lat = p.lat;
             lon = p.lon;
         }
         public static IpLocation GetIpLocation(string host)
         {
             var jsonString = new WebClient().DownloadString(_mainHost + host);
+            var bytes = Encoding.Default.GetBytes(jsonString);
+            jsonString = Encoding.UTF8.GetString(bytes);
             return Json.Decode<IpLocation>(jsonString);
         }
     }
