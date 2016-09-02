@@ -126,6 +126,7 @@ namespace EventBot.Web.Controllers
         {
             // check if event is saved in session variable
             EventViewModel model = Session["imageUploadEventSave"] as EventViewModel;
+            Session["imageUploadEventSave"] = null;
             var editEvent = _service.GetEvent(id);
 
             // else get from db.
