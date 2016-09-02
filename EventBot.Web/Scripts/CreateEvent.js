@@ -82,6 +82,7 @@ function BuildPickers() {
         format: "YYYY-MM-DD HH:mm",
         //defaultDate: moment(item.ToTime)
         defaultDate: moment(),
+        locale:'sv',
         //minDate: moment()
 
     });
@@ -91,6 +92,7 @@ function BuildPickers() {
         format: "YYYY-MM-DD HH:mm",
         //defaultDate: moment(item.ToTime)
         defaultDate: moment(),
+        locale:'sv',
        // minDate: moment()
 
     });

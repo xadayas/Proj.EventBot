@@ -107,21 +107,29 @@
             <img src="/Images/view/@Html.Raw(Model.ImageId)" height="100"/>
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Location)
         </dt>
 
         <dd>
             @Html.Action("Index", "Map", Model.Location)
-        </dd>
+        </dd>*@
 
-        <dt>
+        <dd>
+            @Html.Action("Static", "Map", Model.Location)
+        </dd>
+        @if (Model.IsCanceled)
+        {
+            <dd>Den här aktiviteten är inställd</dd>
+        }
+
+        @*<dt>
             @Html.DisplayNameFor(model => model.IsCanceled)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IsCanceled)
-        </dd>
+        </dd>*@
         <dt>
             Attend
         </dt>
