@@ -78,6 +78,7 @@ window.addEventListener("load", () => {
 function BuildPickers() {
     $('#startDateInput').datetimepicker({
         useCurrent: false,
+        ignoreReadonly: true,
         format: "YYYY-MM-DD HH:mm",
         //defaultDate: moment(item.ToTime)
         defaultDate: moment(),
@@ -86,6 +87,7 @@ function BuildPickers() {
     });
     $('#endDateInput').datetimepicker({
         useCurrent: false,
+        ignoreReadonly: true,
         format: "YYYY-MM-DD HH:mm",
         //defaultDate: moment(item.ToTime)
         defaultDate: moment(),
