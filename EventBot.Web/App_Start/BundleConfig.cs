@@ -11,8 +11,25 @@ namespace EventBot.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/underscore-min.js",
-                        "~/Scrips/moment.js",
+                        //"~/Scrips/moment.js",
                         "~/Scripts/anypicker.js"));
+
+
+            //Bootstrap-datetimepicker and moment.js
+
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                "~/Scripts/moment.js",
+                "~/Scripts/moment.min.js",
+                "~/Scripts/moment-with-locales.js",
+                "~/Scripts/moment-with-locales.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-datetimepicker").Include(
+                "~/Scripts/botstrap-datetimepicker.js",
+                "~/Scripts/bootstrap-datetimepicker.min.js"));
+            //bundles.Add(new StyleBundle("~/Content/bootstrap-datetimepicker").Include(
+            //    "~/Content/bootstrap-datetimepicker.css",
+            //    "~/Content/bootstrap-datetimepicker.min.css"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
@@ -31,13 +48,15 @@ namespace EventBot.Web
                       "~/Scripts/bootstrap3-typeahead.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/animate.css",
-                      "~/Content/eventbot.css",
-                      "~/Content/anypicker.css",
-                      "~/Content/bootstrap-select.css",
-                      "~/Content/bootstrap-tagsinput.css"));
+                "~/Content/bootstrap.css",
+                "~/Content/site.css",
+                "~/Content/animate.css",
+                "~/Content/eventbot.css",
+                "~/Content/anypicker.css",
+                "~/Content/bootstrap-select.css",
+                "~/Content/bootstrap-tagsinput.css",
+                "~/Content/bootstrap-datetimepicker.css",
+                "~/Content/bootstrap-datetimepicker.min.css"));
         }
     }
 }
