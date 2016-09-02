@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using EventBot.Entities.Service.Models;
 using EventBot.Web.Models;
 
@@ -24,16 +25,13 @@ namespace EventBot.Web.Utils
         }
         public static LocationModel IpToLocation(string ipaddr)
         {
-            string url = "http://freegeoip.net/json/";
-            dynamic result = new Uri(url + ipaddr).GetDynamicJsonObject();
-            
+            var ipLocation = IpLocator.GetIpLocation(ipaddr);
             return new LocationModel
             {
-                Name = result.city,
-                Latitude = result.latitude,
-                Longitude = result.longitude
+                Latitude = ipLocation.lat,
+                Longitude = ipLocation.lon,
+                Name = ipLocation.city
             };
-
         }
     }
 }
