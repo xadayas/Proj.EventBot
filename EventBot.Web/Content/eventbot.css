@@ -1,5 +1,6 @@
 ﻿
 /* Css mobile */
+/*
 @media screen and (max-width:992px ) {
     body {
         margin-left: 0;
@@ -60,7 +61,7 @@
 }
 }
 
-/* Desktop */
+/* Desktop 
 @media screen and (min-width: 993px) {
     body {
         margin-left: 15px;
@@ -82,7 +83,7 @@
 
 
 
-/* general*/
+/* general
 body {
     overflow-x: hidden;
 }
@@ -137,7 +138,7 @@ div.eventBot-img-container {
     width: 100%;
 }
 
-
+/*
 
     input.form-control:focus {
         outline: none;
@@ -145,12 +146,14 @@ div.eventBot-img-container {
         background-color: transparent;
         box-shadow: none;
     }
+    */
 
+/*Display pointer on readonly fields*/
     input.form-control[readonly] {
-        background-color: transparent;
+        background:white;
         cursor: pointer;
     }
-
+    /* Button style */
 input.btn {
     height: 91px;
     width: 100% !important;
@@ -170,7 +173,7 @@ input.btn {
 
 
 
-/* Input file */
+/* Input file style as button */
 .inputfile {
     width: 0.1px;
     height: 0.1px;
@@ -205,7 +208,7 @@ input.btn {
     }
 
 
-/* Select box */
+/* Select box 
 .bootstrap-select.btn-group .dropdown-toggle span.filter-option {
     text-align: center;
     display: block;
@@ -256,7 +259,7 @@ div.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.inpu
     margin: 0;
 }
 
-/* Event details */
+/* Event details 
 h1 {
     text-align: center;
 }
@@ -294,7 +297,7 @@ p {
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    /*margin:  auto;*/
+    /*margin:  auto;
     padding: 0;
     width: 70px;
     height: 70px;
@@ -316,6 +319,8 @@ p {
         top: 35%;
         left: 15%;
     }
+    */
+
 
     /* Notiications */
 
@@ -346,3 +351,27 @@ p {
   width:100% !important;
     display: block !important;
 }
+/* Datebox */
+.cb_prod_dateboxes .cb_prod_datebox {border: 1px solid #ccc; float: left; min-width: 28px; text-align: center; margin-right: 8px;}
+.cb_prod_dateboxes .cb_prod_datebox {border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+.cb_prod_dateboxes .cb_prod_datebox .cb_date_day {display: block; font-weight: bold; font-size: 11px; line-height: 17px; background-color: #fff;}
+.cb_prod_dateboxes .cb_prod_datebox .cb_date_day {
+	border-radius: 3px 3px 0 0; -moz-border-radius: 3px 3px 0 0; -webkit-border-radius: 3px 3px 0 0; border-top: 1px solid #fff; font-size: 12px; text-shadow: 0 1px 0 #fff;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#fff));
+	background-image: -webkit-linear-gradient(top, #f5f5f5, #fff);
+	background-image:    -moz-linear-gradient(top, #f5f5f5, #fff);
+	background-image:     -ms-linear-gradient(top, #f5f5f5, #fff);
+	background-image:      -o-linear-gradient(top, #f5f5f5, #fff);
+	background-image:         linear-gradient(top, #f5f5f5, #fff);
+}
+.cb_prod_dateboxes .cb_prod_datebox .cb_date_month {border-radius: 0 0 3px 3px; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; text-transform: uppercase;}
+.cb_prod_dateboxes .cb_prod_datebox .cb_date_month {display: block; color: #fff; font-size: 10px; font-weight: bold; padding: 1px 0 2px 0; line-height: 1em; background-color: #666;}
+.cb_prod_dateboxes .cb_prod_datedivider {line-height: 28px; padding: 0 2px; font-size: 14px; font-weight: bold; float: left; margin-left: -8px;}
+.cb_prod_dateboxes .cb_prod_arena_cat {font-size: 90%; padding-top: 2px;}
+
+/* ------------------------------------ */
+
+
+/* table row clickable cursor */
+.clickable{cursor:pointer;}
+
