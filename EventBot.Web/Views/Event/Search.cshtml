@@ -1,17 +1,5 @@
 ﻿@model IEnumerable<EventBot.Entities.Service.Models.EventModel>
 
-
-@*<table class="table">
-    <thead>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    </thead>*@
-
-
 @foreach (var item in Model)
 {
     <div style="background-color:white; border:1px solid #ff5c47; border-radius:2px;" class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
@@ -22,9 +10,7 @@
             </span>
         </h3>
 
-        @*<div>*@
         <img src="/Images/View/@Html.Raw(item.ImageId)" width="100" />
-        @*</div>*@
         <div style="display:inline-block;" class="cb_prod_dateboxes">
             <span class="cb_prod_datebox">
                 <span class="dtstart">
@@ -49,20 +35,7 @@
             @item.Description.Substring(0,Math.Min(item.Description.Length,30)) ...
         </p>
 
-        @*<td>
-                @Html.DisplayFor(modelItem => item.MeetingPlace)
-            </td>*@
-
-
-
-
-        @*<td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>*@
-
-        @*<td>
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) | @Html.ActionLink("Details2", "Details2", new { id = item.Id })
-            </td>*@
+        
     </div>
 }
 

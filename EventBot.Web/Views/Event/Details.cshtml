@@ -6,7 +6,6 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 @section scripts
 {
     <script>
@@ -17,143 +16,91 @@
 }
 <div>
     <input type="hidden" id="hdnVal" value="@Model.Id" />
-    <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            Rubrik
-        </dt>
 
-        <dd>
+        <h2>
             @Html.DisplayFor(model => model.Title)
-        </dd>
+            
+        </h2>
+    <h4>
+        @Html.DisplayFor(model => model.Location.City)
+    </h4>
+    <img style="max-height:299px;" src="/Images/view/@Html.Raw(Model.ImageId)" />
 
-        <dt>
-           Beskrivning
-        </dt>
-
-        <dd>
+        <p>
             @Html.DisplayFor(model => model.Description)
-        </dd>
+        </p>
 
-        <dt>
-           Börjar
-        </dt>
+    <div style="display:inline-block;" class="cb_prod_dateboxes">
+        <span class="cb_prod_datebox">
+            <span class="dtstart">
+                <span class="cb_date_day">@Model.StartDate.Day</span>
+                <span class="cb_date_month">@Model.StartDate.ToString("MMM")</span>
+                <span class="cb_date_month">@Model.StartDate.Year</span>
+                <span class="value-title" title=@Model.StartDate></span>
+            </span>
+        </span>
+        <span class="cb_prod_datedivider">-</span>
+        <span class="cb_prod_datebox">
+            <span class="dtend">
+                <span class="cb_date_day">@Model.EndDate.Day</span>
+                <span class="cb_date_month">@Model.EndDate.ToString("MMM")</span>
+                <span class="cb_date_month">@Model.EndDate.Year</span>
+                <span class="value-title" title=@Model.EndDate></span>
+            </span>
+        </span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-           Slutar
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-
-        <dt>
-            @*@Html.DisplayNameFor(model => model.VisitCount)*@
-        </dt>
-
-        <dd>
+   
+        <p>
             @Html.DisplayFor(model => model.VisitCount) besökare
-        </dd>
-        <dt>
-            @*@Html.DisplayNameFor(model => model.UserCount)*@ 
-        </dt>
+        </p>
+   
 
-        <dd>
+        <p>
             @Html.DisplayFor(model => model.UserCount) Anmälda
-        </dd>
-        <dt>
-            @*@Html.DisplayNameFor(model => model.MaxAttendees)*@
-            @*Max deltagare*@
-        </dt>
-        <dd>
+        </p>
+
+        <p>
             @if (Model.MaxAttendees != 0)
             {
                @(Model.MaxAttendees-Model.UserCount) @Html.Raw(" lediga platser")
             }
-            @*else
-            {
-                @Html.Raw("Ingen gräns")
-            }*@
-        </dd>
-        <dt>
-            @*@Html.DisplayNameFor(model => model.MeetingPlace)*@
-            Plats
-        </dt>
+        </p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location.Name)
-        </dd>
-        <dt>
-           Taggar
-        </dt>
 
-        <dd>
+
+
+        <div class="tagClass">
             @foreach (var tag in Model.EventTypes)
             {
                 <span class="tag label label-info">@tag.Name</span>
             }
-            @*@Html.EditorFor(model =>tags, new {htmlAttributes = new {@class = "form-control", id = "eventTags" ,@readonly=""}})*@
-        </dd>
+        </div>
 
-        @*<dd>
-            <ul>
-                @foreach (var eventType in Model.EventTypes)
-                {
-                    <li>@eventType.Name</li>
-                }
-            </ul>
-        </dd>*@
-        <dt></dt>
-        <dd>
-            <img src="/Images/view/@Html.Raw(Model.ImageId)" height="100"/>
-        </dd>
+        
+        
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-
-        <dd>
-            @Html.Action("Index", "Map", Model.Location)
-        </dd>*@
-
-        <dd>
+        
             @Html.Action("Static", "Map", Model.Location)
-        </dd>
+        
         @if (Model.IsCanceled)
         {
-            <dd>Den här aktiviteten är inställd</dd>
+            <span>Den här aktiviteten är inställd</span>
         }
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.IsCanceled)
-        </dt>
+  
 
-        <dd>
-            @Html.DisplayFor(model => model.IsCanceled)
-        </dd>*@
-        <dt>
-            Attend
-        </dt>
+        <div id="attend">
 
-        <dd id="attend">
-
-        </dd>
-        <dd>
+        </div>
+        <div>
             <div id="alertbox">
             </div>
-        </dd>
-    </dl>
+        </div>
 </div>
 <p>
     @if (Model.UserId == User.Identity.GetUserId())
     {
-        @Html.ActionLink("Edit", "Edit", new {id = Model.Id});
-        @Html.Raw(" | ");
+        @Html.ActionLink("Ändra", "Edit", new {id = Model.Id});
     }
-    @Html.ActionLink("Back to List", "Index")
 </p>
