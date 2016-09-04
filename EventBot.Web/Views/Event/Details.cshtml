@@ -24,8 +24,9 @@
     <h4>
         @Html.DisplayFor(model => model.Location.City)
     </h4>
-    <img style="max-height:299px;" src="/Images/view/@Html.Raw(Model.ImageId)" />
-
+    <div class="eventBot-img-container">
+        <img id="EventImage" src="/Images/view/@Html.Raw(Model.ImageId)" />
+    </div>
         <p>
             @Html.DisplayFor(model => model.Description)
         </p>

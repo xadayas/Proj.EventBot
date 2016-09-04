@@ -46,7 +46,7 @@ div.eventBot-img-container {
     /* Button  */
 input.btn {
     height: 91px;
-    width: 100% !important;
+    width:100% !important;
     display: block;
     border: none;
     padding: 0;
@@ -55,7 +55,6 @@ input.btn {
     text-align: center;
     background-color: #ff5c47;
     color: white;
-    box-sizing: border-box;
 }
 
     input.btn:focus {
