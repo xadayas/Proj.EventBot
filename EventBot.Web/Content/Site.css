@@ -1,8 +1,9 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
 
 html {
-    box-sizing: border-box;
+   /* box-sizing: border-box; */
     /*padding: (Vad som passar)*/
+    margin-top:10px;
 }
 
 *, *:before, *:after {
@@ -167,11 +168,9 @@ body {
 .jumbotron {
     padding: 7em;
     text-shadow: 0 0 10px black;
- /*   background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
- */
- background: #428bca;
- color:white;
-        background-size: cover;
+    background: linear-gradient(transparent, #edeff0), url("https://raw.githubusercontent.com/xadayas/Proj.EventBot/master/EventBot.Web/Content/sunrise-209146_1920.jpg") no-repeat center;
+    color:white;
+    background-size: cover;
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
@@ -373,3 +372,9 @@ h2 {
 .col-md-12 {
     margin-bottom: 20px;
 }
+
+.col-md-12:hover {
+    margin-bottom: 20px;
+    background: #ff5c47;
+}
+
