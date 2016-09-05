@@ -5,7 +5,7 @@
 <ul class="timeline">
     @foreach(var item in Model)
     {
-        <li onclick="document.location = '/event/details/@item.Id';">
+        <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
             <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
             <div class="timeline-content">
                 <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
