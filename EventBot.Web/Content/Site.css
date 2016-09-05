@@ -353,3 +353,13 @@ h2 {
     -o-transform:scale(1.25); /* Opera */
      transform:scale(1.25);
 }
+
+#notcontent {
+    padding: 7px;
+}
+
+h2 {
+    background: #ff5c47;
+    border-radius: 20px;
+    color: white;
+}
