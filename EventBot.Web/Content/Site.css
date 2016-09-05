@@ -162,8 +162,11 @@ body {
 .jumbotron {
     padding: 7em;
     text-shadow: 0 0 10px black;
-    background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
-    background-size: cover;
+ /*   background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
+ */
+ background: #428bca;
+ color:white;
+        background-size: cover;
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
@@ -243,20 +246,20 @@ a {
         }
 
 /* Timeline */
-    .timeline {
-        list-style: none;
+.timeline {
+    list-style: none;
+}
+
+    .timeline > li {
+        margin-bottom: 60px;
     }
 
-        .timeline > li {
-            margin-bottom: 60px;
-        }
-
-        @media ( min-width : 550px ){
-        .timeline > li {
-            overflow: hidden;
-            margin: 0;
-            position: relative;
-        }
+@media ( min-width : 550px ) {
+    .timeline > li {
+        overflow: hidden;
+        margin: 0;
+        position: relative;
+    }
 
     .timeline-date {
         width: 86px;
@@ -269,6 +272,43 @@ a {
         float: left;
         border-left: 3px #ff5c47 solid;
         padding-left: 30px;
+    }
+
+        .timeline-content:before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #ff5c47;
+            position: absolute;
+            left: 82px;
+            top: 24px;
+            border-radius: 100%;
+        }
+}
+
+@media ( max-width : 549px ) {
+    #eventTitle {
+        font-size: 50%;
+    }
+
+    .timeline > li {
+        overflow: hidden;
+        margin: 0;
+        position: relative;
+    }
+
+    .timeline-date {
+        width: 86px;
+        float: left;
+        margin-top: 10px;
+    }
+
+    .timeline-content {
+        width: 50%;
+        float: left;
+        border-left: 3px #ff5c47 solid;
+        padding-left: 10px;
+        font-size: 80%;
     }
 
         .timeline-content:before {
