@@ -6,6 +6,8 @@ using EventBot.Entities.Models;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 
 namespace EventBot.Entities.Service
 {
@@ -492,22 +494,46 @@ namespace EventBot.Entities.Service
 
         #region Images
 
-        public byte[] GetImage(int imageId)
+        public byte[] GetImageLarge(int imageId)
         {
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
                 if (image == null) throw new InvalidOperationException("Image not found");
-                return image.ImageBytes;
+                return image.ImageBytesLarge;
             }
         }
-
+        public byte[] GetImageThumb(int imageId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var image = db.Images.SingleOrDefault(s => s.Id == imageId);
+                if (image == null) throw new InvalidOperationException("Image not found");
+                return image.ImageBytesThumb;
+            }
+        }
         public int CreateImage(byte[] imageBytes)
         {
+            Image imgFromBytesOriginal;
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                imgFromBytesOriginal = Image.FromStream(ms);
+            }
+            var largeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 300, 300, true);
+            var thumbnailImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 100, 100, true);
+
+            var largeStream = new MemoryStream();
+            largeImage.Save(largeStream, System.Drawing.Imaging.ImageFormat.Png);
+
+            var thumbStream = new MemoryStream();
+            thumbnailImage.Save(thumbStream, System.Drawing.Imaging.ImageFormat.Png);
+
             var image = new EventBotImage
             {
-                ImageBytes = imageBytes
+                ImageBytesLarge = largeStream.ToArray(),
+                ImageBytesThumb = thumbStream.ToArray()
             };
+
             using (var db = new EventBotDb())
             {
                 db.Images.Add(image);

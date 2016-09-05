@@ -21,14 +21,22 @@ namespace EventBot.Web.Controllers
         public void View(int id)
         {
             //TODO better way to fetch default image if id==0
-            var imageBytes = _service.GetImage(id == 0 ? 6 : id);
+            var imageBytes = _service.GetImageLarge(id == 0 ? 6 : id);
 
             var ms = new MemoryStream(imageBytes);
             Response.ContentType = "Image/Png";
             ms.CopyTo(Response.OutputStream);
         }
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        public void ViewThumb(int id)
+        {
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImageThumb(id == 0 ? 6 : id);
 
-
+            var ms = new MemoryStream(imageBytes);
+            Response.ContentType = "Image/Png";
+            ms.CopyTo(Response.OutputStream);
+        }
 
         //public ActionResult Upload(string title, string description, string meetingPlace, string startDate, string endDate, int returnto)
         //{
