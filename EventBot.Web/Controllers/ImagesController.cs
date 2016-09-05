@@ -22,6 +22,7 @@ namespace EventBot.Web.Controllers
         {
             //TODO better way to fetch default image if id==0
             var imageBytes = _service.GetImageLarge(id == 0 ? 6 : id);
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
 
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
@@ -31,6 +32,7 @@ namespace EventBot.Web.Controllers
         {
             //TODO better way to fetch default image if id==0
             var imageBytes = _service.GetImageThumb(id == 0 ? 6 : id);
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
 
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
@@ -40,7 +42,7 @@ namespace EventBot.Web.Controllers
         {
             //TODO better way to fetch default image if id==0
             var imageBytes = _service.GetImageLandscape(id == 0 ? 6 : id);
-
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
         }
