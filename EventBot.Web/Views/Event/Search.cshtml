@@ -8,6 +8,7 @@
             <span>
                 @Html.DisplayFor(modelItem => item.Location.City)
             </span>
+          
         </h3>
 
         <img src="/Images/View/@Html.Raw(item.ImageId)" width="100" />
@@ -33,6 +34,10 @@
 
         <p style="display:inline-block; vertical-align:top;">
             @item.Description.Substring(0,Math.Min(item.Description.Length,30)) ...
+        </p>
+        <br />
+        <p>
+           Avstånd: @item.DistanceFromClient km
         </p>
 
         
