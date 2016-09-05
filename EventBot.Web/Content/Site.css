@@ -367,3 +367,7 @@ h2 {
 .thumbnail {
     height: 300px;
 }
+
+.col-md-12 {
+    margin-bottom: 20px;
+}
