@@ -221,7 +221,7 @@ namespace EventBot.Entities.Service
                     listEvent.Add(db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == item));
                 }
 
-                return listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
+                var list = listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
                      .Select(@event => new EventModel
                      {
                          Id = @event.Id,
@@ -254,7 +254,9 @@ namespace EventBot.Entities.Service
                              Name = eventType.Name
                          }).ToList(),
                          UserId = @event.Organiser.Id
-                     }).ToList();
+                     }).ToList().OrderBy(p => p.StartDate);
+
+                return list.ToList();
             }
         }
 
