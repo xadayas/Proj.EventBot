@@ -1,9 +1,9 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
-
+@import 'https://fonts.googleapis.com/css?family=Montserrat+Alternates';
 html {
    /* box-sizing: border-box; */
     /*padding: (Vad som passar)*/
-    margin-top:10px;
+    margin-top:0px;
 }
 
 *, *:before, *:after {
@@ -14,7 +14,7 @@ body {
     /*padding-top: 50px;*/
     padding-bottom: 20px;
     background: #edeff0;
-    margin: 15px;
+    margin: 0px;
 }
 
 .body-content {
