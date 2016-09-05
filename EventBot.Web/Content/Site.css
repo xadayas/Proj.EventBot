@@ -322,3 +322,14 @@ a {
             border-radius: 100%;
         }
 }
+
+h2 {
+   font-size: 20px;
+   font-family: verdana;
+   font-style: inherit;
+   float: right;
+   background: black;
+   color: white;
+   padding: 20px;
+   width: 100%;
+}
