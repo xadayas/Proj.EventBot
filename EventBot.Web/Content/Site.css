@@ -363,6 +363,7 @@ h2 {
     color: white;
     font-size:12px;
     border-style: double;
+    padding:5px;
 }
 
 .thumbnail {
