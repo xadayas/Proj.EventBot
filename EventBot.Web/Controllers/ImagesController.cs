@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EventBot.Entities.Models;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
@@ -16,6 +17,7 @@ namespace EventBot.Web.Controllers
         private readonly IEventService _service = new EventServiceEf();
 
         // GET: Images
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public void View(int id)
         {
             //TODO better way to fetch default image if id==0
