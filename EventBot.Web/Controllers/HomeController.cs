@@ -18,7 +18,6 @@ namespace EventBot.Web.Controllers
         }
         public ActionResult Index()
         {
-            ViewData["HotEvents"] = _service.SearchEvents("",modulus:4);
             IpLocation location;
             var emptyLocation = new IpLocation()
             {
@@ -38,6 +37,8 @@ namespace EventBot.Web.Controllers
             {
                 location = emptyLocation;
             }
+            var events = _service.SearchEvents("", location: new LocationModel { Latitude = location.lat, Longitude = location.lon }, sortBy: EventSortBy.Distance, modulus: 3);
+            ViewData["HotEvents"] = events.OrderByDescending(o => o.VisitCount).ToArray();
             return View(location);
         }
 

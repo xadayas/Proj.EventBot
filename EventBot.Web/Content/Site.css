@@ -385,3 +385,14 @@ h2 {
 .notify-li {
     color:#ff5c47
 }
+
+.emo-icon {
+    background:black;
+    color:white;
+    padding:5px;
+    border:dotted;
+    float:left;
+    margin-right:5px;
+    border-radius:10px;
+    border-color:#fff;
+}
