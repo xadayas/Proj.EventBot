@@ -18,24 +18,22 @@ namespace EventBot.Web.Controllers
 
         // GET: Images
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
-        public void View(int id)
+        public ActionResult View(int id)
         {
             //TODO better way to fetch default image if id==0
             var imageBytes = _service.GetImageLarge(id == 0 ? 6 : id);
 
             var ms = new MemoryStream(imageBytes);
-            Response.ContentType = "Image/Png";
-            ms.CopyTo(Response.OutputStream);
+            return new FileStreamResult(ms, "image/JPEG");
         }
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
-        public void ViewThumb(int id)
+        public ActionResult ViewThumb(int id)
         {
             //TODO better way to fetch default image if id==0
             var imageBytes = _service.GetImageThumb(id == 0 ? 6 : id);
 
             var ms = new MemoryStream(imageBytes);
-            Response.ContentType = "Image/Png";
-            ms.CopyTo(Response.OutputStream);
+            return new FileStreamResult(ms, "image/JPEG");
         }
 
         //public ActionResult Upload(string title, string description, string meetingPlace, string startDate, string endDate, int returnto)
