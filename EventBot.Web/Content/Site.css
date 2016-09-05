@@ -361,4 +361,9 @@ h2 {
     background: #ff5c47;
     border-radius: 20px;
     color: white;
+    font-size:12px;
+}
+
+.thumbnail {
+    height: 300px;
 }
