@@ -323,19 +323,16 @@ a {
         }
 }
 
-h2 {
-   font-size: 20px;
-   font-family: verdana;
-   font-style: inherit;
-   float: right;
-   background: black;
-   color: white;
-   padding: 20px;
-   width: 100%;
-}
+
 
 .start-page-event {
     overflow: hidden;
+}
+
+h2 {
+   font-size: 20px;
+   font-family: verdana;
+   padding: 20px;
 }
 
 .image {  
