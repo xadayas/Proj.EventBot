@@ -1,9 +1,7 @@
 ﻿
 var IsAttending = false;
 var eventId = 0;
-//$(document).ready(function () {
-//   // OnReady();
-//});
+
 function OnReady() {
     eventId = $("#hdnVal").val();
     buildButton();
@@ -13,7 +11,7 @@ function OnReady() {
 function buildButton() {
     checkIsAttending(eventId);
 
-    var jl = IsAttending ? "Leave" : "Join";
+    var jl = IsAttending ? "Lämna" : "Gå med";
     $("#attend").empty();
     var joinorleave = '<input type="submit" class="btn btn-default" id="bt" value=' + jl + "></input>";
     $(joinorleave).appendTo('#attend');
