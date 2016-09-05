@@ -50,7 +50,7 @@
 @foreach (var item in Model) {
     <tr class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
         <td>
-            <img src="/Images/View/@Html.Raw(item.ImageId)" width="100" />
+            <img class="img-circle" src="/Images/View/@Html.Raw(item.ImageId)" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)

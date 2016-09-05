@@ -87,16 +87,16 @@ function UpdateNotifications() {
             }
         }
         else if (item.eventType == 4) {//EventJoined
-            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');">✌ Du har anmält dig till <span class="highlight">' + item.eventName + '! klicka här för att komma till alla dina kommande aktiviteter</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">✌</span> Du har anmält dig till <span class="highlight">' + item.eventName + '! klicka här för att komma till alla dina kommande aktiviteter</span> </li>');
         }
         else if (item.eventType == 5) {//EventLeaved
-            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');">👋 Du har avanmält dig från <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">👋</span> Du har avanmält dig från <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         else if (item.eventType == 6) {//EventUserHasJoined
-            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');">✌ Någon har anmält sig till ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">✌</span> Någon har anmält sig till ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         else if (item.eventType == 7) {//EventUserHasLeaved
-            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');">🖕 Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">🖕</span> Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         $('#notcontent').append('<hr>');
     });
