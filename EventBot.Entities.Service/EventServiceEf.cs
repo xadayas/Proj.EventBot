@@ -512,6 +512,15 @@ namespace EventBot.Entities.Service
                 return image.ImageBytesThumb;
             }
         }
+        public byte[] GetImageLandscape(int imageId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var image = db.Images.SingleOrDefault(s => s.Id == imageId);
+                if (image == null) throw new InvalidOperationException("Image not found");
+                return image.ImageBytesLandscape;
+            }
+        }
         public int CreateImage(byte[] imageBytes)
         {
             Image imgFromBytesOriginal;
@@ -521,6 +530,7 @@ namespace EventBot.Entities.Service
             }
             var largeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 300, 300, true);
             var thumbnailImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 100, 100, true);
+            var landscapeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 532, 300, true);
 
             var largeStream = new MemoryStream();
             largeImage.Save(largeStream, System.Drawing.Imaging.ImageFormat.Png);
@@ -528,10 +538,14 @@ namespace EventBot.Entities.Service
             var thumbStream = new MemoryStream();
             thumbnailImage.Save(thumbStream, System.Drawing.Imaging.ImageFormat.Png);
 
+            var landscapeStream = new MemoryStream();
+            landscapeImage.Save(landscapeStream, System.Drawing.Imaging.ImageFormat.Png);
+
             var image = new EventBotImage
             {
                 ImageBytesLarge = largeStream.ToArray(),
-                ImageBytesThumb = thumbStream.ToArray()
+                ImageBytesThumb = thumbStream.ToArray(),
+                ImageBytesLandscape = landscapeStream.ToArray()
             };
 
             using (var db = new EventBotDb())

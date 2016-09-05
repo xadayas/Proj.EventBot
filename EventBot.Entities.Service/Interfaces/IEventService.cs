@@ -25,6 +25,7 @@ namespace EventBot.Entities.Service.Interfaces
 
         byte[] GetImageLarge(int imageId);
         byte[] GetImageThumb(int imageId);
+        byte[] GetImageLandscape(int imageId);
         int CreateImage(byte[] imageBytes);
 
         IEnumerable<NotificationModel> GetNewNotificationsFor(string userId);

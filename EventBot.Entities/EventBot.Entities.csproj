@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201609051825272_addedThumbNailImage.Designer.cs">
       <DependentUpon>201609051825272_addedThumbNailImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609052049257_addedLandscapeImage.cs" />
+    <Compile Include="Migrations\201609052049257_addedLandscapeImage.Designer.cs">
+      <DependentUpon>201609052049257_addedLandscapeImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609051825272_addedThumbNailImage.resx">
       <DependentUpon>201609051825272_addedThumbNailImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609052049257_addedLandscapeImage.resx">
+      <DependentUpon>201609052049257_addedLandscapeImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
