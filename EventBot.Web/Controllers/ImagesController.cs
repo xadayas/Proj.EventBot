@@ -35,6 +35,15 @@ namespace EventBot.Web.Controllers
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
         }
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        public ActionResult ViewLandscape(int id)
+        {
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImageLandscape(id == 0 ? 6 : id);
+
+            var ms = new MemoryStream(imageBytes);
+            return new FileStreamResult(ms, "image/JPEG");
+        }
 
         //public ActionResult Upload(string title, string description, string meetingPlace, string startDate, string endDate, int returnto)
         //{
