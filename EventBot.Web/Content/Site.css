@@ -162,8 +162,11 @@ body {
 .jumbotron {
     padding: 7em;
     text-shadow: 0 0 10px black;
-    background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
-    background-size: cover;
+ /*   background: linear-gradient(transparent, #edeff0), url("https://placeimg.com/1000/480/any") no-repeat center;
+ */
+ background: #428bca;
+ color:white;
+        background-size: cover;
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
