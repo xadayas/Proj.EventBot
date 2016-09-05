@@ -334,11 +334,6 @@ a {
     overflow: hidden;
 }
 
-h2 {
-   font-size: 20px;
-   padding: 20px;
-}
-
 .image {  
 }
 
@@ -367,6 +362,7 @@ h2 {
     border-radius: 20px;
     color: white;
     font-size:12px;
+    border-style: double;
 }
 
 .thumbnail {
