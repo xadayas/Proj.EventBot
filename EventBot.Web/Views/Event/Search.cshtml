@@ -38,6 +38,16 @@
         <br />
         <p>
            Avstånd: @item.DistanceFromClient km
+
+            <h2>
+                @{
+                    foreach (var e in item.EventTypes)
+                    {
+                        @e.Name
+                    }
+                }
+            </h2>
+
         </p>
 
         
