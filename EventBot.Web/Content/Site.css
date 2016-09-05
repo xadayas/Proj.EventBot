@@ -285,7 +285,7 @@ a {
 
 @media ( max-width : 549px ) {
     #eventTitle {
-        font-size: 50%;
+        font-size: 100%;
     }
 
     .timeline > li {
