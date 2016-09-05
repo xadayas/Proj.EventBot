@@ -7,13 +7,12 @@ namespace EventBot.Entities.Service
 {
     public class ImageHelpers
     {
-        public static System.Drawing.Image FixedSize(Image image, int Width, int Height, bool needToFill)
+        public static System.Drawing.Image FixedSize(Image image, int width, int height, bool needToFill)
         {
-            #region fields
-            int sourceWidth = image.Width;
-            int sourceHeight = image.Height;
-            int sourceX = 0;
-            int sourceY = 0;
+            var sourceWidth = image.Width;
+            var sourceHeight = image.Height;
+            var sourceX = 0;
+            var sourceY = 0;
             double destX = 0;
             double destY = 0;
 
@@ -21,25 +20,28 @@ namespace EventBot.Entities.Service
             double nScaleW = 0;
             double nScaleH = 0;
 
-            nScaleW = ((double)Width / (double)sourceWidth);
-            nScaleH = ((double)Height / (double)sourceHeight);
+            nScaleW = ((double)width / (double)sourceWidth);
+            nScaleH = ((double)height / (double)sourceHeight);
             if (!needToFill)
             {
                 nScale = Math.Min(nScaleH, nScaleW);
             }
             else
             {
-                nScale = Math.Max(nScaleH, nScaleW);
-                destY = (Height - sourceHeight * nScale) / 2;
-                destX = (Width - sourceWidth * nScale) / 2;
+                if(sourceHeight < height || sourceWidth < width)
+                    nScale = Math.Min(nScaleH, nScaleW);
+                else
+                    nScale = Math.Max(nScaleH, nScaleW);
+                destY = (height - sourceHeight * nScale) / 2;
+                destX = (width - sourceWidth * nScale) / 2;
             }
 
             if (nScale > 1)
                 nScale = 1;
 
-            int destWidth = (int)Math.Round(sourceWidth * nScale);
-            int destHeight = (int)Math.Round(sourceHeight * nScale);
-            #endregion
+            var destWidth = (int)Math.Round(sourceWidth * nScale);
+            var destHeight = (int)Math.Round(sourceHeight * nScale);
+
 
             System.Drawing.Bitmap bmPhoto = null;
             try
@@ -49,7 +51,7 @@ namespace EventBot.Entities.Service
             catch (Exception ex)
             {
                 throw new ApplicationException(string.Format("destWidth:{0}, destX:{1}, destHeight:{2}, desxtY:{3}, Width:{4}, Height:{5}",
-                    destWidth, destX, destHeight, destY, Width, Height), ex);
+                    destWidth, destX, destHeight, destY, width, height), ex);
             }
             using (System.Drawing.Graphics grPhoto = System.Drawing.Graphics.FromImage(bmPhoto))
             {
