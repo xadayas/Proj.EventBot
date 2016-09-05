@@ -156,7 +156,11 @@ body {
 
 .navbar-default {
     background-color: #fff;
-    border-color: #e7e7e7;
+    border-color: #ff5c47;
+    border-width: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .jumbotron {
