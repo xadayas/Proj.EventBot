@@ -296,7 +296,9 @@ a {
         margin-bottom: 5px;
         position: relative;
     }
-
+    ul.timeline {
+        padding-left: 0;
+    }
     .timeline-date {
         width: 86px;
         float: left;
