@@ -3,16 +3,16 @@
 @foreach (var item in Model)
 {
     <div style="background-color:white; border:1px solid #ff5c47; border-radius:2px;" class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
-        <h3>
+        <h1>
             @Html.DisplayFor(modelItem => item.Title)
             <span>
                 @Html.DisplayFor(modelItem => item.Location.City)
             </span>
           
-        </h3>
+        </h1>
 
         <img src="/Images/ViewThumb/@Html.Raw(item.ImageId)" width="100" />
-        <div style="display:inline-block;" class="cb_prod_dateboxes">
+        <div style="display:inline-block;float:right;" class="cb_prod_dateboxes">
             <span class="cb_prod_datebox">
                 <span class="dtstart">
                     <span class="cb_date_day">@item.StartDate.Day</span>
@@ -32,21 +32,21 @@
             </span>
         </div>
 
-        <p style="display:inline-block; vertical-align:top;">
+        <p style="padding:20px; display:inline-block; vertical-align:top;">
             @item.Description.Substring(0,Math.Min(item.Description.Length,30)) ...
+            <hr />
+            Avstånd: @item.DistanceFromClient km
+
         </p>
         <br />
         <p>
-           Avstånd: @item.DistanceFromClient km
 
-            <h2>
                 @{
                     foreach (var e in item.EventTypes)
                     {
                         @e.Name
                     }
                 }
-            </h2>
 
         </p>
 
