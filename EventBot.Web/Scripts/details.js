@@ -38,6 +38,24 @@ $('.js-cancel-event').click(function (e) {
     });
 })
 
+$('.js-cancel-read').click(function (e) {
+    var link = $(e.target);
+    console.log("entering");
+    $.ajax({
+        url: "/api/events/cancelread/" + link.attr("data-id"),
+        method: "POST"
+    })
+        .done(function () {
+            link.parents("li").fadeOut(function () {
+                $(this).remove();
+            })
+        })
+        .fail(function () {
+            alert("Obs, något blev fel!");
+        });
+})
+
+
 function OnReady() {
     eventId = $("#hdnVal").val();
     buildButton();
@@ -68,7 +86,7 @@ function buildButton() {
 }
 function checkIsAttending() {
     console.log("checking...");
-    if (eventId == null)return;
+    if (eventId == null) return;
     $.getJSON('/participants/isattending/' + eventId, function (attendStatus) {
         IsAttending = attendStatus.Attending;
         AvailableSlots = attendStatus.AvailableSlots;
@@ -86,9 +104,9 @@ function JoinOrLeave() {
     $.ajax({
         type: 'POST',
         contentType: "application/json; charset=utf-8",
-        url: '/Participants/' + ToFunctionName()+'/'+eventId,
+        url: '/Participants/' + ToFunctionName() + '/' + eventId,
         statusCode: {
-            200: function(response) {
+            200: function (response) {
                 buildButton();
                 SetAlert(false);
             },
@@ -108,7 +126,7 @@ function SetAlert(errorOnAttend) {
         $("#alertbox").append(unavailable);
     else if (!IsAttending)
         $("#alertbox").append(joined);
-    else if(IsAttending) {
+    else if (IsAttending) {
         $("#alertbox").append(leaved);
     }
 }

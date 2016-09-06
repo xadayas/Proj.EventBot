@@ -32,5 +32,14 @@ namespace EventBot.Web.Controllers.Api
             }
             return Ok();
         }
+
+        [HttpPost]
+        public IHttpActionResult CancelRead(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            _service.LeaveEvent(userId, id);
+
+            return Ok();
+        }
     }
 }

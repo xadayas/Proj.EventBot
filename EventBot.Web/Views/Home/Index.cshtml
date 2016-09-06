@@ -11,7 +11,7 @@
                         <h1 style="color: white"><span style="border:dashed; padding: 20px;">Event<i>al</i>.<i style="background:#ff5c47;color:white;">ly</i><br />
                             </span></h1>
                        
-                       <a href="#" class="btn btn-primary btn-lg">Hitta händelser!</a>
+                       <a href="/Event/" class="btn btn-primary btn-lg">Hitta aktiviteter!</a>
                     </div>
                 </div>
             </div>
@@ -29,14 +29,14 @@
                             {
                                     <div class="col-lg-3 col-md-4 col-xs-6 thumb image" style="overflow: hidden;">
                                         <h2>// @hotEvent.Title</h2>
-                                        <h2>
+                                        @*<h2>*@
                                             @{
                                                 foreach (var e in hotEvent.EventTypes)
                                                 {
-                                                    @e.Name
+                                                    <span class="tag label-info label">@e.Name</span>
                                                 }
                                             }
-                                        </h2>
+                                        @*</h2>*@
                                         <div style="width: 300px; height:300px; background: white;">
 
                                             <a class=" start-page-event" href="/event/details/@hotEvent.Id">
