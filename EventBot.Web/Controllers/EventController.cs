@@ -60,13 +60,6 @@ namespace EventBot.Web.Controllers
             _service.AddVisitorToEvent(id);
             return View(ev);
         }
-        // GET: Event/Details/5
-        public ActionResult Details2(int id)
-        {
-            var ev = _service.GetEvent(id);
-            _service.AddVisitorToEvent(id);
-            return View(ev);
-        }
 
         // GET: Event/Create
         public ActionResult Create()
