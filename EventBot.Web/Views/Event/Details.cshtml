@@ -10,6 +10,7 @@
         });
     </script>
 }
+<input type="hidden" id="hdnVal" value="@Model.Id" />
 <div class="container-fluid">
     <div class="row">
         <div class="jumbotron eventbanner" style="background-image: ../Images/view/@Html.Raw(Model.ImageId)">
@@ -53,7 +54,13 @@
 </div>
 
 
+<div id="attend">
 
+</div>
+<div>
+    <div id="alertbox">
+    </div>
+</div>
 
 <p>
     @if (Model.UserId == User.Identity.GetUserId())
