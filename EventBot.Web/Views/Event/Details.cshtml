@@ -16,6 +16,7 @@
         <div class="jumbotron eventbanner" style="background-image: ../Images/view/@Html.Raw(Model.ImageId)">
             <h1>@Html.DisplayFor(model => model.Title)</h1>
             <p>@(Model.StartDate.ToString("f"))</p>
+            <img class="img-circle" src="/Images/View/@(Model.ImageId)" />
 
         </div>
     </div>
