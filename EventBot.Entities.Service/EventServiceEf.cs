@@ -127,7 +127,7 @@ namespace EventBot.Entities.Service
         {
             using (var db = new EventBotDb())
             {
-                return db.Events.Where(e => e.Organiser.Id == userId)
+                return db.Events.Where(e => e.Organiser.Id == userId && !e.IsCanceled)
                      .Select(@event => new EventModel
                      {
                          Id = @event.Id,
