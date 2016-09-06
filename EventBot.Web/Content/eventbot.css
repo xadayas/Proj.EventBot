@@ -59,6 +59,10 @@ input.btn {
     background-color: #ff5c47;
     color: white;
 }
+input.create-edit-maxwidth{
+    max-width:550px;
+}
+
 
     input.btn:focus {
     }
@@ -163,10 +167,12 @@ input.btn {
 .eventSearch-content {
     margin-left: 20px;
     float: left;
-    max-width: 300px;
-    overflow:no-display;
 }
-.details-image {
-    width: 100%;
-    max-width: 300px;
+@media (max-width: 549px) {
+    .eventSearch-content {
+        width: 50%;
+        float: left;
+        margin-left: 10px;
+        font-size: 80%;
+    }
 }
