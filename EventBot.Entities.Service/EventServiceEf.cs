@@ -314,7 +314,7 @@ namespace EventBot.Entities.Service
             var queryLowerCase = query.ToLower();
             var queryEmpty = string.IsNullOrWhiteSpace(query);
             var locationEmpty = location == null;
-
+            if (minFreePlaces == 0) minFreePlaces = 1;
             using (var db = new EventBotDb())
             {
                 //Search
