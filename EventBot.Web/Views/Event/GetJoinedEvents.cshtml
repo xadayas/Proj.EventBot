@@ -5,14 +5,15 @@
 <ul class="timeline">
     @foreach(var item in Model)
     {
-        <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
+        <li>
             <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
             <div class="timeline-content">
-                <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
+                <h3 class="clickable" onclick="document.location = '/event/details/@item.Id';" id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
                 <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
                 @if (item.IsCanceled)
                 {
                     <span class="label label-warning">Inställd</span>
+                    <span class="label label-info clickable js-cancel-read" data-id="@item.Id">Ok, ta bort.</span>
                 }
             </div>
         </li>

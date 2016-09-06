@@ -299,9 +299,12 @@ namespace EventBot.Entities.Service
                 var tempOwner = db.Events.Where(d => d.Id == eventId).Select(e => e.Organiser).Single();
                 if (attandee != null)
                 {
-                    CreateEventNotificationForUser(db, tempEvent, attandee, NotificationType.EventLeaved, tempEvent.StartDate);
-                    if (tempOwner.Id != attandee.Id)
-                        CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasLeaved, tempEvent.StartDate);
+                    if (!tempEvent.IsCanceled)
+                    {
+                        CreateEventNotificationForUser(db, tempEvent, attandee, NotificationType.EventLeaved, tempEvent.StartDate);
+                        if (tempOwner.Id != attandee.Id)
+                            CreateEventNotificationForUser(db, tempEvent, tempOwner, NotificationType.EventUserHasLeaved, tempEvent.StartDate);
+                    }
                     tempEvent.Users.Remove(attandee);
                     db.SaveChanges();
                 }
