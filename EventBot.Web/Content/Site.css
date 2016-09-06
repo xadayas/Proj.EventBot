@@ -406,6 +406,7 @@ h2 {
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
     margin-bottom: 25px;
+    text-align: center;
 }
 
 
@@ -430,4 +431,8 @@ hr.style-one {
     border-color: #e5e5e5 #eee #eee;
     border-style: solid;
     border-width: 1px 0;
+}
+
+.p {
+    text-align: center;
 }
