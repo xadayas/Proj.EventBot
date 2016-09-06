@@ -67,6 +67,7 @@ $(document).ready(function () {
 
 function UpdateNotifications() {
     $('#notcontent').text('');
+    $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
     $.each(MyNotifications, function (i, item) {
         if (item.eventType==1) {
             $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' +item.id +','+ item.eventId+');">Planerade aktiviteten <span class="highlight">'+ item.eventName +'</span> som var planerad '+ moment(item.dateTime).format("D MMM HH:mm")+ ' är tyvärr inställd.</li>');
@@ -100,7 +101,6 @@ function UpdateNotifications() {
         }
         $('#notcontent').append('<hr>');
     });
-    $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
 }
 
 function OnNotificationClicked(notId, eventId, eventType) {
