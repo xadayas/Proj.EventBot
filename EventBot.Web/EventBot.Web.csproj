@@ -193,6 +193,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Utils\GoogleGeoLocation.cs" />
+    <Compile Include="Utils\GoogleStreetView.cs" />
     <Compile Include="Utils\IpLocator.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EventViewModel.cs" />
