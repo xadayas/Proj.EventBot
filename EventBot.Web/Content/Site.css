@@ -296,9 +296,6 @@ a {
         margin-bottom: 5px;
         position: relative;
     }
-    ul.timeline {
-        padding-left: 0;
-    }
     .timeline-date {
         width: 86px;
         float: left;
@@ -324,7 +321,11 @@ a {
             border-radius: 100%;
         }
 }
-
+@media (max-width : 700px) {
+        ul.timeline {
+        padding-left: 0;
+    }
+}
 
 
 .start-page-event {

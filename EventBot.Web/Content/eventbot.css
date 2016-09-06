@@ -59,6 +59,10 @@ input.btn {
     background-color: #ff5c47;
     color: white;
 }
+input.create-edit-maxwidth{
+    max-width:550px;
+}
+
 
     input.btn:focus {
     }
