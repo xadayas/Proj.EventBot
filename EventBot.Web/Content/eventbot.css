@@ -150,3 +150,10 @@ input.btn {
 /* clickable cursor */
 .clickable{cursor:pointer;}
 
+.bootstrap-tagsinput {
+    max-width: 550px !important;
+    height: 34px !important;
+}
+.bootstrap-tagsinput input{
+    padding: 0 !important;
+}
