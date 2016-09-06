@@ -5,7 +5,7 @@
         @foreach (var item in Model)
         {
             <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
-                <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
+                <p class="timeline-date eventSearch-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
                 <img class="timeline-date img-rounded" src="/Images/ViewThumb/@item.ImageId" />
                 <div class="eventSearch-content">
                     <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>

@@ -170,9 +170,24 @@ input.create-edit-maxwidth{
 }
 @media (max-width: 549px) {
     .eventSearch-content {
-        width: 50%;
+        width: 40%;
         float: left;
         margin-left: 10px;
         font-size: 80%;
+    }
+    img.timeline-date{
+        width:75px;
+    }
+    .eventSearch-date{
+        font-size:80%;
+        width:70px;
+    }
+    #EventTable{
+        padding-left:0;
+        padding-right:0;
+    }
+    #EventTable > div.container{
+        padding-left:0;
+        padding-right:0;
     }
 }
