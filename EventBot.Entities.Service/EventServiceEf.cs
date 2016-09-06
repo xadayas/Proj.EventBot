@@ -7,6 +7,7 @@ using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
 using System.Data.Entity;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace EventBot.Entities.Service
@@ -526,6 +527,12 @@ namespace EventBot.Entities.Service
         }
         public int CreateImage(byte[] imageBytes)
         {
+
+            var encoder = ImageCodecInfo.GetImageEncoders()
+                            .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
+            var encParams = new EncoderParameters(1);
+            encParams.Param[0] = new EncoderParameter(Encoder.Quality, 80L);
+            
             Image imgFromBytesOriginal;
             using (var ms = new MemoryStream(imageBytes))
             {
@@ -536,13 +543,13 @@ namespace EventBot.Entities.Service
             var landscapeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 532, 300, true);
 
             var largeStream = new MemoryStream();
-            largeImage.Save(largeStream, System.Drawing.Imaging.ImageFormat.Png);
+            largeImage.Save(largeStream,encoder,encParams);
 
             var thumbStream = new MemoryStream();
-            thumbnailImage.Save(thumbStream, System.Drawing.Imaging.ImageFormat.Png);
+            thumbnailImage.Save(thumbStream, encoder,encParams);
 
             var landscapeStream = new MemoryStream();
-            landscapeImage.Save(landscapeStream, System.Drawing.Imaging.ImageFormat.Png);
+            landscapeImage.Save(landscapeStream, encoder, encParams);
 
             var image = new EventBotImage
             {

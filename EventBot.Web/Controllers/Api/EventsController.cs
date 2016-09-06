@@ -33,7 +33,7 @@ namespace EventBot.Web.Controllers.Api
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IHttpActionResult CancelRead(int id)
         {
             var userId = User.Identity.GetUserId();

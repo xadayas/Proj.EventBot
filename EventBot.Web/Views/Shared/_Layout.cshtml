@@ -44,12 +44,17 @@
                             <a class="dropdown-toggle events-menu" data-toggle="dropdown" href="#">Aktiviteter<span class="caret"></span></a>
                             <ul class="dropdown-menu">
 
-                                <li><a href="/event">Alla</a></li>
-
-                                <li><a href="/event/userevents">Egna</a></li>
-
-                                <li><a href="/event/create">Skapa</a></li>
-
+                                <li><a href="/event">Alla Aktiviteter</a></li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a href="@Url.Action("GetJoinedEvents", "Event")">Min Tidslinje</a></li>
+                                }
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/event/create">Skapa Aktivitet</a></li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a href="/event/userevents">Mina Aktiviteter</a></li>
+                                }
                             </ul>
 
                         </li>
