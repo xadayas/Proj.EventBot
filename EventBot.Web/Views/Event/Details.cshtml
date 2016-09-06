@@ -47,7 +47,7 @@
     </div>
     <div class="row">
         <div>
-           <p>@Html.Action("Static", "Map", Model.Location)</p>
+            <p>@Html.Action("Static", "Map", Model.Location)</p>
         </div>
     </div>
 </div>
@@ -58,8 +58,9 @@
 <p>
     @if (Model.UserId == User.Identity.GetUserId())
     {
-        @Html.ActionLink("Edit", "Edit", new {id = Model.Id});
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
         @Html.Raw(" | ");
+        <a href="#" class="js-cancel-event" data-event-id="@Model.Id">Ställ in</a>
     }
-    @Html.ActionLink("Back to List", "Index")
 </p>
+

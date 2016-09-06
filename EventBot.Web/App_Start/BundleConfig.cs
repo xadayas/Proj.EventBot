@@ -12,7 +12,8 @@ namespace EventBot.Web
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/underscore-min.js",
                         //"~/Scrips/moment.js",
-                        "~/Scripts/anypicker.js"));
+                        "~/Scripts/anypicker.js",
+                        "~/Scripts/bootbox.min.js"));
 
 
             //Bootstrap-datetimepicker and moment.js
