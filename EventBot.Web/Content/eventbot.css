@@ -140,7 +140,7 @@ input.btn {
 	background-image:         linear-gradient(top, #f5f5f5, #fff);
 }
 .cb_prod_dateboxes .cb_prod_datebox .cb_date_month {border-radius: 0 0 3px 3px; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; text-transform: uppercase;}
-.cb_prod_dateboxes .cb_prod_datebox .cb_date_month {display: block; color: #fff; font-size: 10px; font-weight: bold; padding: 1px 0 2px 0; line-height: 1em; background-color: #666;}
+.cb_prod_dateboxes .cb_prod_datebox .cb_date_month {margin: 2px;display: block; color: #fff; font-size: 10px; font-weight: bold; padding: 2px; line-height: 1em; background-color: #ff6a00;}
 .cb_prod_dateboxes .cb_prod_datedivider {line-height: 28px; padding: 0 2px; font-size: 14px; font-weight: bold; float: left; margin-left: -8px;}
 .cb_prod_dateboxes .cb_prod_arena_cat {font-size: 90%; padding-top: 2px;}
 

@@ -20,6 +20,10 @@
 
         </div>
     </div>
+    @if (Model.IsCanceled)
+    {
+        <span class="label label-warning">Inställd</span>
+    }
     <div class="row">
         <p class="flum">@Model.Description</p>
     </div>
@@ -54,7 +58,8 @@
     </div>
 </div>
 
-
+@if(!Model.IsCanceled)
+{
 <div id="attend">
 
 </div>
@@ -66,9 +71,9 @@
 <p>
     @if (Model.UserId == User.Identity.GetUserId())
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id });
         @Html.Raw(" | ");
         <a href="#" class="js-cancel-event" data-event-id="@Model.Id">Ställ in</a>
     }
 </p>
-
+}
