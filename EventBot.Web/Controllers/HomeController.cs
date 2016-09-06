@@ -37,7 +37,7 @@ namespace EventBot.Web.Controllers
             {
                 location = emptyLocation;
             }
-            var events = _service.SearchEvents("", location: new LocationModel { Latitude = location.lat, Longitude = location.lon }, sortBy: EventSortBy.Distance, modulus: 3);
+            var events = _service.SearchEvents("", location: new LocationModel { Latitude = location.lat, Longitude = location.lon }, sortBy: EventSortBy.Distance, modulus: 4);
             ViewData["HotEvents"] = events.OrderByDescending(o => o.VisitCount).ToArray();
             return View(location);
         }
