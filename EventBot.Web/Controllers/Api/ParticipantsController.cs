@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Net;
+using System.Web.Mvc;
 using EventBot.Entities.Service;
 using Microsoft.AspNet.Identity;
 
@@ -18,7 +20,15 @@ namespace EventBot.Web.Controllers.Api
         public ActionResult Attend(int id)
         {
             var userId = User.Identity.GetUserId();
-            _eventService.JoinEvent(userId, id);
+            try
+            {
+                _eventService.JoinEvent(userId, id);
+            }
+            catch (InvalidOperationException)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+            
             return new HttpStatusCodeResult(200);
         }
         [HttpPost]
@@ -33,7 +43,11 @@ namespace EventBot.Web.Controllers.Api
         [HttpGet]
         public JsonResult IsAttending(int id)
         {
-            var attendStatus = new { Attending = _eventService.CheckParticipant(User.Identity.GetUserId(), id) };
+            var tempEvent = _eventService.GetEvent(id);
+            var availableSlots = tempEvent.MaxAttendees - tempEvent.UserCount;
+            if (tempEvent.MaxAttendees == 0)
+                availableSlots = int.MaxValue;
+            var attendStatus = new { Attending = _eventService.CheckParticipant(User.Identity.GetUserId(), id), AvailableSlots = availableSlots < 0 ? int.MaxValue : availableSlots };
             return Json(attendStatus, JsonRequestBehavior.AllowGet);
         }
     }
