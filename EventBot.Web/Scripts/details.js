@@ -3,6 +3,40 @@ var IsAttending = false;
 var AvailableSlots = 0;
 var eventId = 0;
 
+$('.js-cancel-event').click(function (e) {
+    var link = $(e.target);
+    console.log(link.attr("data-event-id"));
+    bootbox.dialog({
+        message: "Är du säker på att du vill ställa in aktiviteten?",
+        title: "Ställ in",
+        buttons: {
+            no: {
+                label: "Nej",
+                className: "btn-default",
+                callback: function () {
+                    bootbox.hideAll();
+                }
+            },
+            yes: {
+                label: "Ja",
+                className: "btn-danger",
+                callback: function () {
+                    $.ajax({
+                        url: "/api/events/cancel/" + link.attr("data-event-id"),
+                        method: "DELETE"
+                    })
+                    .done(function () {
+                        window.location.href = "/event/userevents";
+                    })
+                    .fail(function () {
+                        alert("Obs, något blev fel!");
+                    });
+                }
+            }
+        }
+    });
+})
+
 function OnReady() {
     eventId = $("#hdnVal").val();
     buildButton();
