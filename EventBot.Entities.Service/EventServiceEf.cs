@@ -326,6 +326,7 @@ namespace EventBot.Entities.Service
                                && (maxCost < 0
                                    || w.ParticipationCost <= maxCost)
                                    && (w.MaxAttendees == 0 || ((w.MaxAttendees - w.Users.Count) >= minFreePlaces))
+                                   && (!w.IsCanceled)
                     );
                 IQueryable<Event> eventsMatchingQueryOrdered;
                 switch (sortBy)
