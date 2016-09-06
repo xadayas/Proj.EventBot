@@ -13,9 +13,21 @@
 
                 <div class="form-group eventBot-img-container">
                     @*<a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=0}) id="EventImageLink">*@
-                    <a href="#" id="EventImageLink">
-                        <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
-                    </a>
+                    
+                        @if (Model.ImageId == 0)
+                        {
+                            //No valid image
+                            <div id="EventImageLink">
+                                <h4 id="EventImage"><span  class="glyphicon glyphicon-picture"></span> Välj bild</h4>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="#" id="EventImageLink">
+                                <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
+                            </a>
+
+                        }
                 </div>
                 @Html.HiddenFor(model => model.ImageId)
                 <hr class="eventbot-divider" />

@@ -13,7 +13,7 @@
 }
 
 /* Image */
-img#EventImage {
+#EventImage {
     margin-left:-15px;
     margin-right:-15px;
     position: absolute;
@@ -28,6 +28,9 @@ img#EventImage {
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+#EventImageLink{
+    cursor:pointer;
 }
 
 div.eventBot-img-container {
