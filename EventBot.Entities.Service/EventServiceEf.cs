@@ -6,6 +6,8 @@ using EventBot.Entities.Models;
 using EventBot.Entities.Service.Interfaces;
 using EventBot.Entities.Service.Models;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 
 namespace EventBot.Entities.Service
 {
@@ -221,7 +223,7 @@ namespace EventBot.Entities.Service
                     listEvent.Add(db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == item));
                 }
 
-                return listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
+                var list = listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
                      .Select(@event => new EventModel
                      {
                          Id = @event.Id,
@@ -254,7 +256,9 @@ namespace EventBot.Entities.Service
                              Name = eventType.Name
                          }).ToList(),
                          UserId = @event.Organiser.Id
-                     }).ToList();
+                     }).ToList().OrderBy(p => p.StartDate);
+
+                return list.ToList();
             }
         }
 
@@ -322,6 +326,7 @@ namespace EventBot.Entities.Service
                                && (maxCost < 0
                                    || w.ParticipationCost <= maxCost)
                                    && (w.MaxAttendees == 0 || ((w.MaxAttendees - w.Users.Count) >= minFreePlaces))
+                                   && (!w.IsCanceled)
                     );
                 IQueryable<Event> eventsMatchingQueryOrdered;
                 switch (sortBy)
@@ -490,22 +495,57 @@ namespace EventBot.Entities.Service
 
         #region Images
 
-        public byte[] GetImage(int imageId)
+        public byte[] GetImageLarge(int imageId)
         {
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
-                if (image == null) throw new InvalidOperationException("Image not found");
-                return image.ImageBytes;
+                return image?.ImageBytesLarge;
             }
         }
-
+        public byte[] GetImageThumb(int imageId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var image = db.Images.SingleOrDefault(s => s.Id == imageId);
+                return image?.ImageBytesThumb;
+            }
+        }
+        public byte[] GetImageLandscape(int imageId)
+        {
+            using (var db = new EventBotDb())
+            {
+                var image = db.Images.SingleOrDefault(s => s.Id == imageId);
+                return image?.ImageBytesLandscape;
+            }
+        }
         public int CreateImage(byte[] imageBytes)
         {
+            Image imgFromBytesOriginal;
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                imgFromBytesOriginal = Image.FromStream(ms);
+            }
+            var largeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 300, 300, true);
+            var thumbnailImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 100, 100, true);
+            var landscapeImage = ImageHelpers.FixedSize(imgFromBytesOriginal, 532, 300, true);
+
+            var largeStream = new MemoryStream();
+            largeImage.Save(largeStream, System.Drawing.Imaging.ImageFormat.Png);
+
+            var thumbStream = new MemoryStream();
+            thumbnailImage.Save(thumbStream, System.Drawing.Imaging.ImageFormat.Png);
+
+            var landscapeStream = new MemoryStream();
+            landscapeImage.Save(landscapeStream, System.Drawing.Imaging.ImageFormat.Png);
+
             var image = new EventBotImage
             {
-                ImageBytes = imageBytes
+                ImageBytesLarge = largeStream.ToArray(),
+                ImageBytesThumb = thumbStream.ToArray(),
+                ImageBytesLandscape = landscapeStream.ToArray()
             };
+
             using (var db = new EventBotDb())
             {
                 db.Images.Add(image);

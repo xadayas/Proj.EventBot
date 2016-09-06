@@ -69,7 +69,7 @@ function UpdateNotifications() {
     $('#notcontent').text('');
     $.each(MyNotifications, function (i, item) {
         if (item.eventType==1) {
-            $('#notcontent').append('<li onClick="OnNotificationClicked(' +item.id +','+ item.eventId+');">Planerade aktiviteten <span class="highlight">'+ item.eventName +'</span> som var planerad '+ moment(item.dateTime).format("D MMM HH:mm")+ ' är tyvärr inställd.</li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' +item.id +','+ item.eventId+');">Planerade aktiviteten <span class="highlight">'+ item.eventName +'</span> som var planerad '+ moment(item.dateTime).format("D MMM HH:mm")+ ' är tyvärr inställd.</li>');
         }
         else if (item.eventType == 2) {
             var changes = [],
@@ -81,33 +81,38 @@ function UpdateNotifications() {
                 originalValues.push(moment(item.originalStartDate).format("D MMM HH:mm"));
                 newValues.push(moment(item.startDate).format("D MMM HH:mm"));
 
-                $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');"><span class="highlight">' + item.eventName + '</span> har ändrat ' + changes.join(" and ") + ' från ' + originalValues.join("/") + ' till ' + newValues.join("/") + '</li>');
+                $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="highlight">' + item.eventName + '</span> har ändrat ' + changes.join(" and ") + ' från ' + originalValues.join("/") + ' till ' + newValues.join("/") + '</li>');
             } else {
-                $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');"><span class="highlight">' + item.eventName + '</span> har uppdaterat aktiviteten som är planerad ' + moment(item.startDate).format("D MMM HH:mm") + '.</li>');
+                $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="highlight">' + item.eventName + '</span> har uppdaterat aktiviteten som är planerad ' + moment(item.startDate).format("D MMM HH:mm") + '.</li>');
             }
         }
         else if (item.eventType == 4) {//EventJoined
-            $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Du har anmält dig till <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">✌</span> Du har anmält dig till <span class="highlight">' + item.eventName + '! klicka här för att komma till alla dina kommande aktiviteter</span> </li>');
         }
         else if (item.eventType == 5) {//EventLeaved
-            $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Du har avanmält dig från <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">👋</span> Du har avanmält dig från <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         else if (item.eventType == 6) {//EventUserHasJoined
-            $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Någon har anmält sig till ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">✌</span> Någon har anmält sig till ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         else if (item.eventType == 7) {//EventUserHasLeaved
-            $('#notcontent').append('<li onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ');">Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
+            $('#notcontent').append('<li class="notify-li" onClick="OnNotificationClicked(' + item.id + ',' + item.eventId + ',' + item.eventType + ');"><span class="emo-icon">🖕</span> Någon har avanmält sig från ditt event <span class="highlight">' + item.eventName + '!</span> </li>');
         }
         $('#notcontent').append('<hr>');
     });
     $('#notcontent').append('<li style="text-align: center;" onClick="MarkAllAsRead();">Rensa</li>');
 }
 
-function OnNotificationClicked(notId, eventId) {
+function OnNotificationClicked(notId, eventId, eventType) {
     console.log(notId + " " + eventId);
     $.post("/api/Notifications/MarkSingleAsRead/"+notId)
                 .done(function () {
-                    window.location = "/event/details/" + eventId;
+                    if (eventType == 4) {
+                        window.location = "/Event/GetJoinedEvents";
+                    } else {
+                        window.location = "/Event/Details/" + eventId;
+                    }
+                   
                 });
 }
 function MarkAllAsRead() {
@@ -154,10 +159,10 @@ function NotificationTypeToString(ntype) {
 //    });
 //});
 
-$(document).on("scroll", function () {
-    if ($(document).scrollTop() > 100) {
-        $("header").removeClass("large").addClass("small");
-    } else {
-        $("header").removeClass("small").addClass("large");
-    }
-});
+//$(document).on("scroll", function () {
+//    if ($(document).scrollTop() > 100) {
+//        $("header").removeClass("large").addClass("small");
+//    } else {
+//        $("header").removeClass("small").addClass("large");
+//    }
+//});

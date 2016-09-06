@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using EventBot.Entities.Models;
 using EventBot.Entities.Service;
 using EventBot.Entities.Service.Interfaces;
@@ -16,17 +17,35 @@ namespace EventBot.Web.Controllers
         private readonly IEventService _service = new EventServiceEf();
 
         // GET: Images
-        public void View(int id)
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        public ActionResult View(int id)
         {
             //TODO better way to fetch default image if id==0
-            var imageBytes = _service.GetImage(id == 0 ? 6 : id);
+            var imageBytes = _service.GetImageLarge(id == 0 ? 6 : id);
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
 
             var ms = new MemoryStream(imageBytes);
-            Response.ContentType = "Image/Png";
-            ms.CopyTo(Response.OutputStream);
+            return new FileStreamResult(ms, "image/JPEG");
         }
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        public ActionResult ViewThumb(int id)
+        {
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImageThumb(id == 0 ? 6 : id);
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
 
-
+            var ms = new MemoryStream(imageBytes);
+            return new FileStreamResult(ms, "image/JPEG");
+        }
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        public ActionResult ViewLandscape(int id)
+        {
+            //TODO better way to fetch default image if id==0
+            var imageBytes = _service.GetImageLandscape(id == 0 ? 6 : id);
+            if (imageBytes == null) return new HttpStatusCodeResult(404);
+            var ms = new MemoryStream(imageBytes);
+            return new FileStreamResult(ms, "image/JPEG");
+        }
 
         //public ActionResult Upload(string title, string description, string meetingPlace, string startDate, string endDate, int returnto)
         //{

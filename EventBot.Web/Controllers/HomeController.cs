@@ -18,8 +18,27 @@ namespace EventBot.Web.Controllers
         }
         public ActionResult Index()
         {
-            ViewData["HotEvents"] = _service.SearchEvents("",modulus:4);
-            var location = IpLocator.GetIpLocation(Request.UserHostAddress);
+            IpLocation location;
+            var emptyLocation = new IpLocation()
+            {
+                city = "Vintergatan",
+                country = "Världen"
+            };
+            try
+            {
+                location = IpLocator.GetIpLocation(Request.UserHostAddress);
+                if (location == null || string.IsNullOrEmpty(location.city))
+                {
+                    location = emptyLocation;
+                }
+                    
+            }
+            catch (Exception)
+            {
+                location = emptyLocation;
+            }
+            var events = _service.SearchEvents("", location: new LocationModel { Latitude = location.lat, Longitude = location.lon }, sortBy: EventSortBy.Distance, modulus: 3);
+            ViewData["HotEvents"] = events.OrderByDescending(o => o.VisitCount).ToArray();
             return View(location);
         }
 

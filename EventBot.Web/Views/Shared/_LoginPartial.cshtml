@@ -8,10 +8,10 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName() <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">˙ ͜ʟ˙ @User.Identity.GetUserName() <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="@Url.Action("GetJoinedEvents", "Event")">Kommande aktiviteter</a></li>
-                    <li><a href="@Url.Action("UserEvents", "Event")">Mina aktiviteter</a></li>
+                    @*<li><a href="@Url.Action("UserEvents", "Event")">Mina aktiviteter</a></li>*@
                     <li><a href="@Url.Action("Index", "Manage")">Inställningar</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut mig</a></li>
@@ -23,9 +23,9 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><button class="btnintf outline" onclick="location.href='/Account/Login';">Logga in </button></li>
+        @*<li><button class="btnintf outline" onclick="location.href='/Account/Login';">Logga in </button></li>
         <li><button class="btnintf" onclick="location.href='/Account/Register';">Registrera</button></li>  
-        @*<li><a href="/Account/Register"><span class="glyphicon glyphicon-user"></span> Registrera</a></li>
-        <li><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>*@
+        <li><a href="/Account/Register"><span class="glyphicon glyphicon-user"></span> Registrera</a></li>*@
+        <li><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
     </ul>
 }

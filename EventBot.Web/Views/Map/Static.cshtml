@@ -1,3 +1,8 @@
 ﻿@using System.Globalization
 @model EventBot.Web.Models.LocationViewModel
-<img src="https://maps.googleapis.com/maps/api/staticmap?center=@Model.Latitude.ToString(CultureInfo.InvariantCulture),@Model.Longitude.ToString(CultureInfo.InvariantCulture)&zoom=15&size=640x640&maptype=roadmap&markers=color:red%7Clabel:S|@Model.Latitude.ToString(CultureInfo.InvariantCulture),@Model.Longitude.ToString(CultureInfo.InvariantCulture)&key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU" id="staticMapImage" />
+    @{
+        var googleMapsUrl = $"https://maps.google.com/maps?q=loc:{Model.Latitude.ToString(CultureInfo.InvariantCulture)},{Model.Longitude.ToString(CultureInfo.InvariantCulture)}";
+    }
+    <a href="@googleMapsUrl">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center=@Model.Latitude.ToString(CultureInfo.InvariantCulture),@Model.Longitude.ToString(CultureInfo.InvariantCulture)&zoom=15&size=640x640&maptype=roadmap&markers=color:red%7Clabel:S|@Model.Latitude.ToString(CultureInfo.InvariantCulture),@Model.Longitude.ToString(CultureInfo.InvariantCulture)&key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU" id="staticMapImage" />
+</a>

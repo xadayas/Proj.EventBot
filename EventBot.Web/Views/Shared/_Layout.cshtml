@@ -4,9 +4,11 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Eventius @ViewBag.Title</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <link rel="icon" type="image/png" href="https://www.hashratestore.com/wp-content/uploads/2014/01/HashRateStore_Icon-1.png" />
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -14,7 +16,7 @@
 <body>
     <header class="large">
         <div class="navbar navbar-default navbar-fixed-top">
-            <div class="">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -22,7 +24,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    @Html.ActionLink("Button Name", "Index", "Home", null, new {@class = "eventius-logo navbar-brand"})
+                    @Html.ActionLink("Evental.ly", "Index", "Home", null, new {@class = "eventius-logo navbar-brand"})
                     @if (Request.IsAuthenticated) {
                     <div class="notifications-container">
                         <ul class="nav navbar-nav">

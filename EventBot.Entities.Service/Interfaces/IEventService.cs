@@ -23,7 +23,9 @@ namespace EventBot.Entities.Service.Interfaces
         void UnSubscribeFromEventType(string userId, int eventTypeId);
         ICollection<string> GetSubscribedEventTypeUserIds(ICollection<EventTypeModel> eventTypes);
 
-        byte[] GetImage(int imageId);
+        byte[] GetImageLarge(int imageId);
+        byte[] GetImageThumb(int imageId);
+        byte[] GetImageLandscape(int imageId);
         int CreateImage(byte[] imageBytes);
 
         IEnumerable<NotificationModel> GetNewNotificationsFor(string userId);
