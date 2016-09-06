@@ -17,7 +17,7 @@ namespace EventBot.Web.Utils
         {
             var bytes =
                 new WebClient().DownloadData(
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={location.Latitude.ToString(CultureInfo.InvariantCulture)},{location.Longitude.ToString(CultureInfo.InvariantCulture)}&zoom=15&size=640x640&maptype=roadmap&markers=color:red%7Clabel:S|{location.Latitude.ToString(CultureInfo.InvariantCulture)},{location.Longitude.ToString(CultureInfo.InvariantCulture)}&key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU");
+                    $"https://maps.googleapis.com/maps/api/staticmap?center={location.Latitude.ToString(CultureInfo.InvariantCulture)},{location.Longitude.ToString(CultureInfo.InvariantCulture)}&zoom=16&size=640x640&maptype=satellite&markers=color:red%7Clabel:S|{location.Latitude.ToString(CultureInfo.InvariantCulture)},{location.Longitude.ToString(CultureInfo.InvariantCulture)}&key=AIzaSyALGUncOuBetS0vXnVDMrnJC-JSZA65kpU");
             return bytes;
         }
     }

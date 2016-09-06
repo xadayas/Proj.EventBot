@@ -1,56 +1,19 @@
 ﻿@model IEnumerable<EventBot.Entities.Service.Models.EventModel>
 
-@foreach (var item in Model)
-{
-    <div style="background-color:white; border:1px solid #ff5c47; border-radius:2px;" class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
-        <h3>
-            @Html.DisplayFor(modelItem => item.Title)
-            <span>
-                @Html.DisplayFor(modelItem => item.Location.City)
-            </span>
-          
-        </h3>
-
-        <img src="/Images/ViewThumb/@Html.Raw(item.ImageId)" width="100" />
-        <div style="display:inline-block;" class="cb_prod_dateboxes">
-            <span class="cb_prod_datebox">
-                <span class="dtstart">
-                    <span class="cb_date_day">@item.StartDate.Day</span>
-                    <span class="cb_date_month">@item.StartDate.ToString("MMM")</span>
-                    <span class="cb_date_month">@item.StartDate.Year</span>
-                    <span class="value-title" title=@item.StartDate></span>
-                </span>
-            </span>
-            <span class="cb_prod_datedivider">-</span>
-            <span class="cb_prod_datebox">
-                <span class="dtend">
-                    <span class="cb_date_day">@item.EndDate.Day</span>
-                    <span class="cb_date_month">@item.EndDate.ToString("MMM")</span>
-                    <span class="cb_date_month">@item.EndDate.Year</span>
-                    <span class="value-title" title=@item.EndDate></span>
-                </span>
-            </span>
-        </div>
-
-        <p style="display:inline-block; vertical-align:top;">
-            @item.Description.Substring(0,Math.Min(item.Description.Length,30)) ...
-        </p>
-        <br />
-        <p>
-           Avstånd: @item.DistanceFromClient km
-
-            <h2>
-                @{
-                    foreach (var e in item.EventTypes)
-                    {
-                        @e.Name
-                    }
+<ul class="timeline">
+    @foreach (var item in Model)
+    {
+        <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
+            <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
+            <img class="timeline-date img-rounded" src="/Images/ViewThumb/@item.ImageId"/>
+            <div class="eventSearch-content">
+                <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
+                @foreach (var tag in item.EventTypes)
+                {
+                    <span class="tag label label-info">@tag.Name</span>
                 }
-            </h2>
-
-        </p>
-
-        
-    </div>
-}
-
+            </div>
+        </li>
+    }
+</ul>

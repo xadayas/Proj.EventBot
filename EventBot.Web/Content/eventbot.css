@@ -157,3 +157,7 @@ input.btn {
 .bootstrap-tagsinput input{
     padding: 0 !important;
 }
+.eventSearch-content {
+    margin-left: 20px;
+    float: left;
+}
