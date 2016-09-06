@@ -223,7 +223,7 @@ namespace EventBot.Entities.Service
                     listEvent.Add(db.Events.Include(p => p.Location).Include(p => p.Organiser).Include(p => p.Image).SingleOrDefault(s => s.Id == item));
                 }
 
-                var list = listEvent.Where(e => e.StartDate > DateTime.Now && !e.IsCanceled)
+                var list = listEvent.Where(e => e.StartDate > DateTime.Now)
                      .Select(@event => new EventModel
                      {
                          Id = @event.Id,

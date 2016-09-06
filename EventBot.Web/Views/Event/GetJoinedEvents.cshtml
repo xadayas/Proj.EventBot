@@ -10,6 +10,10 @@
             <div class="timeline-content">
                 <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
                 <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
+                @if (item.IsCanceled)
+                {
+                    <span class="label label-warning">Inställd</span>
+                }
             </div>
         </li>
     }
