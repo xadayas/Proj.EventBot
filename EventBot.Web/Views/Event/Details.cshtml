@@ -2,10 +2,6 @@
 @using Microsoft.AspNet.Identity
 @model EventBot.Entities.Service.Models.EventModel
 
-@{
-    ViewBag.Title = "Details";
-}
-
 @section scripts
 {
     <script>
@@ -14,94 +10,56 @@
         });
     </script>
 }
-<div>
-    <input type="hidden" id="hdnVal" value="@Model.Id" />
-
-        <h2>
-            @Html.DisplayFor(model => model.Title)
-            
-        </h2>
-    <h4>
-        @Html.DisplayFor(model => model.Location.City)
-    </h4>
-    <div class="eventBot-img-container">
-        <img id="EventImage" src="/Images/View/@Html.Raw(Model.ImageId)" />
-    </div>
-        <p>
-            @Html.DisplayFor(model => model.Description)
-        </p>
-
-    <div style="display:inline-block;" class="cb_prod_dateboxes">
-        <span class="cb_prod_datebox">
-            <span class="dtstart">
-                <span class="cb_date_day">@Model.StartDate.Day</span>
-                <span class="cb_date_month">@Model.StartDate.ToString("MMM")</span>
-                <span class="cb_date_month">@Model.StartDate.Year</span>
-                <span class="value-title" title=@Model.StartDate></span>
-            </span>
-        </span>
-        <span class="cb_prod_datedivider">-</span>
-        <span class="cb_prod_datebox">
-            <span class="dtend">
-                <span class="cb_date_day">@Model.EndDate.Day</span>
-                <span class="cb_date_month">@Model.EndDate.ToString("MMM")</span>
-                <span class="cb_date_month">@Model.EndDate.Year</span>
-                <span class="value-title" title=@Model.EndDate></span>
-            </span>
-        </span>
-    </div>
-
-   
-        <p>
-            @Html.DisplayFor(model => model.VisitCount) besökare
-        </p>
-   
-
-        <p>
-            @Html.DisplayFor(model => model.UserCount) Anmälda
-        </p>
-
-        <p>
-            @if (Model.MaxAttendees != 0)
-            {
-               @(Model.MaxAttendees-Model.UserCount) @Html.Raw(" lediga platser")
-            }
-        </p>
-
-
-
-
-        <div class="tagClass">
-            @foreach (var tag in Model.EventTypes)
-            {
-                <span class="tag label label-info">@tag.Name</span>
-            }
-        </div>
-
-        
-        
-
-        
-            @Html.Action("Static", "Map", Model.Location)
-        
-        @if (Model.IsCanceled)
-        {
-            <span>Den här aktiviteten är inställd</span>
-        }
-
-  
-
-        <div id="attend">
+<div class="container-fluid">
+    <div class="row">
+        <div class="jumbotron eventbanner" style="background-image: ../Images/view/@Html.Raw(Model.ImageId)">
+            <h1>@Html.DisplayFor(model => model.Title)</h1>
+            <p>@(Model.StartDate.ToString("f"))</p>
 
         </div>
+    </div>
+    <div class="row">
+        <p class="flum">@Model.Description</p>
+    </div>
+    <div class="row">
+        <div class="bs-example" data-example-id="glyphicons-general">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            @if (Model.MaxAttendees == 0)
+            {
+                @Model.UserCount;
+            }
+            else
+            {
+                @Model.UserCount @Html.Raw("/") @Model.MaxAttendees @Html.Raw(" Deltagare")
+            }
+        </div>
+        <div class="bs-example" data-example-id="glyphicons-general">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            @if (Model.ParticipationCost == 0)
+            {
+                @Html.Raw("Gratis")
+            }
+            else
+            {
+                @Model.ParticipationCost; @Html.Raw(" SEK")
+            }
+        </div>
+    </div>
+    <div class="row">
         <div>
-            <div id="alertbox">
-            </div>
+           <p>@Html.Action("Static", "Map", Model.Location)</p>
         </div>
+    </div>
 </div>
+
+
+
+
 <p>
     @if (Model.UserId == User.Identity.GetUserId())
     {
-        @Html.ActionLink("Ändra", "Edit", new {id = Model.Id});
+        @Html.ActionLink("Edit", "Edit", new {id = Model.Id});
+        @Html.Raw(" | ");
     }
+    @Html.ActionLink("Back to List", "Index")
 </p>

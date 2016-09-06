@@ -328,6 +328,7 @@ namespace EventBot.Entities.Service
                                && (maxCost < 0
                                    || w.ParticipationCost <= maxCost)
                                    && (w.MaxAttendees == 0 || ((w.MaxAttendees - w.Users.Count) >= minFreePlaces))
+                                   && (!w.IsCanceled)
                     );
                 IQueryable<Event> eventsMatchingQueryOrdered;
                 switch (sortBy)
@@ -501,8 +502,7 @@ namespace EventBot.Entities.Service
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
-                if (image == null) throw new InvalidOperationException("Image not found");
-                return image.ImageBytesLarge;
+                return image?.ImageBytesLarge;
             }
         }
         public byte[] GetImageThumb(int imageId)
@@ -510,8 +510,7 @@ namespace EventBot.Entities.Service
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
-                if (image == null) throw new InvalidOperationException("Image not found");
-                return image.ImageBytesThumb;
+                return image?.ImageBytesThumb;
             }
         }
         public byte[] GetImageLandscape(int imageId)
@@ -519,8 +518,7 @@ namespace EventBot.Entities.Service
             using (var db = new EventBotDb())
             {
                 var image = db.Images.SingleOrDefault(s => s.Id == imageId);
-                if (image == null) throw new InvalidOperationException("Image not found");
-                return image.ImageBytesLandscape;
+                return image?.ImageBytesLandscape;
             }
         }
         public int CreateImage(byte[] imageBytes)
