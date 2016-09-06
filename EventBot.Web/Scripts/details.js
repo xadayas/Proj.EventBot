@@ -26,7 +26,8 @@ $('.js-cancel-event').click(function (e) {
                         method: "DELETE"
                     })
                     .done(function () {
-                        window.location.href = "/event/userevents";
+                        window.location.reload();
+                        //window.location.href = "/event/userevents";
                     })
                     .fail(function () {
                         alert("Obs, något blev fel!");
