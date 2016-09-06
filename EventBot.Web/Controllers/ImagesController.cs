@@ -17,7 +17,7 @@ namespace EventBot.Web.Controllers
         private readonly IEventService _service = new EventServiceEf();
 
         // GET: Images
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult View(int id)
         {
             //TODO better way to fetch default image if id==0
@@ -27,7 +27,7 @@ namespace EventBot.Web.Controllers
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
         }
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult ViewThumb(int id)
         {
             //TODO better way to fetch default image if id==0
@@ -37,7 +37,7 @@ namespace EventBot.Web.Controllers
             var ms = new MemoryStream(imageBytes);
             return new FileStreamResult(ms, "image/JPEG");
         }
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        [OutputCache(Duration = Int32.MaxValue, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult ViewLandscape(int id)
         {
             //TODO better way to fetch default image if id==0
