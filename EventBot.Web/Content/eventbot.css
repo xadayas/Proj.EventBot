@@ -168,3 +168,11 @@ input.create-edit-maxwidth{
     margin-left: 20px;
     float: left;
 }
+@media (max-width: 549px) {
+    .eventSearch-content {
+        width: 50%;
+        float: left;
+        margin-left: 10px;
+        font-size: 80%;
+    }
+}
