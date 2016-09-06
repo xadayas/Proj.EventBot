@@ -54,7 +54,8 @@
     </div>
 </div>
 
-
+@if(!Model.IsCanceled)
+{
 <div id="attend">
 
 </div>
@@ -71,4 +72,4 @@
         <a href="#" class="js-cancel-event" data-event-id="@Model.Id">Ställ in</a>
     }
 </p>
-
+}
