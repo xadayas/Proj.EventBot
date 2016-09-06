@@ -277,6 +277,8 @@ namespace EventBot.Entities.Service
 
                 if (!tempEvent.Users.Contains(tempUser))
                 {
+                    if(tempEvent.Users.Count >= tempEvent.MaxAttendees && tempEvent.MaxAttendees != 0)
+                        throw new InvalidOperationException("To many attendees!");
                     tempEvent.Users.Add(tempUser);
                     CreateEventNotificationForUser(db, tempEvent, tempUser, NotificationType.EventJoined, tempEvent.StartDate);
                     if (tempOwner.Id != tempUser.Id)
