@@ -4,93 +4,34 @@
     ViewBag.Title = "Mina aktiviteter";
 }
 
-<h2>UserEvents</h2>
+<h2>Dina skapade aktiviteter</h2>
 
 <p>
     @Html.ActionLink("Skapa ny aktivitet", "Create")
 </p>
-<table class="table">
-    @*<tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VisitCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MeetingPlace)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsCanceled)
-        </th>
-        <th></th>
-    </tr>*@
+<ul class="timeline">
+    @foreach (var item in Model)
+    {
+        <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
+            <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
+            <img class="timeline-date img-rounded" src="/Images/ViewThumb/@item.ImageId" />
+            <div class="eventSearch-content">
+                <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
+                <p>
+                    Anmälda @item.UserCount
+                    @if (item.MaxAttendees > 0)
+                    {
+                        @Html.Raw("/")
+                        @item.MaxAttendees
+                    }
+                </p>
 
-@foreach (var item in Model) {
-    <tr class="col-md-12 clickable" onclick="document.location = '/event/details/@item.Id';">
-        <td>
-            <img class="img-circle" src="/Images/View/@Html.Raw(item.ImageId)" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedDate)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.VisitCount) besökare
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.MeetingPlace)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsCanceled)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-        </td>*@
-    </tr>
-}
-
-</table>
+                @foreach (var tag in item.EventTypes)
+                {
+                    <span class="tag label label-info">@tag.Name</span>
+                }
+            </div>
+        </li>
+    }
+</ul>
