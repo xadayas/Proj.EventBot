@@ -60,13 +60,6 @@ namespace EventBot.Web.Controllers
             _service.AddVisitorToEvent(id);
             return View(ev);
         }
-        // GET: Event/Details/5
-        public ActionResult Details2(int id)
-        {
-            var ev = _service.GetEvent(id);
-            _service.AddVisitorToEvent(id);
-            return View(ev);
-        }
 
         // GET: Event/Create
         public ActionResult Create()
@@ -94,7 +87,14 @@ namespace EventBot.Web.Controllers
 
             model.UserId = User.Identity.GetUserId();
 
-            //TODO select starttime and endtime
+            // If no selected image download map and upload to db.
+            if (model.ImageId == 0)
+            {
+                var mapBytes = GoogleStreetView.GetMapImage(model.Location);
+                model.ImageId=_service.CreateImage(mapBytes);
+            }
+            
+            
             _service.CreateOrUpdateEvent(new EventModel
             {
                 UserId = model.UserId,
