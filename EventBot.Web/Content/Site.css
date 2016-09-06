@@ -395,7 +395,7 @@ h2 {
 
 .eventbanner {
     color: white;
-    padding: 7em;
+    padding: 1px;
     text-shadow: 0 0 10px black;
     background-size: cover;
     -webkit-border-radius: 0 !important;
@@ -404,7 +404,11 @@ h2 {
     margin-bottom: 25px;
     text-align: center;
 }
-
+.eventbanner > h1 {
+    padding-top:  1em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
 
 p.flum {
     margin: 15px 15px 10px;

@@ -163,4 +163,10 @@ input.btn {
 .eventSearch-content {
     margin-left: 20px;
     float: left;
+    max-width: 300px;
+    overflow:no-display;
+}
+.details-image {
+    width: 100%;
+    max-width: 300px;
 }
