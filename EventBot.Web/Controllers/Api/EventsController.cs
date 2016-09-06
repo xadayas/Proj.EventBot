@@ -19,7 +19,7 @@ namespace EventBot.Web.Controllers.Api
             _service = new EventServiceEf();
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IHttpActionResult Cancel(int id)
         {
             var userId = User.Identity.GetUserId();

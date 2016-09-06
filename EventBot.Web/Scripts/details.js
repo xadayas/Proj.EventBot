@@ -23,7 +23,7 @@ $('.js-cancel-event').click(function (e) {
                 callback: function () {
                     $.ajax({
                         url: "/api/events/cancel/" + link.attr("data-event-id"),
-                        method: "DELETE"
+                        method: "POST"
                     })
                     .done(function () {
                         window.location.reload();
