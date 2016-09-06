@@ -1,124 +1,124 @@
 ﻿@using EventBot.Web.Models
 @using ModelBinderAttribute = System.Web.Http.ModelBinding.ModelBinderAttribute
 @model EventBot.Web.Models.EventViewModel
-@{
-    ViewBag.Title = "Skapa Aktivitet";
-}
 
+<div class="container" style="padding: 60px;">
+    <div class="row">
+        @using (Html.BeginForm("Create", "Event", FormMethod.Post, new { id = "eventForm" }))
+        {
+            @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Create","Event",FormMethod.Post,new {id="eventForm"}))
-{
-    @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group eventBot-img-container">
+                    @*<a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=0}) id="EventImageLink">*@
+                    <a href="#" id="EventImageLink">
+                        <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
+                    </a>
+                </div>
+                @Html.HiddenFor(model => model.ImageId)
+                <hr class="eventbot-divider" />
+                <div class="form-group">
+                    @Html.Label("Rubrik", htmlAttributes: new { @class = "control-label col-md-2" })
 
-        <div class="form-group eventBot-img-container">
-            @*<a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=0}) id="EventImageLink">*@
-            <a href="#" id="EventImageLink">
-                <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
-            </a>
-        </div>
-        @Html.HiddenFor(model => model.ImageId)
-        <hr class="eventbot-divider" />
-        <div class="form-group">
-            @Html.Label("Rubrik", htmlAttributes: new { @class = "control-label col-md-2" })
-
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", id = "titleInput" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
-        <div class="form-group">
-            @Html.Label("Beskrivning", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
-
-
-
-        <div class="form-group">
-            @Html.Label("Max deltagare", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaxAttendees, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
-                @Html.ValidationMessageFor(model => model.MaxAttendees, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", id = "titleInput" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
+                <div class="form-group">
+                    @Html.Label("Beskrivning", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
 
 
 
-        <div class="form-group">
-            @Html.Label("Kostnad", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ParticipationCost, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
-                @Html.ValidationMessageFor(model => model.ParticipationCost, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
+                <div class="form-group">
+                    @Html.Label("Max deltagare", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MaxAttendees, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
+                        @Html.ValidationMessageFor(model => model.MaxAttendees, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
 
-        <div class="form-group">
-            @Html.Label("Plats", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location.Name, new { htmlAttributes = new { @class = "form-control", id = "meetingPlaceInput" ,placeholder=""} })
-                @Html.ValidationMessageFor(model => model.Location.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
 
-        @*<div class="form-group">
-                @Html.Label("Kategorier", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
-                        @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                    @Html.ValidationMessageFor(model => model.EventTypes, "", new {@class = "text-danger"})
+
+                <div class="form-group">
+                    @Html.Label("Kostnad", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ParticipationCost, new { htmlAttributes = new { @class = "form-control", id = "descriptionInput" } })
+                        @Html.ValidationMessageFor(model => model.ParticipationCost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
+
+                <div class="form-group">
+                    @Html.Label("Plats", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Location.Name, new { htmlAttributes = new { @class = "form-control", id = "meetingPlaceInput", placeholder = "" } })
+                        @Html.ValidationMessageFor(model => model.Location.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
+
+                @*<div class="form-group">
+                        @Html.Label("Kategorier", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <select name="EventTypes" id="EventTypes" multiple="" class="selectpicker select-multiple valid" data-mobile="" data-title="Kategorier" data-size="7">
+                                @foreach (var item in ViewBag.EventTypes as IEnumerable<EventTypeViewModel> ?? new List<EventTypeViewModel>())
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.EventTypes, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    <hr class="eventbot-divider"/>*@
+
+                <div class="form-group">
+                    @Html.Label("Taggar", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control", id = "eventTags" } })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
+
+
+                <div class="form-group">
+                    @Html.Label("Börjar", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "text", id = "startDateInput", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr class="eventbot-divider" />
+
+                <div class="form-group">
+                    @Html.Label("Slutar", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "text", id = "endDateInput", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lägg till" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
-            <hr class="eventbot-divider"/>*@
-
-        <div class="form-group">
-            @Html.Label("Taggar", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model=>model.Tags,new {htmlAttributes=new {@class="form-control",id="eventTags"}})
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
-
-
-        <div class="form-group">
-            @Html.Label("Börjar", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control", type="text", id = "startDateInput", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-            </div>
-        </div>
-        <hr class="eventbot-divider" />
-
-        <div class="form-group">
-            @Html.Label("Slutar", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "text", id = "endDateInput" , @readonly = true} })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lägg till" class="btn btn-default" />
-            </div>
-        </div>
+        }
     </div>
-}
+</div>
 
 
 @section scripts {

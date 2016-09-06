@@ -1,11 +1,9 @@
 ﻿@using EventBot.Web.Models
 @model EventBot.Web.Models.EventViewModel
 
-@{
-    ViewBag.Title = "Ändra Aktivitet";
-}
 
-@using (Html.BeginForm("Edit","Event", FormMethod.Post, new { id = "eventForm" }))
+<div class="container" style="padding: 60px;">
+    @using (Html.BeginForm("Edit", "Event", FormMethod.Post, new { id = "eventForm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -13,7 +11,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group eventBot-img-container">
-        @*<a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=@Model.Id}) id="EventImageLink">*@
+            @*<a href=@Url.Action("Upload","Images",new {title="titleText",description="descriptionText",meetingPlace="meetingPlaceText",startDate="startDateText",endDate="endDateText",returnto=@Model.Id}) id="EventImageLink">*@
             <a href="#" id="EventImageLink">
                 <img src="/Images/View/@Html.Raw(Model.ImageId)" class="col-md-10" id="EventImage" />
             </a>
@@ -35,7 +33,7 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        <hr class="eventbot-divider"/>
+        <hr class="eventbot-divider" />
 
         <div class="form-group">
             @Html.Label("Max deltagare", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -83,7 +81,7 @@
             </div>
         </div>
         <hr class="eventbot-divider" />
-       
+
         <div class="form-group">
             @Html.Label("Taggar", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -92,14 +90,14 @@
         </div>
         <hr class="eventbot-divider" />
         @*<div class="form-group">
-            @Html.Label("Inställt", htmlAttributes: new { @class = "control-label cancel-label col-md-2" })
-            <div class="col-md-10">
-                
-                    @Html.EditorFor(model => model.IsCanceled,new {htmlAttributes = new {@class="form-control"}})
-                    @Html.ValidationMessageFor(model => model.IsCanceled, "", new { @class = "text-danger" })
-                
-            </div>
-        </div>*@
+                @Html.Label("Inställt", htmlAttributes: new { @class = "control-label cancel-label col-md-2" })
+                <div class="col-md-10">
+
+                        @Html.EditorFor(model => model.IsCanceled,new {htmlAttributes = new {@class="form-control"}})
+                        @Html.ValidationMessageFor(model => model.IsCanceled, "", new { @class = "text-danger" })
+
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -108,6 +106,7 @@
         </div>
     </div>
 }
+</div>
 
 <div>
     @Html.ActionLink("Tillbaka", "UserEvents",null,new {@class="back-link"})

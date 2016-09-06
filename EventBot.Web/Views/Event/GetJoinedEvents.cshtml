@@ -2,20 +2,22 @@
 
 <h2>Kommande aktiviteter du ska delta i</h2>
 
-<ul class="timeline">
-    @foreach(var item in Model)
-    {
-        <li>
-            <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
-            <div class="timeline-content">
-                <h3 class="clickable" onclick="document.location = '/event/details/@item.Id';" id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
-                <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
-                @if (item.IsCanceled)
+<div class="container" style="padding: 60px;">
+    <ul class="timeline">
+        @foreach (var item in Model)
+        {
+            <li>
+                <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
+                <div class="timeline-content">
+                    <h3 class="clickable" onclick="document.location = '/event/details/@item.Id';" id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
+                    <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
+                    @if (item.IsCanceled)
                 {
-                    <span class="label label-warning">Inställd</span>
-                    <span class="label label-info clickable js-cancel-read" data-id="@item.Id">Ok, ta bort.</span>
-                }
-            </div>
-        </li>
-    }
-</ul>
+                        <span class="label label-warning">Inställd</span>
+                        <span class="label label-info clickable js-cancel-read" data-id="@item.Id">Ok, ta bort.</span>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</div>

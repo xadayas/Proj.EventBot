@@ -1,37 +1,38 @@
 ﻿@model IEnumerable<EventBot.Entities.Service.Models.EventModel>
 
-@{
-    ViewBag.Title = "Mina aktiviteter";
-}
 
-<h2>Dina skapade aktiviteter</h2>
+<div class="container" style="padding: 60px;">
+    <div class="row">
+        <p>
+            @Html.ActionLink("Skapa ny aktivitet", "Create")
+        </p>
+    </div>
+    <div class="row">
+        <ul class="timeline">
+            @foreach (var item in Model)
+            {
+                <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
+                    <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
+                    <img class="timeline-date img-rounded" src="/Images/ViewThumb/@item.ImageId" />
+                    <div class="eventSearch-content">
+                        <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
+                        <p>
+                            Anmälda @item.UserCount
+                            @if (item.MaxAttendees > 0)
+                            {
+                                @Html.Raw("/")
+                                @item.MaxAttendees
+                            }
+                        </p>
 
-<p>
-    @Html.ActionLink("Skapa ny aktivitet", "Create")
-</p>
-<ul class="timeline">
-    @foreach (var item in Model)
-    {
-        <li class="clickable" onclick="document.location = '/event/details/@item.Id';">
-            <p class="timeline-date">@Html.DisplayFor(modelItem => item.StartDate)</p>
-            <img class="timeline-date img-rounded" src="/Images/ViewThumb/@item.ImageId" />
-            <div class="eventSearch-content">
-                <h3 id="eventTitle">@Html.DisplayFor(modelItem => item.Title)</h3>
-                <p>@Html.DisplayFor(modelItem => item.MeetingPlace)</p>
-                <p>
-                    Anmälda @item.UserCount
-                    @if (item.MaxAttendees > 0)
-                    {
-                        @Html.Raw("/")
-                        @item.MaxAttendees
-                    }
-                </p>
-
-                @foreach (var tag in item.EventTypes)
-                {
-                    <span class="tag label label-info">@tag.Name</span>
-                }
-            </div>
-        </li>
-    }
-</ul>
+                        @foreach (var tag in item.EventTypes)
+                        {
+                            <span class="tag label label-info">@tag.Name</span>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

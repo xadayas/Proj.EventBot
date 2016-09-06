@@ -1,17 +1,13 @@
 ﻿@import 'https://fonts.googleapis.com/css?family=Lobster';
 @import 'https://fonts.googleapis.com/css?family=Montserrat+Alternates';
-html {
-   /* box-sizing: border-box; */
-    /*padding: (Vad som passar)*/
-    margin-top:0px;
-}
 
-*, *:before, *:after {
-    box-sizing: inherit;
+html {
+    /* box-sizing: border-box; */
+    /*padding: (Vad som passar)*/
+    margin-top: 0px;
 }
 
 body {
-    /*padding-top: 50px;*/
     padding-bottom: 20px;
     background: #edeff0;
     margin: 0px;
@@ -25,6 +21,11 @@ body {
 
 .dl-horizontal dt {
     white-space: normal;
+}
+
+
+.portfolio-item {
+    margin-bottom: 25px;
 }
 
 input,
@@ -97,6 +98,7 @@ body {
 .navbar-brand {
     font-family: 'Lobster', cursive;
     font-weight: 100;
+    /* ReSharper disable once InvalidValue */
     font-style: initial;
     font-size: 25px;
     color: white;
@@ -170,19 +172,13 @@ body {
     padding: 7em;
     text-shadow: 0 0 10px black;
     background: linear-gradient(transparent, #edeff0), url("https://raw.githubusercontent.com/xadayas/Proj.EventBot/master/EventBot.Web/Content/sunrise-209146_1920.jpg") no-repeat center;
-    color:white;
+    color: white;
     background-size: cover;
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
 
 .thumb {
     margin-bottom: 30px;
@@ -333,24 +329,24 @@ a {
     overflow: hidden;
 }
 
-.image {  
+.image {
 }
 
-.image img {
-    -webkit-transition: all 1s ease; /* Safari and Chrome */
-    -moz-transition: all 1s ease; /* Firefox */
-    -ms-transition: all 1s ease; /* IE 9 */
-    -o-transition: all 1s ease; /* Opera */
-    transition: all 1s ease;
-}
+    .image img {
+        -webkit-transition: all 1s ease; /* Safari and Chrome */
+        -moz-transition: all 1s ease; /* Firefox */
+        -ms-transition: all 1s ease; /* IE 9 */
+        -o-transition: all 1s ease; /* Opera */
+        transition: all 1s ease;
+    }
 
-.image:hover img {
-    -webkit-transform:scale(1.25); /* Safari and Chrome */
-    -moz-transform:scale(1.25); /* Firefox */
-    -ms-transform:scale(1.25); /* IE 9 */
-    -o-transform:scale(1.25); /* Opera */
-     transform:scale(1.25);
-}
+    .image:hover img {
+        -webkit-transform: scale(1.25); /* Safari and Chrome */
+        -moz-transform: scale(1.25); /* Firefox */
+        -ms-transform: scale(1.25); /* IE 9 */
+        -o-transform: scale(1.25); /* Opera */
+        transform: scale(1.25);
+    }
 
 #notcontent {
     padding: 7px;
@@ -360,9 +356,9 @@ h2 {
     background: #ff5c47;
     border-radius: 20px;
     color: white;
-    font-size:12px;
+    font-size: 12px;
     border-style: double;
-    padding:5px;
+    padding: 5px;
 }
 
 .thumbnail {
@@ -373,28 +369,25 @@ h2 {
     margin-bottom: 20px;
 }
 
-.col-md-12:hover {
-    margin-bottom: 20px;
-    background: #ff5c47;
-}
+    .col-md-12:hover {
+        margin-bottom: 20px;
+        background: #ff5c47;
+    }
 
-.col-lg-3 {
-    width: 300px;
-}
 
 .notify-li {
-    color:#ff5c47
+    color: #ff5c47;
 }
 
 .emo-icon {
-    background:black;
-    color:white;
-    padding:5px;
-    border:dotted;
-    float:left;
-    margin-right:5px;
-    border-radius:10px;
-    border-color:#fff;
+    background: black;
+    color: white;
+    padding: 5px;
+    border: dotted;
+    float: left;
+    margin-right: 5px;
+    border-radius: 10px;
+    border-color: #fff;
 }
 
 .eventbanner {
@@ -416,7 +409,6 @@ p.flum {
     margin-right: 15px;*/
     color: #7d7e7d;
     margin-bottom: 25px;
-
 }
 
 hr.style-one {

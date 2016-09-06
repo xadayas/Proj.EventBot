@@ -10,70 +10,72 @@
         });
     </script>
 }
-<input type="hidden" id="hdnVal" value="@Model.Id" />
-<div class="container-fluid">
-    <div class="row">
-        <div class="jumbotron eventbanner" style="background-image: ../Images/view/@Html.Raw(Model.ImageId)">
-            <h1>@Html.DisplayFor(model => model.Title)</h1>
-            <p>@(Model.StartDate.ToString("f"))</p>
-            <img class="img-circle" src="/Images/View/@(Model.ImageId)" />
+<div class="container">
+    <input type="hidden" id="hdnVal" value="@Model.Id" />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="jumbotron eventbanner" style="background-image: ../Images/view/@Html.Raw(Model.ImageId)">
+                <h1>@Html.DisplayFor(model => model.Title)</h1>
+                <p>@(Model.StartDate.ToString("f"))</p>
+                <img class="img-circle" src="/Images/View/@(Model.ImageId)" />
+
+            </div>
+        </div>
+        @if (Model.IsCanceled)
+        {
+            <span class="label label-warning">Inställd</span>
+        }
+        <div class="row">
+            <p class="flum">@Model.Description</p>
+        </div>
+        <div class="row">
+            <div class="bs-example" data-example-id="glyphicons-general">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                @if (Model.MaxAttendees == 0)
+            {
+                    @Model.UserCount;
+            }
+            else
+            {
+                    @Model.UserCount @Html.Raw("/") @Model.MaxAttendees @Html.Raw(" Deltagare")
+                }
+            </div>
+            <div class="bs-example" data-example-id="glyphicons-general">
+                💰
+                @if (Model.ParticipationCost == 0)
+            {
+                    @Html.Raw("Gratis")
+                }
+                else
+                {
+                    @Model.ParticipationCost; @Html.Raw(" SEK")
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <p>@Html.Action("Static", "Map", Model.Location)</p>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.IsCanceled)
+    {
+        <div id="attend">
 
         </div>
-    </div>
-    @if (Model.IsCanceled)
-    {
-        <span class="label label-warning">Inställd</span>
-    }
-    <div class="row">
-        <p class="flum">@Model.Description</p>
-    </div>
-    <div class="row">
-        <div class="bs-example" data-example-id="glyphicons-general">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            @if (Model.MaxAttendees == 0)
-            {
-                @Model.UserCount;
-            }
-            else
-            {
-                @Model.UserCount @Html.Raw("/") @Model.MaxAttendees @Html.Raw(" Deltagare")
-            }
-        </div>
-        <div class="bs-example" data-example-id="glyphicons-general">
-            💰
-            @if (Model.ParticipationCost == 0)
-            {
-                @Html.Raw("Gratis")
-            }
-            else
-            {
-                @Model.ParticipationCost; @Html.Raw(" SEK")
-            }
-        </div>
-    </div>
-    <div class="row">
         <div>
-            <p>@Html.Action("Static", "Map", Model.Location)</p>
+            <div id="alertbox">
+            </div>
         </div>
-    </div>
-</div>
 
-@if(!Model.IsCanceled)
-{
-<div id="attend">
-
-</div>
-<div>
-    <div id="alertbox">
-    </div>
-</div>
-
-<p>
-    @if (Model.UserId == User.Identity.GetUserId())
-    {
-        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id });
-        @Html.Raw(" | ");
-        <a href="#" class="js-cancel-event" data-event-id="@Model.Id">Ställ in</a>
+        <p>
+            @if (Model.UserId == User.Identity.GetUserId())
+            {
+                @Html.ActionLink("Ändra", "Edit", new { id = Model.Id });
+                @Html.Raw(" | ");
+                <a href="#" class="js-cancel-event" data-event-id="@Model.Id">Ställ in</a>
+            }
+        </p>
     }
-</p>
-}
+</div>
