@@ -43,7 +43,7 @@ $('.js-cancel-read').click(function (e) {
     console.log("entering");
     $.ajax({
         url: "/api/events/cancelread/" + link.attr("data-id"),
-        method: "DELETE"
+        method: "POST"
     })
         .done(function () {
             link.parents("li").fadeOut(function () {
